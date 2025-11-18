@@ -21,7 +21,7 @@
       @foreach ($productos as $producto)
       <div class="bg-white rounded-xl border shadow-sm hover:shadow-md transition overflow-hidden">
         <div class="relative">
-          <img src="{{ asset('images/' . $producto['imagen']) }}" alt="{{ $producto['titulo'] }}" class="w-full h-56 object-cover">
+          <img src="{{ asset('images/' . $producto['imagen']) }}" alt="{{ $producto['titulo'] }}" class="w-full h-90 object-cover">
           <span class="absolute top-3 left-3 bg-pink-600 text-white text-xs px-3 py-1 rounded-full">{{ $producto['etiqueta'] }}</span>
         </div>
         <div class="p-6 text-left">

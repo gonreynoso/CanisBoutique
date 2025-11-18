@@ -1,8 +1,8 @@
     <section class="relative bg-gray-50">
         <div class="absolute inset-0">
-            <img src="{{ asset('images/hero-dog-1.jpg') }}" 
+            <img src="{{ asset('images/pet-grooming-at-home-scaled-1.jpg') }}" 
                  alt="Canis Boutique" 
-                 class="w-full h-full object-cover opacity-60">
+                 class="w-full h-full object-fit lg:object-cover" style="opacity: 0.7;">
         </div>
 
         <div class="relative max-w-7xl mx-auto px-6 py-20 flex flex-col md:flex-row items-center">
@@ -26,11 +26,11 @@
 
                 <div class="mt-6 flex flex-col md:flex-row gap-3 justify-center md:justify-start">
                     <a href="#peluqueria" 
-                       class="bg-pink-600 text-white px-6 py-3 rounded-lg shadow hover:bg-pink-700 transition">
+                       class="bg-pink-600 text-black-100 px-6 py-3 rounded-lg shadow hover:bg-white transition">
                        Reservar Peluquería
                     </a>
                     <a href="#productos" 
-                       class="border border-gray-300 px-6 py-3 rounded-lg hover:bg-gray-100 transition">
+                       class="border border-gray-300 px-6 py-3 rounded-lg bg-white hover:bg-pink-600  hover:text-gray-100 transition">
                        Ver Productos
                     </a>
                 </div>

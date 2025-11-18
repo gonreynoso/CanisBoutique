@@ -5,8 +5,8 @@
     <x-grooming />
     {{-- Sección de productos --}}
     <x-shop />
-    <!-- {{-- Sección de testimonios --}}
-    {{-- <x-testimonials /> --}}
+    {{-- Sección de testimonios --}}
+    <x-testimonials />
     {{-- Sección de contacto --}}
-    <x-contact /> -->
+    <x-contact />
 </x-app-layout>

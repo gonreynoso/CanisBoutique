@@ -10,7 +10,7 @@ class Shop extends Component
 
     public function __construct()
     {
-        $path = storage_path('app/products/products.json');
+        $path = storage_path('app/data/products.json');
 
         if (file_exists($path)) {
             $json = file_get_contents($path);
