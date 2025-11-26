@@ -21,6 +21,6 @@ class Grooming extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.grooming');
+        return view('sections.home.grooming');
     }
 }

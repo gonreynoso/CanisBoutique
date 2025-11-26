@@ -19,7 +19,7 @@ class Testimonials extends Component
 
     public function render()
     {
-        return view('components.testimonials', [
+        return view('sections.home.testimonials', [
             'testimonials' => $this->testimonials,
         ]);
     }

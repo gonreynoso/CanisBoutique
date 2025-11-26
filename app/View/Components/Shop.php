@@ -21,7 +21,7 @@ class Shop extends Component
     public function render()
     {
         // aseguramos que la vista reciba $productos explícitamente
-        return view('components.shop', [
+        return view('sections.home.shop', [
             'productos' => $this->productos,
         ]);
     }
