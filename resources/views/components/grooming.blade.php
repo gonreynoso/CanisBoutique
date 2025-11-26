@@ -22,7 +22,7 @@
         <div class="text-pink-600 text-4xl mb-4">✂️</div>
         <h3 class="text-xl font-bold text-gray-900 mb-2">Corte y Peinado</h3>
         <p class="text-gray-600 mb-4">Cortes profesionales adaptados a la raza y estilo de tu mascota.</p>
-        <p class="text-pink-600 font-bold mb-4">Desde 25€</p>
+        <p class="text-pink-600 font-bold mb-4">Desde $15000</p>
         <ul class="text-gray-600 text-sm mb-6 space-y-1">
           <li>✔ Corte según raza</li>
           <li>✔ Peinado personalizado</li>
@@ -36,7 +36,7 @@
         <div class="text-pink-600 text-4xl mb-4">🛁</div>
         <h3 class="text-xl font-bold text-gray-900 mb-2">Baño Completo</h3>
         <p class="text-gray-600 mb-4">Baño relajante con productos premium y secado profesional.</p>
-        <p class="text-pink-600 font-bold mb-4">Desde 20€</p>
+        <p class="text-pink-600 font-bold mb-4">Desde $9000</p>
         <ul class="text-gray-600 text-sm mb-6 space-y-1">
           <li>✔ Champú premium</li>
           <li>✔ Acondicionador</li>
@@ -50,7 +50,7 @@
         <div class="text-pink-600 text-4xl mb-4">🧴</div>
         <h3 class="text-xl font-bold text-gray-900 mb-2">Cepillado y Desenredado</h3>
         <p class="text-gray-600 mb-4">Eliminamos nudos y mantenemos el pelaje saludable y brillante.</p>
-        <p class="text-pink-600 font-bold mb-4">Desde 15€</p>
+        <p class="text-pink-600 font-bold mb-4">Desde $3000</p>
         <ul class="text-gray-600 text-sm mb-6 space-y-1">
           <li>✔ Desenredado suave</li>
           <li>✔ Cepillado profundo</li>

@@ -28,7 +28,7 @@
           <h3 class="font-semibold text-lg">{{ $producto['titulo'] }}</h3>
           <p class="text-gray-600 text-sm mb-3">{{ $producto['descripcion'] }}</p>
           <div class="flex items-center justify-between mb-4">
-            <span class="text-pink-600 font-bold text-lg">{{ number_format($producto['precio'], 2) }}€</span>
+            <span class="text-pink-600 font-bold text-lg">${{ number_format($producto['precio'], 2) }}</span>
             <span class="text-yellow-500 text-sm">★ {{ $producto['rating'] }}</span>
           </div>
           <button class="bg-pink-600 text-white w-full py-2 rounded-lg hover:bg-pink-700 transition">
