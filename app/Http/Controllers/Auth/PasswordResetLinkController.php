@@ -29,16 +29,24 @@ class PasswordResetLinkController extends Controller
             'email' => ['required', 'email'],
         ]);
 
-        // We will send the password reset link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
+        // Intentamos enviar el enlace de restablecimiento
         $status = Password::sendResetLink(
             $request->only('email')
         );
 
-        return $status == Password::RESET_LINK_SENT
-                    ? back()->with('status', __($status))
-                    : back()->withInput($request->only('email'))
-                        ->withErrors(['email' => __($status)]);
+        // Definimos el mensaje ambiguo que queremos mostrar al usuario.
+        // Esto evita la enumeración de usuarios (vulnerabilidad de seguridad).
+        $ambiguousMessage = 'Si tu dirección de correo electrónico es correcta, te enviaremos un enlace para restablecer tu contraseña.';
+
+        // Si fue exitoso O si falló, devolvemos el MISMO mensaje.
+        if ($status == Password::RESET_LINK_SENT) {
+            // Retorna back() con el mensaje ambiguo en el campo 'status' (el campo de éxito de Breeze)
+            return back()->with('status', $ambiguousMessage);
+        } else {
+            // Retorna back() con el mensaje ambiguo como un error de validación 
+            // Esto asegura que la respuesta sea idéntica al caso de éxito.
+            return back()->withInput($request->only('email'))
+                ->withErrors(['email' => $ambiguousMessage]);
+        }
     }
 }

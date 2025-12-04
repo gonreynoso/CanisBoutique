@@ -45,7 +45,8 @@
         <div class="max-w-7xl flex flex-wrap items-center justify-between mx-auto p-4">
 
             <a href="/" class="flex items-center space-x-3">
-                <span class="self-center text-xl font-bold text-pink-600">Canis Boutique</span>
+                <img src="{{ asset('images/logo_Canis_sin_fondo.png') }}" alt="Logo" class="w-20 h-20">
+
             </a>
 
             <div class="inline-flex md:order-2 space-x-3 md:space-x-0 items-center">
@@ -74,21 +75,10 @@
                 <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-200 rounded-md bg-gray-50
                      md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-transparent">
 
-                    <li><a href="#servicios"
-                            class="block py-2 px-3 text-gray-800 hover:text-pink-600 md:p-0">Servicios</a></li>
-                    <li><a href="#productos"
-                            class="block py-2 px-3 text-gray-800 hover:text-pink-600 md:p-0">Productos</a></li>
-
-                    {{-- Enlace de Gestión AÑADIDO para usuarios logueados --}}
-                    @auth
-                        <li>
-                            <a href="{{ route('products.index') }}"
-                                class="block py-2 px-3 text-gray-800 hover:text-pink-600 md:p-0">
-                                Gestión de Tienda
-                            </a>
-                        </li>
-                    @endauth
-
+                    <li><a href="#Tienda" class="block py-2 px-3 text-gray-800 hover:text-pink-600 md:p-0">Tienda</a>
+                    </li>
+                    <li><a href="#peluqueria"
+                            class="block py-2 px-3 text-gray-800 hover:text-pink-600 md:p-0">Peluquería</a></li>
                     <li><a href="#contacto"
                             class="block py-2 px-3 text-gray-800 hover:text-pink-600 md:p-0">Contacto</a></li>
                 </ul>
