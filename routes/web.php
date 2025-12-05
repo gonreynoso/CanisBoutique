@@ -2,13 +2,21 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController; // Importación necesaria
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Auth\SocialController;
 
 // 1. RUTAS PÚBLICAS (HOME)
 Route::get('/', function () {
     // Aquí es donde se carga tu componente <x-header />
     return view('welcome');
 });
+
+Route::middleware('guest')->group(function () {
+    Route::get('auth/google', [SocialController::class, 'redirectToGoogle'])->name('auth.google');
+    Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback']);
+});
+
+
 
 
 // 2. RUTAS PROTEGIDAS (AUTH/VERIFIED)

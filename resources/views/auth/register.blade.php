@@ -11,12 +11,25 @@
                 <a href="{{ url('/') }}">
                     <img src="{{ asset('images/logo_Canis_sin_fondo.png') }}" alt="Logo" class="w-32 h-32 mb-4 mx-auto">
                 </a>
-
-                {{-- Título --}}
-                <h1 class="text-2xl font-semibold text-gray-800">Creá tu cuenta</h1>
             </div>
 
             <x-auth-session-status class="mb-4" :status="session('status')" />
+
+            {{-- Botón para Crear/Registrarse con Google --}}
+            <div class="mb-4">
+                <a href="{{ route('auth.google') }}"
+                    class="block w-full text-center py-2 border border-gray-300 rounded-lg shadow-sm text-gray-700 hover:bg-gray-50 transition duration-150">
+                    <img src="{{ asset('images/google_icon.svg') }}" alt="Google" class="inline-block w-5 h-5 mr-2">
+                    {{ __('Registrarse con Google') }}
+                </a>
+            </div>
+
+            {{-- Separador "O ingresa tu email" --}}
+            <div class="flex items-center justify-center mb-4">
+                <div class="flex-grow border-t border-gray-300"></div>
+                <span class="flex-shrink mx-4 text-gray-500 text-sm">{{ __('O registráte con tu e-mail') }}</span>
+                <div class="flex-grow border-t border-gray-300"></div>
+            </div>
 
             {{-- FORMULARIO COMPLETO --}}
             <form method="POST" action="{{ route('register') }}">

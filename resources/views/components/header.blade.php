@@ -29,11 +29,11 @@
 
                     {{-- Enlaces Login y Register --}}
                     <a href="{{ route('login') }}" class="text-xs text-white hover:text-pink-600 font-medium">
-                        Log in
+                        Iniciar Sesión
                     </a>
                     @if (Route::has('register'))
                         <a href="{{ route('register') }}" class="text-xs text-white hover:text-pink-600 font-medium">
-                            Registro
+                            Registrarse
                         </a>
                     @endif
                 @endauth
