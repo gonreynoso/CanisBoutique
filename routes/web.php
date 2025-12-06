@@ -16,6 +16,10 @@ Route::middleware('guest')->group(function () {
     Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback']);
 });
 
+Route::get('/admin', function () {
+
+    return view('admin.index');
+});
 
 
 
