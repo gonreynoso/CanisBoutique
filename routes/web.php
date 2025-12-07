@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\SocialController;
+use App\Http\Controllers\AjusteController;
 
 // 1. RUTAS PÚBLICAS (HOME)
 Route::get('/', function () {
@@ -16,7 +17,6 @@ Route::middleware('guest')->group(function () {
     Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback']);
 });
 
-// En routes/web.php
 Route::get('/admin/dashboard', function () {
     return view('admin.index'); // O la vista principal del admin
 })->middleware(['auth', 'verified'])->name('admin.index'); // <-- ESTA ES LA RUTA NOMBRADA
@@ -42,9 +42,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Si tienes archivos auth.php y profile.php separados, inclúyelos (si Breeze no lo hace automáticamente)
-    // require __DIR__ . '/auth.php'; // Las rutas de login/register ya se cargan desde aquí
-    // require __DIR__ . '/profile.php'; 
+
+
+    Route::get('admin/ajustes', [AjusteController::class, 'index'])->name('admin.ajustes.index');
 });
 
 // 3. INCLUSIÓN DE RUTAS DE AUTENTICACIÓN

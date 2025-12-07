@@ -28,9 +28,7 @@
             <div class="sidebar-wrapper active">
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
-                        <div class="logo">
-                            <a href="{{ url('/admin') }}">ADMIN</a>
-                        </div>
+
                         <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20"
@@ -68,12 +66,20 @@
                 </div>
                 <div class="sidebar-menu">
                     <ul class="menu">
-                        <li class="sidebar-title">Menu</li>
+
+                        <li class="sidebar-item">
+                            <a href="{{ url('/admin/index') }}" class='sidebar-link'>
+                                <i class="bi bi-house-fill"></i>
+                                <span>Inicio</span>
+                            </a>
+
+                        </li>
+
 
                         <li class="sidebar-item has-sub">
                             <a href="index.html" class='sidebar-link'>
-                                <i class="bi bi-grid-fill"></i>
-                                <span>{{ Auth::user()->name }}</span>
+                                <i class="bi bi-person-fill"></i>
+                                <span>Hola, {{ Auth::user()->name }}</span>
                             </a>
 
                             <ul class="submenu ">
@@ -103,6 +109,8 @@
                             </ul>
                         </li>
 
+                        <li class="sidebar-title">Productos</li>
+
                         <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
@@ -112,124 +120,26 @@
                             <ul class="submenu ">
 
                                 <li class="submenu-item  ">
-                                    <a href="component-accordion.html" class="submenu-link">Accordion</a>
+                                    <a href="component-accordion.html" class="submenu-link">Stock</a>
 
                                 </li>
 
                                 <li class="submenu-item  ">
-                                    <a href="component-alert.html" class="submenu-link">Alert</a>
+                                    <a href="component-alert.html" class="submenu-link">Reportes</a>
 
                                 </li>
-
-
-
-
-
                             </ul>
                         </li>
+
+
 
                         <li class="sidebar-title">Ajustes</li>
 
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-hexagon-fill"></i>
-                                <span>Componente 1</span>
+                        <li class="sidebar-item">
+                            <a href="{{ url('/admin/ajustes') }}" class='sidebar-link'>
+                                <i class="bi bi-gear-fill"></i>
+                                <span>Configuración</span>
                             </a>
-
-                            <ul class="submenu ">
-
-                                <li class="submenu-item  ">
-                                    <a href="form-element-input.html" class="submenu-link">Input</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="form-element-input-group.html" class="submenu-link">Input Group</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="form-element-select.html" class="submenu-link">Select</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="form-element-radio.html" class="submenu-link">Radio</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="form-element-checkbox.html" class="submenu-link">Checkbox</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="form-element-textarea.html" class="submenu-link">Textarea</a>
-
-                                </li>
-
-                            </ul>
-
-
-                        </li>
-
-
-
-
-
-                        <li class="sidebar-title">Extra UI</li>
-
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-pentagon-fill"></i>
-                                <span>Widgets</span>
-                            </a>
-
-                            <ul class="submenu ">
-
-                                <li class="submenu-item  ">
-                                    <a href="ui-widgets-chatbox.html" class="submenu-link">Chatbox</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="ui-widgets-pricing.html" class="submenu-link">Pricing</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="ui-widgets-todolist.html" class="submenu-link">To-do List</a>
-
-                                </li>
-
-                            </ul>
-
-
-                        </li>
-
-
-
-                        <li class="sidebar-title">Pages</li>
-
-                        <li class="sidebar-item  ">
-                            <a href="application-email.html" class='sidebar-link'>
-                                <i class="bi bi-envelope-fill"></i>
-                                <span>Email Application</span>
-                            </a>
-
-
-                        </li>
-
-
-
-                        <li class="sidebar-title">Raise Support</li>
-
-                        <li class="sidebar-item  ">
-                            <a href="https://zuramai.github.io/mazer/docs" class='sidebar-link'>
-                                <i class="bi bi-life-preserver"></i>
-                                <span>Documentation</span>
-                            </a>
-
 
                         </li>
 
@@ -244,14 +154,11 @@
                 </a>
             </header>
 
-            <div class="page-heading">
-                <h3>Panel de administración - CanisBoutique</h3>
-            </div>
             <div class="page-content">
                 @yield('content')
 
             </div>
-
+            {{--
             <footer>
                 <div class="footer clearfix mb-0 text-muted">
                     <div class="float-start">
@@ -262,7 +169,7 @@
                             by <a href="https://saugi.me">Gonzalo Reynoso ACN3AV</a></p>
                     </div>
                 </div>
-            </footer>
+            </footer> --}}
         </div>
     </div>
 
