@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,6 +12,16 @@ return new class extends Migration
     {
         Schema::create('ajustes', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('description');
+            $table->string('sucursal');
+            $table->text('direccion');
+            $table->string('telefono');
+            $table->string('logo');
+            $table->string('imagen_login');
+            $table->string('email');
+            $table->string('divisa');
+            $table->string('pagina_web')->nullable();
             $table->timestamps();
         });
     }
