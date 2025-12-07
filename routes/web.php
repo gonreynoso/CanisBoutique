@@ -16,10 +16,10 @@ Route::middleware('guest')->group(function () {
     Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback']);
 });
 
-Route::get('/admin', function () {
-
-    return view('admin.index');
-});
+// En routes/web.php
+Route::get('/admin/dashboard', function () {
+    return view('admin.index'); // O la vista principal del admin
+})->middleware(['auth', 'verified'])->name('admin.index'); // <-- ESTA ES LA RUTA NOMBRADA
 
 
 
@@ -27,10 +27,10 @@ Route::get('/admin', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // A. DASHBOARD (Ruta principal de entrada tras el login)
-    Route::get('/dashboard', function () {
+    Route::get('admin/index', function () {
         // Esta es la vista donde el usuario ve su cuenta, historial, etc.
-        return view('dashboard');
-    })->name('dashboard');
+        return view('admin.index');
+    })->name('admin.index');
 
     // B. GESTIÓN DE PRODUCTOS (CRUD)
     // Esto define products.index, products.create, products.store, products.edit, products.update, products.destroy
