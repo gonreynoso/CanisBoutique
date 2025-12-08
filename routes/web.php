@@ -8,18 +8,17 @@ use App\Http\Controllers\AjusteController;
 
 // 1. RUTAS PÚBLICAS (HOME)
 Route::get('/', function () {
-    // Aquí es donde se carga tu componente <x-header />
     return view('welcome');
-});
+})->name('welcome');
 
 Route::middleware('guest')->group(function () {
     Route::get('auth/google', [SocialController::class, 'redirectToGoogle'])->name('auth.google');
     Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback']);
 });
 
-Route::get('/admin/dashboard', function () {
-    return view('admin.index'); // O la vista principal del admin
-})->middleware(['auth', 'verified'])->name('admin.index'); // <-- ESTA ES LA RUTA NOMBRADA
+Route::get('welcome', function () {
+    return view('welcome'); // O la vista principal del admin
+})->middleware(['auth', 'verified'])->name('welcome'); // <-- ESTA ES LA RUTA NOMBRADA
 
 
 

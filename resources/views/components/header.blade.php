@@ -6,37 +6,55 @@
 
             @if (Route::has('login'))
                 @auth
-                    {{-- ----------------------------------------------------- --}}
-                    {{-- ESTADO: USUARIO LOGUEADO --}}
-                    {{-- ----------------------------------------------------- --}}
+                    <ul>
+                        <li class="sidebar-item has-sub ">
+                            <a href="index.html" class='sidebar-link px-4 '>
+                                <i class="bi bi-person-fill"></i>
+                                <span>{{ Auth::user()->name }}</span>
+                            </a>
+                            {{--
+                            <ul class="submenu ">
 
-                    {{-- Enlaces a la gestión del proyecto --}}
-                    <a href="{{ route('products.index') }}" class="text-xs text-pink-600 hover:text-pink-800 font-medium">
-                        Gestión de Productos
-                    </a>
+                                <li class="submenu-item  ">
+                                    <a href="account-profile.html" class="submenu-link">Perfil</a>
 
-                    {{-- Botón Cerrar Sesión (Se mantiene visible) --}}
-                    <form method="POST" action="{{ route('logout') }}" class="inline-block">
-                        @csrf
-                        <button type="submit" class="text-white bg-red-500 hover:bg-red-600 px-2 py-1 text-xs rounded-md">
-                            Cerrar Sesión
-                        </button>
-                    </form>
+                                </li>
+
+                                <li class="submenu-item  ">
+                                    <a href="account-security.html" class="submenu-link">Seguridad</a>
+
+                                </li>
+
+                                <li class="submenu-item  ">
+                                    <a href="{{ route('logout') }}" class="submenu-link"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar
+                                        Sesión</a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                        @method('POST')
+                                    </form>
+
+                                </li>
+                            </ul> --}}
+                            {{-- Botón Cerrar Sesión (Se mantiene visible) --}}
+                            <form method="POST" action="{{ route('logout') }}" class="inline-block">
+                                @csrf
+                                <button type="submit"
+                                    class="text-white bg-red-500 hover:bg-red-600 px-2 py-1 text-xs rounded-md">
+                                    Cerrar Sesión
+                                </button>
+                            </form>
                 @else
-                    {{-- ----------------------------------------------------- --}}
-                    {{-- ESTADO: USUARIO NO LOGUEADO --}}
-                    {{-- ----------------------------------------------------- --}}
-
-                    {{-- Enlaces Login y Register --}}
-                    <a href="{{ route('login') }}" class="text-xs text-white hover:text-pink-600 font-medium">
-                        Iniciar Sesión
-                    </a>
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="text-xs text-white hover:text-pink-600 font-medium">
-                            Registrarse
-                        </a>
-                    @endif
-                @endauth
+                            <a href="{{ route('login') }}" class="text-xs text-white hover:text-pink-600 font-medium">
+                                Iniciar Sesión
+                            </a>
+                            @if (Route::has('register'))
+                                <a href="{{ route('register') }}" class="text-xs text-white hover:text-pink-600 font-medium">
+                                    Registrarse
+                                </a>
+                            @endif
+                        @endauth
             @endif
         </div>
     </div>
@@ -52,12 +70,12 @@
             <div class="inline-flex md:order-2 space-x-3 md:space-x-0 items-center">
 
                 {{-- Botón CTA (solo visible para no logueados o si es el CTA principal) --}}
-                @guest
-                    <a href="#contacto"
-                        class="text-white bg-pink-600 hover:bg-pink-700 border border-transparent px-3 py-2 text-sm rounded-md">
-                        Reservar turno
-                    </a>
-                @endguest
+
+                <a href="#contacto"
+                    class="text-white bg-pink-600 hover:bg-pink-700 border border-transparent px-3 py-2 text-sm rounded-md">
+                    Reservar turno
+                </a>
+
 
                 <button data-collapse-toggle="navbar-menu" type="button"
                     class="inline-flex items-center p-2 w-9 h-9 justify-center text-gray-700 rounded-md md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
@@ -82,7 +100,10 @@
                     <li><a href="#contacto"
                             class="block py-2 px-3 text-gray-800 hover:text-pink-600 md:p-0">Contacto</a></li>
                 </ul>
+
+
             </div>
+
 
         </div>
     </nav>
