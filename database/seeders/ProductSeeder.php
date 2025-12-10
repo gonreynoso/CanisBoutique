@@ -14,7 +14,6 @@ class ProductSeeder extends Seeder
     {
         Product::create([
             'name' => 'Correa de Paseo Premium',
-            'slug' => 'correa-paseo-premium',
             'description' => 'Correa ergonómica de 2 metros para perros grandes.',
             'price' => 19.99,
             'stock' => 50,
