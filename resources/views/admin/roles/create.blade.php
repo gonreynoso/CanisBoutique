@@ -6,37 +6,36 @@
     <div class="row">
         <div class="col-md-4">
             <div class="card">
-                <div class="card-header">
+                {{-- <div class="card-header">
                     <h5>Llenar los campos</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            {{-- <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Nombre</th>
-                                            <th>Descripción</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($roles as $role)
-                                            <tr>
-                                                <td>{{ $role->name }}</td>
-                                                <td>{{ $role->description }}</td>
-                                                <td>
-                                                    <a href="{{ route('admin.roles.edit', $role->id) }}"
-                                                        class="btn btn-primary">Editar</a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div> --}}
+                </div> --}}
+                <div class="card-body border-0">
+                    <form action="{{ route('admin.roles.store') }}" method="POST">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="name">Nombre del rol (*)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi-person-badge-fill"></i></span>
+                                        <input type="text" name="name" class="form-control" id="name"
+                                            placeholder="Nombre del rol" required>
+                                        @error('name')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <a href="{{ route('admin.roles.index') }}" class="btn btn-secondary">Cancelar</a>
+                                    <button type="submit" class="btn btn-primary">Registrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
             </div>

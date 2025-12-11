@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -11,7 +12,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return view('admin.roles.index');
+        $roles = Role::paginate(2);
+        return view('admin.roles.index', compact('roles'));
     }
 
     /**
@@ -27,7 +29,15 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:roles|string|max:255',
+        ]);
+
+        $role = new Role();
+        $role->name = strtoupper($request->name);
+        $role->save();
+
+        echo "Se guardo el rol";
     }
 
     /**

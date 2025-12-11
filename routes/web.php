@@ -48,6 +48,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('admin/roles', [RoleController::class, 'index'])->name('admin.roles.index');
 
     Route::get('admin/roles/create', [RoleController::class, 'create'])->name('admin.roles.create');
+
+    Route::post('admin/roles/store', [RoleController::class, 'store'])->name('admin.roles.store');
     
 });
 
