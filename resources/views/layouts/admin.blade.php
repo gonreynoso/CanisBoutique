@@ -60,8 +60,8 @@
                 <div class="sidebar-menu">
                     <ul class="menu">
 
-                        <li class="sidebar-item">
-                            <a href="{{ url('/admin/index') }}" class='sidebar-link'>
+                        <li class="sidebar-item {{ request()->is('admin') ? 'active' : '' }}">
+                            <a href="{{ url('/admin') }}" class='sidebar-link'>
                                 <i class="bi bi-house-fill"></i>
                                 <span>Inicio</span>
                             </a>
@@ -69,7 +69,7 @@
                         </li>
 
 
-                        <li class="sidebar-item has-sub">
+                        <li class="sidebar-item {{ request()->is('admin/profile') ? 'active' : '' }}">
                             <a href="index.html" class='sidebar-link'>
                                 <i class="bi bi-person-fill"></i>
                                 <span>Hola, {{ Auth::user()->name }}</span>
@@ -104,7 +104,7 @@
 
                         <li class="sidebar-title">Productos</li>
 
-                        <li class="sidebar-item  has-sub">
+                        <li class="sidebar-item  has-sub {{ request()->is('admin/products*') ? 'active' : '' }}">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
                                 <span>Productos</span>
@@ -128,7 +128,7 @@
 
                         <li class="sidebar-title">Ajustes</li>
 
-                        <li class="sidebar-item">
+                        <li class="sidebar-item {{ request()->is('admin/ajustes') ? 'active' : '' }}">
                             <a href="{{ url('/admin/ajustes') }}" class='sidebar-link'>
                                 <i class="bi bi-gear-fill"></i>
                                 <span>Configuración</span>
@@ -138,13 +138,13 @@
 
                         <li class="sidebar-title">Roles</li>
 
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-stack"></i>
+                        <li class="sidebar-item {{ request()->is('admin/roles') ? 'active' : '' }}  ">
+                            <a href="{{ url('/admin/roles') }}" class='sidebar-link'>
+                                <i class="bi bi-shield-check"></i>
                                 <span>Roles</span>
                             </a>
 
-                            <ul class="submenu ">
+                            {{-- <ul class="submenu ">
 
                                 <li class="submenu-item  ">
                                     <a href="component-accordion.html" class="submenu-link">Stock</a>
@@ -155,7 +155,7 @@
                                     <a href="component-alert.html" class="submenu-link">Reportes</a>
 
                                 </li>
-                            </ul>
+                            </ul> --}}
                         </li>
 
                     </ul>

@@ -42,6 +42,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // E. Configuración del sistema (CREATE)
     Route::post('admin/ajustes/create', [AjusteController::class, 'store'])->name('admin.ajustes.store');
+
+    // F. Roles
+    // Route::resource('roles', RoleController::class);
+    
 });
 
 // 3. INCLUSIÓN DE RUTAS DE AUTENTICACIÓN
