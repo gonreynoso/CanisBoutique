@@ -12,13 +12,11 @@ return new class extends Migration {
     {
         Schema::create('ajustes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description');
+            $table->string('nombre');
+            $table->string('descripcion');
             $table->string('sucursal');
             $table->text('direccion');
             $table->string('telefono');
-            $table->string('logo');
-            $table->string('imagen_login');
             $table->string('email');
             $table->string('divisa');
             $table->string('pagina_web')->nullable();

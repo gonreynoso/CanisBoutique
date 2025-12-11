@@ -16,20 +16,15 @@ Route::middleware('guest')->group(function () {
     Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback']);
 });
 
-Route::get('welcome', function () {
-    return view('welcome'); // O la vista principal del admin
-})->middleware(['auth', 'verified'])->name('welcome'); // <-- ESTA ES LA RUTA NOMBRADA
-
-
 
 // 2. RUTAS PROTEGIDAS (AUTH/VERIFIED)
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // A. DASHBOARD (Ruta principal de entrada tras el login)
-    Route::get('admin/index', function () {
+    Route::get('admin', function () {
         // Esta es la vista donde el usuario ve su cuenta, historial, etc.
         return view('admin.index');
-    })->name('admin.index');
+    })->name('admin');
 
     // B. GESTIÓN DE PRODUCTOS (CRUD)
     // Esto define products.index, products.create, products.store, products.edit, products.update, products.destroy
@@ -42,8 +37,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-
+    // D. Configuración del sistema (INDEX)
     Route::get('admin/ajustes', [AjusteController::class, 'index'])->name('admin.ajustes.index');
+
+    // E. Configuración del sistema (CREATE)
+    Route::post('admin/ajustes/create', [AjusteController::class, 'store'])->name('admin.ajustes.store');
 });
 
 // 3. INCLUSIÓN DE RUTAS DE AUTENTICACIÓN

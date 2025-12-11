@@ -8,13 +8,11 @@ class Ajuste extends Model
 {
     protected $table = 'ajustes';
     protected $fillable = [
-        'name',
+        'nombre',
         'description',
         'sucursal',
         'direccion',
         'telefono',
-        'logo',
-        'imagen_login',
         'email',
         'divisa',
         'pagina_web',

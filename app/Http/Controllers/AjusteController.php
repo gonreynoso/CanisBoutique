@@ -12,7 +12,9 @@ class AjusteController extends Controller
      */
     public function index()
     {
-        return view('admin.ajustes.index');
+        $jsonData = file_get_contents("https://api.hilariweb.com/divisas");
+        $data = json_decode($jsonData, true);
+        return view('admin.ajustes.index', compact('data'));
     }
 
     /**
@@ -28,7 +30,7 @@ class AjusteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd("¡Llegó al controlador!", $request->all());
     }
 
     /**
