@@ -140,8 +140,9 @@
                                                 <option value="">Seleccione una moneda</option>
                                                 @foreach ($data as $item)
                                                     <option value="{{ $item['symbol'] }}"
-                                                        {{ old('divisa', $ajuste->divisa) ?? $item['symbol'] ? 'selected' : '' }}>
-                                                        {{ $item['name'] }}({{ $item['symbol'] }})</option>
+                                                        {{ old('divisa', $ajuste?->divisa) == $item['symbol'] ? 'selected' : '' }}>
+                                                        {{ $item['name'] }} ({{ $item['symbol'] }})
+                                                    </option>
                                                 @endforeach
                                             </select>
                                             @error('divisa')

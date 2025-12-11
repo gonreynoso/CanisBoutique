@@ -136,6 +136,28 @@
 
                         </li>
 
+                        <li class="sidebar-title">Roles</li>
+
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-stack"></i>
+                                <span>Roles</span>
+                            </a>
+
+                            <ul class="submenu ">
+
+                                <li class="submenu-item  ">
+                                    <a href="component-accordion.html" class="submenu-link">Stock</a>
+
+                                </li>
+
+                                <li class="submenu-item  ">
+                                    <a href="component-alert.html" class="submenu-link">Reportes</a>
+
+                                </li>
+                            </ul>
+                        </li>
+
                     </ul>
                 </div>
             </div>

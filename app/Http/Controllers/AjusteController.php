@@ -31,7 +31,7 @@ class AjusteController extends Controller
      */
     public function store(Request $request)
     {
-        $ajuste = Ajuste::first();
+        $ajuste =Ajuste::firstOrNew([]);
         // dd($request->all());
         $rules = [
             'nombre' => 'required|string|max:255',
@@ -47,7 +47,7 @@ class AjusteController extends Controller
         $request->validate($rules);
 
         if(!$ajuste){
-            $ajuste = New Ajuste();
+                $ajuste = New Ajuste();
         }
 
         $ajuste->nombre = $request->nombre;
@@ -60,9 +60,7 @@ class AjusteController extends Controller
         $ajuste->pagina_web = $request->pagina_web;
         $ajuste->save();
 
-        // return redirect()->route('admin.ajustes.index')->with('success', 'Ajuste guardado correctamente');
-
-        echo "Ajuste guardado correctamente";
+        return view('admin.ajustes.index', compact('ajuste'));
     }
 
     /**
