@@ -50,7 +50,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('admin/roles/create', [RoleController::class, 'create'])->name('admin.roles.create');
 
     Route::post('admin/roles/store', [RoleController::class, 'store'])->name('admin.roles.store');
-    
+
+    Route::get('admin/rol/{id}', [RoleController::class, 'show'])->name('admin.roles.show');
+
 });
 
 // 3. INCLUSIÓN DE RUTAS DE AUTENTICACIÓN
