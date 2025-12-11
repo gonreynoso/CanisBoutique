@@ -22,7 +22,8 @@
                                             <span class="input-group-text"><i class="bi bi-book"></i></span>
                                             <input type="text" name="nombre" class="form-control"
                                                 @error('nombre') class="is-invalid" @enderror
-                                                placeholder="Nombre del sistema" value="" required>
+                                                placeholder="Nombre de la empresa"
+                                                value="{{ old('nombre', $ajuste->nombre ?? '') }}" required>
                                             @error('nombre')
                                                 <div class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -37,7 +38,8 @@
                                             <span class="input-group-text"><i class="bi bi-file-earmark-text"></i></span>
                                             <input type="text" name="descripcion" class="form-control"
                                                 @error('descripcion') class="is-invalid" @enderror
-                                                placeholder="Descripción del sistema" value="" required>
+                                                placeholder="Descripción del sistema"
+                                                value="{{ old('descripcion', $ajuste->descripcion ?? '') }}" required>
                                             @error('descripcion')
                                                 <div class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -58,7 +60,8 @@
                                             <span class="input-group-text"><i class="bi bi-building"></i></span>
                                             <input type="text" name="sucursal" class="form-control"
                                                 @error('sucursal') class="is-invalid" @enderror
-                                                placeholder="Nombre de la sucursal" value="" required>
+                                                placeholder="Nombre de la sucursal"
+                                                value="{{ old('sucursal', $ajuste->sucursal ?? '') }}" required>
                                             @error('sucursal')
                                                 <div class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -73,7 +76,8 @@
                                             <span class="input-group-text"><i class="bi bi-info-circle"></i></span>
                                             <input type="text" name="direccion" class="form-control"
                                                 @error('direccion') class="is-invalid" @enderror
-                                                placeholder="Dirección de la sucursal" value="" required>
+                                                placeholder="Dirección de la sucursal"
+                                                value="{{ old('direccion', $ajuste->direccion ?? '') }}" required>
                                             @error('direccion')
                                                 <div class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -94,7 +98,8 @@
                                             <span class="input-group-text"><i class="bi bi-phone"></i></span>
                                             <input type="text" name="telefono" class="form-control"
                                                 @error('telefono') class="is-invalid" @enderror
-                                                placeholder="Teléfono de la sucursal" value="" required>
+                                                placeholder="Teléfono de la sucursal"
+                                                value="{{ old('telefono', $ajuste->telefono ?? '') }}" required>
                                             @error('telefono')
                                                 <div class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -109,7 +114,8 @@
                                             <span class="input-group-text"><i class="bi bi-envelope"></i></span>
                                             <input type="text" name="email" class="form-control"
                                                 @error('email') class="is-invalid" @enderror
-                                                placeholder="Email de la sucursal" value="" required>
+                                                placeholder="Email de la sucursal"
+                                                value="{{ old('email', $ajuste->email ?? '') }}" required>
                                             @error('email')
                                                 <div class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -126,18 +132,19 @@
                             <div class="col-md-10">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label for="moneda" class="form-label">Moneda <sup
+                                        <label for="divisa" class="form-label">Moneda <sup
                                                 class="text-danger">(*)</sup></label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
-                                            <select name="moneda" id="" class="form-control">
+                                            <select name="divisa" id="" class="form-control">
                                                 <option value="">Seleccione una moneda</option>
                                                 @foreach ($data as $item)
-                                                    <option value="{{ $item['symbol'] }}">
+                                                    <option value="{{ $item['symbol'] }}"
+                                                        {{ old('divisa', $ajuste->divisa) ?? $item['symbol'] ? 'selected' : '' }}>
                                                         {{ $item['name'] }}({{ $item['symbol'] }})</option>
                                                 @endforeach
                                             </select>
-                                            @error('moneda')
+                                            @error('divisa')
                                                 <div class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </div>
@@ -145,13 +152,13 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="pagina_web" class="form-label">Página Web <sup
-                                                class="text-danger">(*)</sup></label>
+                                        <label for="pagina_web" class="form-label">Página Web (Opcional)</label>
                                         <div class="input-group">
                                             <span class="input-group-text"><i class="bi bi-globe"></i></span>
                                             <input type="text" name="pagina_web" class="form-control"
                                                 @error('pagina_web') class="is-invalid" @enderror
-                                                placeholder="Pagina web de la sucursal" value="" required>
+                                                placeholder="Pagina web de la sucursal"
+                                                value="{{ old('pagina_web', $ajuste->pagina_web ?? '') }}">
                                             @error('pagina_web')
                                                 <div class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -166,7 +173,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-2 mt-4">
+                    <div class="col-md-2 m-4">
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>

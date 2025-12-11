@@ -12,9 +12,10 @@ class AjusteController extends Controller
      */
     public function index()
     {
+        $ajuste = Ajuste::first();
         $jsonData = file_get_contents("https://api.hilariweb.com/divisas");
         $data = json_decode($jsonData, true);
-        return view('admin.ajustes.index', compact('data'));
+        return view('admin.ajustes.index', compact('data', 'ajuste'));
     }
 
     /**
@@ -30,7 +31,38 @@ class AjusteController extends Controller
      */
     public function store(Request $request)
     {
-        dd("¡Llegó al controlador!", $request->all());
+        $ajuste = Ajuste::first();
+        // dd($request->all());
+        $rules = [
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:255',
+            'sucursal' => 'required|string|max:255',
+            'direccion' => 'required|string|max:255',
+            'telefono' => 'required|string|max:255',
+            'email' => 'required|string|max:255',
+            'divisa' => 'required',
+            'pagina_web' => 'nullable|string|max:255',
+        ];
+
+        $request->validate($rules);
+
+        if(!$ajuste){
+            $ajuste = New Ajuste();
+        }
+
+        $ajuste->nombre = $request->nombre;
+        $ajuste->descripcion = $request->descripcion;
+        $ajuste->sucursal = $request->sucursal;
+        $ajuste->direccion = $request->direccion;
+        $ajuste->telefono = $request->telefono;
+        $ajuste->email = $request->email;
+        $ajuste->divisa = $request->divisa;
+        $ajuste->pagina_web = $request->pagina_web;
+        $ajuste->save();
+
+        // return redirect()->route('admin.ajustes.index')->with('success', 'Ajuste guardado correctamente');
+
+        echo "Ajuste guardado correctamente";
     }
 
     /**
