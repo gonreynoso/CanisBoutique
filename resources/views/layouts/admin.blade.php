@@ -104,13 +104,13 @@
 
                         <li class="sidebar-title">Productos</li>
 
-                        <li class="sidebar-item  has-sub {{ request()->is('admin/products*') ? 'active' : '' }}">
-                            <a href="#" class='sidebar-link'>
+                        <li class="sidebar-item {{ request()->is('admin/products') ? 'active' : '' }}">
+                            <a href="{{ url('/admin/products') }}" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
                                 <span>Productos</span>
                             </a>
 
-                            <ul class="submenu ">
+                            {{-- <ul class="submenu ">
 
                                 <li class="submenu-item  ">
                                     <a href="component-accordion.html" class="submenu-link">Stock</a>
@@ -121,7 +121,7 @@
                                     <a href="component-alert.html" class="submenu-link">Reportes</a>
 
                                 </li>
-                            </ul>
+                            </ul> --}}
                         </li>
 
 

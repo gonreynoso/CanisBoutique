@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\SocialController;
 use App\Http\Controllers\AjusteController;
+use App\Http\Controllers\RoleController;
 
 // 1. RUTAS PÚBLICAS (HOME)
 Route::get('/', function () {
@@ -44,7 +45,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('admin/ajustes/create', [AjusteController::class, 'store'])->name('admin.ajustes.store');
 
     // F. Roles
-    // Route::resource('roles', RoleController::class);
+    Route::get('admin/roles', [RoleController::class, 'index'])->name('admin.roles.index');
+
+    Route::get('admin/roles/create', [RoleController::class, 'create'])->name('admin.roles.create');
     
 });
 
