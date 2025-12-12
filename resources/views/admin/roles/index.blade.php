@@ -30,15 +30,22 @@
                                     <td style="text-align: center;">{{ $nro++ }}</td>
                                     <td style="text-align: center;">{{ $role->name }}</td>
                                     <td style="text-align: center;">
+
                                         <a href="{{ route('admin.roles.show', $role->id) }}" class="btn btn-info"><i
                                                 class="bi bi-eye"></i></a>
-                                        <a href="" class="btn btn-success"><i class="bi bi-pencil"></i></a>
-                                        <form action="" method="POST" style="display: inline-block;">
+
+
+                                        <a href="{{ route('admin.roles.edit', $role->id) }}" class="btn btn-success"><i
+                                                class="bi bi-pencil"></i></a>
+
+
+                                        <form action="{{ url('admin/role', $role->id) }}" method="POST"
+                                            style="display: inline-block;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger"
                                                 onclick="return confirm('¿Estas seguro de eliminar este rol?')"><i
-                                                    class="bi bi-trash"></i>Eliminar</button>
+                                                    class="bi-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>

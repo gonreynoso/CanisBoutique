@@ -51,7 +51,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('admin/roles/store', [RoleController::class, 'store'])->name('admin.roles.store');
 
-    Route::get('admin/rol/{id}', [RoleController::class, 'show'])->name('admin.roles.show');
+    Route::get('admin/roles/{id}', [RoleController::class, 'show'])->name('admin.roles.show');
+
+    Route::get('admin/role/{id}', [RoleController::class, 'edit'])->name('admin.roles.edit');
+
+    Route::put('admin/role/{id}', [RoleController::class, 'update'])->name('admin.roles.update');
+
+    Route::delete('admin/role/{id}', [RoleController::class, 'destroy'])->name('admin.roles.destroy');
 
 });
 

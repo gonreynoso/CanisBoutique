@@ -45,7 +45,8 @@ class RoleController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $role = Role::findOrFail($id);
+        return view('admin.roles.show', compact('role'));
     }
 
     /**
@@ -53,7 +54,8 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $role = Role::findOrFail($id);
+        return view('admin.roles.edit', compact('role'));
     }
 
     /**
@@ -61,7 +63,15 @@ class RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:roles,name,' . $id . '|string|max:255',
+        ]);
+
+        $role = Role::findOrFail($id);
+        $role->name = strtoupper($request->name);
+        $role->save();
+
+        return redirect()->route('admin.roles.index')->with('success', 'Se actualizo el rol');
     }
 
     /**
@@ -69,6 +79,9 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $role = Role::findOrFail($id);
+        $role->delete();
+
+        return redirect()->route('admin.roles.index')->with('success', 'Se elimino el rol');
     }
 }
