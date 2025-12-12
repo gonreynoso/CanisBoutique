@@ -1,51 +1,87 @@
-<footer class="bg-gray-900 text-gray-300 py-12">
-    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+<footer class="bg-dark text-light py-5 mt-auto">
+    <div class="container">
+        <div class="row gy-5"> {{-- gy-5 da espacio vertical entre filas en móviles --}}
 
-        <!-- Columna 1: Logo + descripción -->
-        <div>
-            <h2 class="text-2xl font-bold text-white">Canis Boutique</h2>
-            <p class="mt-4 text-sm text-gray-400">
-                Tu tienda de confianza para productos premium y servicios de peluquería canina.
-                Amor y cuidado para tu mejor amigo 🐾
-            </p>
+            <div class="col-12 col-sm-6 col-md-3">
+                <img src="{{ asset('images/logo_Canis_sin_fondo.png') }}" alt="Logo" class="img-fluid"
+                    style="width: 80px; height: 80px; object-fit: contain; margin-bottom: 1rem;">
+
+                <p class="small text-secondary">
+                    Tu tienda de confianza para productos premium y servicios de peluquería canina.
+                    Amor y cuidado para tu mejor amigo 🐾
+                </p>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-3">
+                <h6 class="fw-bold text-white mb-3">Productos</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#"
+                            class="text-decoration-none text-secondary custom-hover-pink transition-colors">Alimentos</a>
+                    </li>
+                    <li class="mb-2"><a href="#"
+                            class="text-decoration-none text-secondary custom-hover-pink transition-colors">Accesorios</a>
+                    </li>
+                    <li class="mb-2"><a href="#"
+                            class="text-decoration-none text-secondary custom-hover-pink transition-colors">Juguetes</a>
+                    </li>
+                    <li class="mb-2"><a href="#"
+                            class="text-decoration-none text-secondary custom-hover-pink transition-colors">Higiene</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-3">
+                <h6 class="fw-bold text-white mb-3">Servicios</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#"
+                            class="text-decoration-none text-secondary custom-hover-pink transition-colors">Peluquería</a>
+                    </li>
+                    <li class="mb-2"><a href="#"
+                            class="text-decoration-none text-secondary custom-hover-pink transition-colors">Baños
+                            especiales</a></li>
+                    <li class="mb-2"><a href="#"
+                            class="text-decoration-none text-secondary custom-hover-pink transition-colors">Spa
+                            canino</a></li>
+                    <li class="mb-2"><a href="#"
+                            class="text-decoration-none text-secondary custom-hover-pink transition-colors">Cuidado
+                            dental</a></li>
+                </ul>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-3">
+                <h6 class="fw-bold text-white mb-3">Contacto</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#"
+                            class="text-decoration-none text-secondary custom-hover-pink transition-colors">Sobre
+                            nosotros</a></li>
+                    <li class="mb-2"><a href="#"
+                            class="text-decoration-none text-secondary custom-hover-pink transition-colors">Preguntas
+                            frecuentes</a></li>
+                    <li class="mb-2"><a href="#"
+                            class="text-decoration-none text-secondary custom-hover-pink transition-colors">Política de
+                            privacidad</a></li>
+                    <li class="mb-2"><a href="#"
+                            class="text-decoration-none text-secondary custom-hover-pink transition-colors">Términos y
+                            condiciones</a></li>
+                </ul>
+            </div>
         </div>
 
-        <!-- Columna 2 -->
-        <div>
-            <h3 class="text-lg font-semibold text-white mb-4">Productos</h3>
-            <ul class="space-y-2">
-                <li><a href="#" class="hover:text-pink-500 transition">Alimentos</a></li>
-                <li><a href="#" class="hover:text-pink-500 transition">Accesorios</a></li>
-                <li><a href="#" class="hover:text-pink-500 transition">Juguetes</a></li>
-                <li><a href="#" class="hover:text-pink-500 transition">Higiene</a></li>
-            </ul>
+        <div class="border-top border-secondary mt-5 pt-4 text-center small text-secondary">
+            © {{ date('Y') }} Canis Boutique. Todos los derechos reservados.
         </div>
-
-        <!-- Columna 3 -->
-        <div>
-            <h3 class="text-lg font-semibold text-white mb-4">Servicios</h3>
-            <ul class="space-y-2">
-                <li><a href="#" class="hover:text-pink-500 transition">Peluquería</a></li>
-                <li><a href="#" class="hover:text-pink-500 transition">Baños especiales</a></li>
-                <li><a href="#" class="hover:text-pink-500 transition">Spa canino</a></li>
-                <li><a href="#" class="hover:text-pink-500 transition">Cuidado dental</a></li>
-            </ul>
-        </div>
-
-        <!-- Columna 4 -->
-        <div>
-            <h3 class="text-lg font-semibold text-white mb-4">Contacto</h3>
-            <ul class="space-y-2">
-                <li><a href="#" class="hover:text-pink-500 transition">Sobre nosotros</a></li>
-                <li><a href="#" class="hover:text-pink-500 transition">Preguntas frecuentes</a></li>
-                <li><a href="#" class="hover:text-pink-500 transition">Política de privacidad</a></li>
-                <li><a href="#" class="hover:text-pink-500 transition">Términos y condiciones</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Línea inferior -->
-    <div class="border-t border-gray-700 mt-12 pt-6 text-center text-sm text-gray-500">
-        © {{ date('Y') }} Canis Boutique. Todos los derechos reservados.
     </div>
 </footer>
+
+{{-- Estilos adicionales (si no los pusiste ya en app.scss o el layout) --}}
+<style>
+    /* Efecto transición suave */
+    .transition-colors {
+        transition: color 0.3s ease;
+    }
+
+    /* Reutilizamos el hover rosa del Header */
+    .custom-hover-pink:hover {
+        color: #d63384 !important;
+    }
+</style>

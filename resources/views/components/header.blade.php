@@ -1,110 +1,128 @@
-<header id="dynamic-header" class="fixed w-full z-20 top-0 start-0">
+<header id="dynamic-header" class="fixed-top w-100 z-3">
 
-    <div id="top-bar"
-        class="bg-gray-900 border-b border-gray-700 py-2 transition-transform duration-300 ease-in-out translate-y-0">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-end items-center space-x-4">
+    {{-- MAIN NAV (Ahora contiene todo) --}}
+    <nav id="main-nav" class="navbar navbar-expand-md navbar-light bg-white shadow-sm py-3">
+        <div class="container">
 
-            @if (Route::has('login'))
-                @auth
-                    <ul>
-                        <li class="sidebar-item has-sub ">
-                            <a href="index.html" class='sidebar-link px-4 '>
-                                <i class="bi bi-person-fill"></i>
-                                <span>{{ Auth::user()->name }}</span>
-                            </a>
-                            {{--
-                            <ul class="submenu ">
-
-                                <li class="submenu-item  ">
-                                    <a href="account-profile.html" class="submenu-link">Perfil</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="account-security.html" class="submenu-link">Seguridad</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="{{ route('logout') }}" class="submenu-link"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Cerrar
-                                        Sesión</a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                        @method('POST')
-                                    </form>
-
-                                </li>
-                            </ul> --}}
-                            {{-- Botón Cerrar Sesión (Se mantiene visible) --}}
-                            <form method="POST" action="{{ route('logout') }}" class="inline-block">
-                                @csrf
-                                <button type="submit"
-                                    class="text-white bg-red-500 hover:bg-red-600 px-2 py-1 text-xs rounded-md">
-                                    Cerrar Sesión
-                                </button>
-                            </form>
-                @else
-                            <a href="{{ route('login') }}" class="text-xs text-white hover:text-pink-600 font-medium">
-                                Iniciar Sesión
-                            </a>
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="text-xs text-white hover:text-pink-600 font-medium">
-                                    Registrarse
-                                </a>
-                            @endif
-                        @endauth
-            @endif
-        </div>
-    </div>
-
-    <nav id="main-nav" class="bg-white border-b border-gray-200 shadow-md">
-        <div class="max-w-7xl flex flex-wrap items-center justify-between mx-auto p-4">
-
-            <a href="/" class="flex items-center space-x-3">
-                <img src="{{ asset('images/logo_Canis_sin_fondo.png') }}" alt="Logo" class="w-20 h-20">
-
+            {{-- 1. LOGO --}}
+            <a class="navbar-brand me-4" href="/">
+                <img src="{{ asset('images/logo_Canis_sin_fondo.png') }}" alt="Logo" class="img-fluid"
+                    style="width: 80px; height: 80px; object-fit: contain;">
             </a>
 
-            <div class="inline-flex md:order-2 space-x-3 md:space-x-0 items-center">
+            {{-- 2. GRUPO DERECHA: CTA + ICONO USUARIO + HAMBURGUESA --}}
+            {{-- 'order-md-last' asegura que esto siempre esté a la derecha --}}
+            <div class="d-flex align-items-center gap-3 order-md-last">
 
-                {{-- Botón CTA (solo visible para no logueados o si es el CTA principal) --}}
-
-                <a href="#contacto"
-                    class="text-white bg-pink-600 hover:bg-pink-700 border border-transparent px-3 py-2 text-sm rounded-md">
+                {{-- A. Botón CTA (Reservar Turno) --}}
+                {{-- En móviles pequeños ocultamos el texto si falta espacio, o lo dejamos --}}
+                <a href="#contacto" class="btn text-white fw-bold shadow-sm d-none d-sm-block"
+                    style="background-color: #d63384; border-color: #d63384; font-size: 0.9rem;">
                     Reservar turno
                 </a>
 
+                {{-- B. ÍCONO DE SESIÓN (Dropdown) --}}
+                <div class="dropdown">
+                    <a href="#"
+                        class="text-dark fs-4 d-flex align-items-center justify-content-center text-decoration-none"
+                        id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false"
+                        style="width: 40px; height: 40px; border-radius: 50%; transition: background 0.2s;">
+                        <i class="bi bi-person-circle"></i>
+                    </a>
 
-                <button data-collapse-toggle="navbar-menu" type="button"
-                    class="inline-flex items-center p-2 w-9 h-9 justify-center text-gray-700 rounded-md md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
-                    aria-controls="navbar-menu" aria-expanded="false">
-                    <span class="sr-only">Abrir menú</span>
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 mt-2"
+                        aria-labelledby="userDropdown">
+
+                        @if (Route::has('login'))
+                            @auth
+                                {{-- ESTADO: LOGUEADO --}}
+                                <li class="px-3 py-2 border-bottom">
+                                    <span class="small text-muted d-block">Hola,</span>
+                                    <span class="fw-bold text-dark">{{ Auth::user()->name }}</span>
+                                </li>
+
+                                {{-- <li><a class="dropdown-item py-2" href="#">Perfil</a></li> --}}
+
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item py-2 text-danger">
+                                            <i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión
+                                        </button>
+                                    </form>
+                                </li>
+                            @else
+                                {{-- ESTADO: VISITANTE --}}
+                                <li><span class="dropdown-header">Mi Cuenta</span></li>
+                                <li>
+                                    <a class="dropdown-item py-2" href="{{ route('login') }}">
+                                        <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
+                                    </a>
+                                </li>
+                                @if (Route::has('register'))
+                                    <li>
+                                        <a class="dropdown-item py-2" href="{{ route('register') }}">
+                                            <i class="bi bi-person-plus me-2"></i>Registrarse
+                                        </a>
+                                    </li>
+                                @endif
+                            @endauth
+                        @endif
+                    </ul>
+                </div>
+
+                {{-- C. Botón Hamburguesa (Móvil) --}}
+                <button class="navbar-toggler border-0 p-0 ms-1" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
 
-            <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-menu">
+            {{-- 3. MENÚ DE ENLACES (Centro) --}}
+            <div class="collapse navbar-collapse" id="navbarMenu">
+                <ul class="navbar-nav mx-auto mb-2 mb-md-0 text-center">
 
-                <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-200 rounded-md bg-gray-50
-                     md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-transparent">
-
-                    <li><a href="#Tienda" class="block py-2 px-3 text-gray-800 hover:text-pink-600 md:p-0">Tienda</a>
+                    {{-- CTA visible SOLO en móvil (ya que arriba lo oculté con d-none d-sm-block para no saturar) --}}
+                    <li class="nav-item d-block d-sm-none my-2">
+                        <a href="#contacto" class="btn btn-primary w-100 fw-bold"
+                            style="background-color: #d63384; border-color: #d63384;">
+                            Reservar turno
+                        </a>
                     </li>
-                    <li><a href="#peluqueria"
-                            class="block py-2 px-3 text-gray-800 hover:text-pink-600 md:p-0">Peluquería</a></li>
-                    <li><a href="#contacto"
-                            class="block py-2 px-3 text-gray-800 hover:text-pink-600 md:p-0">Contacto</a></li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fw-medium custom-hover-pink px-3" href="#Tienda">Tienda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fw-medium custom-hover-pink px-3" href="#peluqueria">Peluquería</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fw-medium custom-hover-pink px-3" href="#contacto">Contacto</a>
+                    </li>
                 </ul>
-
-
             </div>
-
 
         </div>
     </nav>
 </header>
+
+<style>
+    /* Efecto Hover para ícono de usuario */
+    #userDropdown:hover {
+        background-color: #f8f9fa;
+        /* Gris muy suave al pasar el mouse */
+        color: #d63384 !important;
+        /* Se pone rosa */
+    }
+
+    .custom-hover-pink:hover {
+        color: #d63384 !important;
+        transition: color 0.3s ease;
+    }
+
+    /* Padding para que el contenido no quede oculto bajo el header fixed */
+    body {
+        padding-top: 110px;
+    }
+</style>

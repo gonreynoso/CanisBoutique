@@ -1,54 +1,80 @@
-    <section class="relative bg-gray-50">
-        <div class="absolute inset-0">
-            <img src="{{ asset('images/pet-grooming-at-home-scaled-1.jpg') }}" 
-                 alt="Canis Boutique" 
-                 class="w-full h-full object-fit lg:object-cover" style="opacity: 0.7;">
-        </div>
+<section class="position-relative bg-light overflow-hidden">
 
-        <div class="relative max-w-7xl mx-auto px-6 py-20 flex flex-col md:flex-row items-center">
-            {{-- Texto principal --}}
-            <div class="md:w-1/2 text-center md:text-left">
-                <div class="text-pink-600 font-semibold flex items-center justify-center md:justify-start gap-2 mb-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M12 11c0 3-2 5-4 5s-4-2-4-5 2-5 4-5 4 2 4 5zM20 11c0 3-2 5-4 5s-4-2-4-5 2-5 4-5 4 2 4 5z"/>
-                    </svg>
-                    Cuidado profesional para tu mejor amigo
+    {{-- 1. IMAGEN DE FONDO (Absolute) --}}
+    <div class="position-absolute top-0 start-0 w-100 h-100">
+        <img src="{{ asset('images/pet-grooming-at-home-scaled-1.jpg') }}" alt="Canis Boutique" class="w-100 h-100"
+            style="object-fit: cover; opacity: 0.7;">
+        {{-- opacity-70 permite que el texto se lea mejor si la imagen es oscura/clara --}}
+    </div>
+
+    {{-- 2. CONTENIDO (Relative para estar encima de la imagen) --}}
+    <div class="container position-relative py-5">
+        <div class="row align-items-center min-vh-75"> {{-- min-vh-75 da buena altura al hero --}}
+
+            {{-- Columna de Texto --}}
+            <div class="col-12 col-md-8 col-lg-6 text-center text-md-start py-5">
+
+                {{-- Badge / Subtítulo --}}
+                <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2 mb-3 fw-semibold"
+                    style="color: #d63384;">
+                    <i class="bi bi-paw-fill fs-5"></i>
+                    <span>Cuidado profesional para tu mejor amigo</span>
                 </div>
 
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-                    Bienvenido a <span class="text-pink-600">Canis Boutique</span>
+                {{-- Título Principal --}}
+                <h1 class="display-4 fw-bold text-dark lh-1 mb-4">
+                    Bienvenido a <span style="color: #d63384;">Canis Boutique</span>
                 </h1>
 
-                <p class="mt-4 text-gray-700">
-                    Tu tienda de confianza donde encontrarás los mejores productos para tu mascota y servicios de peluquería profesional con todo el amor y cuidado que se merece.
+                {{-- Párrafo --}}
+                <p class="lead text-secondary mb-4">
+                    Tu tienda de confianza donde encontrarás los mejores productos para tu mascota y servicios de
+                    peluquería profesional con todo el amor y cuidado que se merece.
                 </p>
 
-                <div class="mt-6 flex flex-col md:flex-row gap-3 justify-center md:justify-start">
-                    <a href="#peluqueria" 
-                       class="bg-pink-600 text-black-100 px-6 py-3 rounded-lg shadow hover:bg-white transition">
-                       Reservar Peluquería
+                {{-- Botones de Acción --}}
+                <div class="d-flex flex-column flex-md-row gap-3 justify-content-center justify-content-md-start">
+
+                    <a href="#peluqueria" class="btn text-white fw-bold px-4 py-3 shadow-sm rounded-3"
+                        style="background-color: #d63384; border-color: #d63384;">
+                        Reservar Peluquería
                     </a>
-                    <a href="#productos" 
-                       class="border border-gray-300 px-6 py-3 rounded-lg bg-white hover:bg-pink-600  hover:text-gray-100 transition">
-                       Ver Productos
+
+                    <a href="#productos"
+                        class="btn btn-white bg-white border px-4 py-3 rounded-3 fw-medium btn-hover-pink shadow-sm">
+                        Ver Productos
                     </a>
                 </div>
 
-                <div class="mt-10 flex flex-col md:flex-row gap-10 text-center md:text-left">
+                {{-- Estadísticas --}}
+                <div
+                    class="mt-5 d-flex flex-column flex-md-row gap-4 gap-md-5 justify-content-center justify-content-md-start">
                     <div>
-                        <h3 class="text-2xl font-bold text-pink-600">500+</h3>
-                        <p class="text-gray-600 text-sm">Clientes Felices</p>
+                        <h3 class="fw-bold mb-0" style="color: #d63384;">500+</h3>
+                        <p class="text-secondary small mb-0">Clientes Felices</p>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold text-pink-600">5 años</h3>
-                        <p class="text-gray-600 text-sm">de Experiencia</p>
+                        <h3 class="fw-bold mb-0" style="color: #d63384;">5 años</h3>
+                        <p class="text-secondary small mb-0">de Experiencia</p>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold text-pink-600">100%</h3>
-                        <p class="text-gray-600 text-sm">Satisfacción</p>
+                        <h3 class="fw-bold mb-0" style="color: #d63384;">100%</h3>
+                        <p class="text-secondary small mb-0">Satisfacción</p>
                     </div>
                 </div>
+
             </div>
+            {{-- Fin Columna Texto --}}
         </div>
-    </section>
+    </div>
+</section>
+
+{{-- Estilos para el hover del botón secundario --}}
+<style>
+    .btn-hover-pink:hover {
+        background-color: #d63384 !important;
+        color: white !important;
+        border-color: #d63384 !important;
+        transition: all 0.3s ease;
+    }
+</style>

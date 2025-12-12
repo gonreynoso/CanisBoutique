@@ -1,43 +1,99 @@
-<section id="productos" class="bg-gray-50 py-20">
-  <div class="max-w-7xl mx-auto px-6 text-center">
-    <div class="text-pink-600 font-semibold mb-2 flex items-center justify-center gap-2">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M12 11c0 3-2 5-4 5s-4-2-4-5 2-5 4-5 4 2 4 5zM20 11c0 3-2 5-4 5s-4-2-4-5 2-5 4-5 4 2 4 5z"/>
-      </svg>
-      Nuestra Tienda
-    </div>
+<section id="productos" class="bg-light py-5">
+  <div class="container">
 
-    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">
-      Productos de Calidad para tu Mascota
-    </h2>
+    {{-- Encabezado de la Sección --}}
+    <div class="text-center mb-5">
+      <div class="d-flex align-items-center justify-content-center gap-2 mb-2 fw-semibold" style="color: #d63384;">
+        <i class="bi bi-paw-fill"></i>
+        <span>Nuestra Tienda</span>
+      </div>
 
-    <p class="mt-3 text-gray-600 max-w-2xl mx-auto">
-      Seleccionamos cuidadosamente los mejores productos para el bienestar y felicidad de tu compañero.
-    </p>
+      <h2 class="display-5 fw-bold text-dark mb-3">
+        Productos de Calidad para tu Mascota
+      </h2>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-
-      @foreach ($productos as $producto)
-      <div class="bg-white rounded-xl border shadow-sm hover:shadow-md transition overflow-hidden">
-        <div class="relative">
-          <img src="{{ asset('images/' . $producto['imagen']) }}" alt="{{ $producto['titulo'] }}" class="w-full h-90 object-cover">
-          <span class="absolute top-3 left-3 bg-pink-600 text-white text-xs px-3 py-1 rounded-full">{{ $producto['etiqueta'] }}</span>
-        </div>
-        <div class="p-6 text-left">
-          <h3 class="font-semibold text-lg">{{ $producto['titulo'] }}</h3>
-          <p class="text-gray-600 text-sm mb-3">{{ $producto['descripcion'] }}</p>
-          <div class="flex items-center justify-between mb-4">
-            <span class="text-pink-600 font-bold text-lg">${{ number_format($producto['precio'], 2) }}</span>
-            <span class="text-yellow-500 text-sm">★ {{ $producto['rating'] }}</span>
-          </div>
-          <button class="bg-pink-600 text-white w-full py-2 rounded-lg hover:bg-pink-700 transition">
-            Añadir al Carrito
-          </button>
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <p class="text-secondary lead fs-6">
+            Seleccionamos cuidadosamente los mejores productos para el bienestar y felicidad de tu compañero.
+          </p>
         </div>
       </div>
+    </div>
+
+    {{-- Grid de Productos --}}
+    <div class="row g-4"> {{-- g-4 da un espaciado consistente entre tarjetas --}}
+
+      @foreach ($productos as $producto)
+        {{-- Columna: 1 en móvil (col-12), 3 en desktop (col-md-4) --}}
+        <div class="col-12 col-md-6 col-lg-4">
+
+          {{-- Tarjeta (Card) --}}
+          <div class="card h-100 border shadow-sm rounded-4 overflow-hidden product-card-transition">
+
+            {{-- Imagen con Badge superpuesto --}}
+            <div class="position-relative">
+              {{-- Fijamos altura (height: 250px) para que todas las cajas sean iguales --}}
+              <img src="{{ asset('images/' . $producto['imagen']) }}" alt="{{ $producto['titulo'] }}"
+                class="card-img-top w-100" style="height: 250px; object-fit: cover;">
+
+              <span class="position-absolute top-0 start-0 m-3 badge rounded-pill text-white shadow-sm"
+                style="background-color: #d63384;">
+                {{ $producto['etiqueta'] }}
+              </span>
+            </div>
+
+            {{-- Cuerpo de la Tarjeta --}}
+            <div class="card-body p-4 text-start d-flex flex-column">
+              <h5 class="card-title fw-bold mb-2">{{ $producto['titulo'] }}</h5>
+
+              {{-- Descripción (flex-grow para empujar el precio y botón al fondo si el texto es corto) --}}
+              <p class="card-text text-secondary small mb-3 flex-grow-1">
+                {{ $producto['descripcion'] }}
+              </p>
+
+              {{-- Precio y Rating --}}
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <span class="fw-bold fs-5" style="color: #d63384;">
+                  ${{ number_format($producto['precio'], 2) }}
+                </span>
+                <span class="text-warning small fw-bold">
+                  <i class="bi bi-star-fill me-1"></i>{{ $producto['rating'] }}
+                </span>
+              </div>
+
+              {{-- Botón --}}
+              <button class="btn text-white fw-bold w-100 py-2 rounded-3 btn-pink-hover"
+                style="background-color: #d63384; border-color: #d63384;">
+                Añadir al Carrito
+              </button>
+            </div>
+          </div>
+        </div>
       @endforeach
 
     </div>
   </div>
 </section>
+
+{{-- Estilos para las transiciones (Hover effect) --}}
+<style>
+  /* Efecto al pasar el mouse por la tarjeta completa */
+  .product-card-transition {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .product-card-transition:hover {
+    transform: translateY(-5px);
+    /* Se eleva un poco */
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+    /* Sombra más fuerte (shadow-lg) */
+  }
+
+  /* Efecto del botón al pasar el mouse */
+  .btn-pink-hover:hover {
+    background-color: #b02a67 !important;
+    /* Un rosa un poco más oscuro */
+    border-color: #b02a67 !important;
+  }
+</style>

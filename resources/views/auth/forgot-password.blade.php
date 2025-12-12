@@ -1,51 +1,66 @@
 <x-guest-layout>
-
-    {{-- Contenedor principal de fondo suave --}}
-    <div class="absolute inset-0 bg-pink-100 flex items-center justify-center">
+    {{-- Contenedor principal (Fondo suave rosa) --}}
+    <div class="min-vh-100 d-flex align-items-center justify-content-center" style="background-color: #fce7f3;">
 
         {{-- Contenedor Central (Tarjeta Blanca) --}}
-        <div class="w-full max-w-md bg-white shadow-xl rounded-lg p-8">
+        <div class="card shadow-lg border-0 rounded-4 w-100" style="max-width: 450px;">
+            <div class="card-body p-5">
 
-            <div class="text-center mb-6">
-                {{-- Tu logo o marca --}}
-                <a href="{{ url('/') }}">
-                    <img src="{{ asset('images/logo_Canis_sin_fondo.png') }}" alt="Logo" class="w-32 h-32 mb-4 mx-auto">
-                </a>
-
-                {{-- Título --}}
-                <h1 class="text-xl font-semibold text-gray-800">¿Olvidaste tu contraseña?</h1>
-            </div>
-
-
-
-            {{-- Mensaje de Éxito/Ambigüedad (status) --}}
-            <x-auth-session-status class="mb-4 font-medium text-center" :status="session('status')" />
-
-            <form method="POST" action="{{ route('password.email') }}">
-                @csrf
-
-                {{-- Email Address --}}
-                <div class="mb-4">
-                    <x-input-label for="email" :value="__('E-mail')" class="text-sm text-gray-600" />
-                    <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
-                        required autofocus />
-                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
-                </div>
-
-                <div class="flex items-center justify-end mt-6">
-                    <x-primary-button class="w-full justify-center bg-pink-600 hover:bg-pink-700 focus:ring-pink-500">
-                        {{ __('Enviar') }}
-                    </x-primary-button>
-                </div>
-            </form>
-
-            <div class="mt-4 text-center">
-                {{-- Enlace Volver a Iniciar Sesión --}}
-                <p class="text-sm text-gray-600">
-                    <a class="underline text-pink-600 hover:text-pink-800" href="{{ route('login') }}">
-                        Volver a Iniciar Sesión
+                <div class="text-center mb-4">
+                    {{-- Logo --}}
+                    <a href="{{ url('/') }}">
+                        <img src="{{ asset('images/logo_Canis_sin_fondo.png') }}" alt="Logo" class="img-fluid mb-3"
+                            style="width: 120px; height: 120px;">
                     </a>
-                </p>
+
+                    {{-- Título --}}
+                    <h1 class="h4 text-dark fw-bold">{{ __('¿Olvidaste tu contraseña?') }}</h1>
+
+                    {{-- Texto explicativo opcional (Breeze suele traerlo, si quieres agregarlo se vería bien aquí) --}}
+                    <p class="text-muted small mt-2">
+                        {{ __('Indícanos tu e-mail y te enviaremos un enlace para recuperar el acceso.') }}
+                    </p>
+                </div>
+
+                {{-- Reemplazo Técnico: Alerta nativa de Bootstrap en lugar del componente de Breeze --}}
+                @if (session('status'))
+                    <div class="alert alert-success mb-3 text-center small" role="alert">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
+                <form method="POST" action="{{ route('password.email') }}">
+                    @csrf
+
+                    {{-- Email Address --}}
+                    <div class="mb-4">
+                        <label for="email" class="form-label text-secondary small">{{ __('E-mail') }}</label>
+                        <input id="email" class="form-control @error('email') is-invalid @enderror" type="email"
+                            name="email" value="{{ old('email') }}" required autofocus>
+
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    {{-- Botón Enviar --}}
+                    <div class="d-grid">
+                        <button type="submit" class="btn text-white py-2 fw-bold shadow-sm"
+                            style="background-color: #d63384; border-color: #d63384;">
+                            {{ __('Enviar Enlace') }}
+                        </button>
+                    </div>
+                </form>
+
+                <div class="mt-4 text-center">
+                    {{-- Enlace Volver --}}
+                    <p class="small text-secondary mb-0">
+                        <a class="text-decoration-none fw-bold" href="{{ route('login') }}" style="color: #d63384;">
+                            Volver a Iniciar Sesión
+                        </a>
+                    </p>
+                </div>
+
             </div>
         </div>
     </div>
