@@ -69,7 +69,7 @@
                         </li>
 
 
-                        <li class="sidebar-item {{ request()->is('admin/profile') ? 'active' : '' }}">
+                        <li class="sidebar-item has-sub {{ request()->is('admin/profile') ? 'active' : '' }}">
                             <a href="index.html" class='sidebar-link'>
                                 <i class="bi bi-person-fill"></i>
                                 <span>Hola, {{ Auth::user()->name }}</span>
