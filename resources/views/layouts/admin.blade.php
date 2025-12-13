@@ -158,6 +158,26 @@
                             </ul> --}}
                         </li>
 
+                        <li class="sidebar-item {{ request()->is('admin/usuarios') ? 'active' : '' }}  ">
+                            <a href="{{ url('/admin/usuarios') }}" class='sidebar-link'>
+                                <i class="bi bi-shield-check"></i>
+                                <span>Usuarios</span>
+                            </a>
+
+                            {{-- <ul class="submenu ">
+
+                                <li class="submenu-item  ">
+                                    <a href="component-accordion.html" class="submenu-link">Stock</a>
+
+                                </li>
+
+                                <li class="submenu-item  ">
+                                    <a href="component-alert.html" class="submenu-link">Reportes</a>
+
+                                </li>
+                            </ul> --}}
+                        </li>
+
                     </ul>
                 </div>
             </div>

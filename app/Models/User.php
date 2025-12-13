@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 
 // 1. IMPORTAR EL TRAIT
 use Spatie\Permission\Traits\HasRoles;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {

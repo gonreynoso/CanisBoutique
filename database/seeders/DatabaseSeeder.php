@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Ajuste;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,16 +18,17 @@ class DatabaseSeeder extends Seeder
     {
         // LLAMADA ÚNICA: La secuencia de ejecución está garantizada
         $this->call([
-            // 1. CREACIÓN DE DEPENDENCIAS (El usuario Admin DEBE existir primero)
-            UserSeeder::class, 
-            
-            // 2. CONFIGURACIÓN DE SEGURIDAD (Asigna el rol al usuario que ya existe)
-            RolesAndPermissionsSeeder::class, 
+                // 1. CREACIÓN DE DEPENDENCIAS (El usuario Admin DEBE existir primero)
+            UserSeeder::class,
 
-            // 3. DATOS DE APLICACIÓN (Pueden depender de usuarios/roles)
+                // 2. CONFIGURACIÓN DE SEGURIDAD (Asigna el rol al usuario que ya existe)
+            RolesAndPermissionsSeeder::class,
+
+                // 3. DATOS DE APLICACIÓN (Pueden depender de usuarios/roles)
             ProductSeeder::class,
-            // CategorySeeder::class,
-            // ... Otros seeders
+
+                // 4. Ajustes del sistema
+            AjusteSeeder::class,
         ]);
     }
 }
