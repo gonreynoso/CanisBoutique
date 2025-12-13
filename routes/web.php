@@ -32,20 +32,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Esto define products.index, products.create, products.store, products.edit, products.update, products.destroy
     Route::resource('products', ProductController::class)->except(['show']);
 
-    // C. PERFIL DE USUARIO
-    // Las rutas de ProfileController se definen aquí o en auth/profile.php
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-    // D. Configuración del sistema (INDEX)
+    // C. Configuración del sistema (INDEX)
     Route::get('admin/ajustes', [AjusteController::class, 'index'])->name('admin.ajustes.index');
 
-    // E. Configuración del sistema (CREATE)
+
     Route::post('admin/ajustes/create', [AjusteController::class, 'store'])->name('admin.ajustes.store');
 
-    // F. Roles
+
+
+    // D. Roles
     Route::get('admin/roles', [RoleController::class, 'index'])->name('admin.roles.index');
 
     Route::get('admin/roles/create', [RoleController::class, 'create'])->name('admin.roles.create');
@@ -62,12 +59,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 
-    //RUTAS USUARIOS
     // A. DASHBOARD (Ruta principal de entrada tras el login)
-    Route::get('admin', function () {
-        // Esta es la vista donde el usuario ve su cuenta, historial, etc.
-        return view('admin.usuarios.index');
-    })->name('admin.usuarios.index');
+    // Route::get('admin', function () {
+    //     // Esta es la vista donde el usuario ve su cuenta, historial, etc.
+    //     return view('admin.usuarios.index');
+    // })->name('admin.usuarios.index');
 
     // // B. GESTIÓN DE PRODUCTOS (CRUD)
     // // Esto define products.index, products.create, products.store, products.edit, products.update, products.destroy
@@ -80,13 +76,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-    // // D. Configuración del sistema (INDEX)
-    // Route::get('admin/ajustes', [AjusteController::class, 'index'])->name('admin.ajustes.index');
 
-    // // E. Configuración del sistema (CREATE)
-    // Route::post('admin/ajustes/create', [AjusteController::class, 'store'])->name('admin.ajustes.store');
-
-    // F. Roles
+    //3. RUTAS USUARIOS
     Route::get('admin/usuarios', [UserController::class, 'index'])->name('admin.usuarios.index');
 
     Route::get('admin/usuarios/create', [UserController::class, 'create'])->name('admin.usuarios.create');
@@ -99,7 +90,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::put('admin/usuarios/{id}', [UserController::class, 'update'])->name('admin.usuarios.update');
 
-    Route::delete('admin/usuarios/{id}', [RoleController::class, 'destroy'])->name('admin.usuarios.destroy');
+    Route::delete('admin/usuarios/{id}', [UserController::class, 'destroy'])->name('admin.usuarios.destroy');
 
 });
 

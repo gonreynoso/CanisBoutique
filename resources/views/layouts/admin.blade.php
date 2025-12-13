@@ -72,13 +72,15 @@
                         <li class="sidebar-item has-sub {{ request()->is('admin/profile') ? 'active' : '' }}">
                             <a href="index.html" class='sidebar-link'>
                                 <i class="bi bi-person-fill"></i>
-                                <span>Hola, {{ Auth::user()->name }}</span>
+                                <span> Mi Cuenta</span>
                             </a>
 
                             <ul class="submenu ">
 
                                 <li class="submenu-item  ">
-                                    <a href="account-profile.html" class="submenu-link">Perfil</a>
+                                    <a href="index.html" class='sidebar-link'>
+                                        {{ Auth::user()->name }}
+                                    </a>
 
                                 </li>
 
@@ -102,11 +104,11 @@
                             </ul>
                         </li>
 
-                        <li class="sidebar-title">Productos</li>
+                        {{-- <li class="sidebar-title">Productos</li> --}}
 
                         <li class="sidebar-item {{ request()->is('admin/products') ? 'active' : '' }}">
                             <a href="{{ url('/admin/products') }}" class='sidebar-link'>
-                                <i class="bi bi-stack"></i>
+                                <i class="bi bi-shop"></i>
                                 <span>Productos</span>
                             </a>
 
@@ -126,17 +128,6 @@
 
 
 
-                        <li class="sidebar-title">Ajustes</li>
-
-                        <li class="sidebar-item {{ request()->is('admin/ajustes') ? 'active' : '' }}">
-                            <a href="{{ url('/admin/ajustes') }}" class='sidebar-link'>
-                                <i class="bi bi-gear-fill"></i>
-                                <span>Configuración</span>
-                            </a>
-
-                        </li>
-
-                        <li class="sidebar-title">Roles</li>
 
                         <li class="sidebar-item {{ request()->is('admin/roles') ? 'active' : '' }}  ">
                             <a href="{{ url('/admin/roles') }}" class='sidebar-link'>
@@ -144,38 +135,21 @@
                                 <span>Roles</span>
                             </a>
 
-                            {{-- <ul class="submenu ">
-
-                                <li class="submenu-item  ">
-                                    <a href="component-accordion.html" class="submenu-link">Stock</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-alert.html" class="submenu-link">Reportes</a>
-
-                                </li>
-                            </ul> --}}
                         </li>
 
                         <li class="sidebar-item {{ request()->is('admin/usuarios') ? 'active' : '' }}  ">
                             <a href="{{ url('/admin/usuarios') }}" class='sidebar-link'>
-                                <i class="bi bi-shield-check"></i>
+                                <i class="bi bi-people-fill"></i>
                                 <span>Usuarios</span>
                             </a>
+                        </li>
 
-                            {{-- <ul class="submenu ">
+                        <li class="sidebar-item {{ request()->is('admin/ajustes') ? 'active' : '' }}">
+                            <a href="{{ url('/admin/ajustes') }}" class='sidebar-link'>
+                                <i class="bi bi-gear-fill"></i>
+                                <span>Configuración</span>
+                            </a>
 
-                                <li class="submenu-item  ">
-                                    <a href="component-accordion.html" class="submenu-link">Stock</a>
-
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-alert.html" class="submenu-link">Reportes</a>
-
-                                </li>
-                            </ul> --}}
                         </li>
 
                     </ul>
