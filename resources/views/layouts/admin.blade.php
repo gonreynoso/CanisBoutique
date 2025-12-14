@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de administración - CanisBoutique</title>
     <link rel="shortcut icon" href="./assets/compiled/svg/favicon.svg" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('mazer-assets/assets/compiled/css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('mazer-assets/assets/compiled/css/app-dark.css') }}">
-    <link rel="stylesheet" href="{{ asset('mazer-assets/assets/compiled/css/iconly.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/compiled/css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/compiled/css/app-dark.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/compiled/css/iconly.css') }}">
 
     @vite(['resources/css/app.scss', 'resources/js/app.js'])
 </head>
 
 <body>
-    <script src="{{ asset('mazer-assets/assets/static/js/initTheme.js') }}"></script>
+    <script src="{{ asset('assets/static/js/initTheme.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <div id="app">
         <div id="sidebar">
@@ -171,9 +171,9 @@
     </div>
 
 
-    <script src="{{ asset('mazer-assets/assets/static/js/components/dark.js') }}"></script>
-    <script src="{{ asset('mazer-assets/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
-    <script src="{{ asset('mazer-assets/assets/compiled/js/app.js') }}"></script>
+    <script src="{{ asset('assets/static/js/components/dark.js') }}"></script>
+    <script src="{{ asset('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('assets/compiled/js/app.js') }}"></script>
     @if (session('message') && session('icono'))
         <script>
             Swal.fire({

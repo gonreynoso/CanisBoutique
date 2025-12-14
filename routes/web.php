@@ -7,26 +7,36 @@ use App\Http\Controllers\Auth\SocialController;
 use App\Http\Controllers\AjusteController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\StoreController;
 
-// 1. RUTAS PÚBLICAS (HOME)
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
-
+// RUTA GOOGLE
 Route::middleware('guest')->group(function () {
     Route::get('auth/google', [SocialController::class, 'redirectToGoogle'])->name('auth.google');
     Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback']);
 });
 
+// RUTA HOME
+Route::get('/', function () {
+    return view('web.index');
+})->name('web.index');
 
-// 2. RUTAS PROTEGIDAS (AUTH/VERIFIED)
+// RUTA TIENDA
+Route::get('/tienda', [StoreController::class, 'index'])->name('tienda.index');
+Route::get('/tienda/producto/{id}', [StoreController::class, 'show'])->name('tienda.show');
+Route::get('/carrito', [StoreController::class, 'cart'])->name('tienda.cart');
+
+//RUTA CONTACTO
+Route::get('/contacto', function () {
+    return view('web.contact');
+})->name('contacto');
+
+
+
+// RUTAS PROTEGIDAS (AUTH/VERIFIED)
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // A. DASHBOARD (Ruta principal de entrada tras el login)
-    Route::get('admin', function () {
-        // Esta es la vista donde el usuario ve su cuenta, historial, etc.
-        return view('admin.index');
-    })->name('admin');
+    Route::get('admin', [UserController::class, 'index'])->name('admin');
 
     // B. GESTIÓN DE PRODUCTOS (CRUD)
     // Esto define products.index, products.create, products.store, products.edit, products.update, products.destroy
@@ -92,6 +102,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::delete('admin/usuarios/{id}', [UserController::class, 'destroy'])->name('admin.usuarios.destroy');
 
+
+    // Aquí es donde el usuario llega para pagar
+    Route::get('/checkout', [StoreController::class, 'checkout'])->name('tienda.checkout');
+
+    // "Mi Cuenta" para clientes
+    Route::get('/mi-cuenta', [UserController::class, 'profile'])->name('usuarios.perfil');
+
+    // Rutas de perfil estándar de Breeze
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
 });
 
 // 3. INCLUSIÓN DE RUTAS DE AUTENTICACIÓN
@@ -99,3 +121,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
 // Es vital que este require esté al final y FUERA de cualquier middleware 'auth' 
 // para que las rutas de login sean accesibles para visitantes.
 require __DIR__ . '/auth.php';
+
+

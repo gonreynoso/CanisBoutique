@@ -6,14 +6,24 @@
     <div class="row">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">
-                    <h5>Usuarios registrados <a href="{{ route('admin.usuarios.create') }}" class="btn btn-primary"
-                            style="float: right;"><i class="bi bi-plus-circle"></i>
-                            Nuevo usuario</a></h5>
-
-                </div>
                 <div class="card-body">
-                    <table class="table table-bordered table-striped table-hover table-sm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form action="{{ route('admin.usuarios.index') }}" method="GET">
+                                <div class="input-group mb-3 mt-3 gap-2 col-md-6">
+                                    <input type="text" name="search" class="form-control" placeholder="Buscar...">
+                                    <button class="btn btn-outline-primary" type="submit"><i
+                                            class="bi bi-search"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6 text-end mt-3">
+                            <a href="{{ route('admin.usuarios.create') }}" class="btn btn-primary"><i
+                                    class="bi bi-plus-circle"></i>
+                                Nuevo usuario</a>
+                        </div>
+                    </div>
+                    <table class=" table table-bordered table-striped table-hover mt-2">
                         <thead>
                             <tr>
                                 <th>Nro</th>
@@ -56,7 +66,8 @@
                     @if ($users->hasPages())
                         <div class="mt-4 d-flex justify-content-between align-items-center px-3">
                             <div class="text-muted">
-                                Mostrando {{ $users->firstItem() }} - {{ $users->lastItem() }} de {{ $users->total() }}
+                                Mostrando {{ $users->firstItem() }} - {{ $users->lastItem() }} de
+                                {{ $users->total() }}
                                 usuarios
                             </div>
                             <div>
