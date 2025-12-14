@@ -410,10 +410,11 @@
 
 <body class="index-page">
 
-    {{-- ==================== 1. TOP BAR ==================== --}}
 
 
     <header id="header" class="top-bar sticky-top">
+
+
         <!-- Top Bar -->
         <div class="top-bar py-2 d-none d-lg-block">
             <div class="container d-flex justify-content-between align-items-center">
@@ -450,32 +451,107 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
 
-                        {{-- Menú Central --}}
-                        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                            <ul class="navbar-nav">
+                        {{-- CONTENEDOR COLAPSABLE (Aquí dentro va todo lo que se oculta/muestra) --}}
+                        <div class="collapse navbar-collapse" id="navbarNav">
+
+                            {{-- 1. Menú de Enlaces (Usamos me-auto para empujar los iconos a la derecha en Desktop)
+                            --}}
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center text-lg-start">
                                 <li class="nav-item"><a class="nav-link active" href="#">Inicio</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#productos">Tienda</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#servicios">Peluquería</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#nosotros">Nosotros</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
                             </ul>
+
+                            {{-- 2. Iconos y Cuenta (AHORA ESTÁN DENTRO DEL MENU) --}}
+                            {{-- Cambios realizados:
+                            - Quitamos 'd-none' para que siempre existan.
+                            - Quitamos 'd-lg-flex' y ponemos 'd-flex' general.
+                            - Agregamos 'justify-content-center' para que en móvil se centren.
+                            - Agregamos 'mt-3 mt-lg-0' para dar aire en móvil pero no en desktop.
+                            --}}
+                            <div
+                                class="header-icons d-flex align-items-center justify-content-center gap-3 mt-3 mt-lg-0">
+
+                                {{-- Botón de Búsqueda --}}
+                                <button class="btn"><i class="bi bi-search"></i></button>
+
+                                {{-- Dropdown de Cuenta --}}
+                                <div class="dropdown">
+                                    <button
+                                        class="btn btn-canis-outline dropdown-toggle d-flex align-items-center gap-2"
+                                        type="button" id="dropdownAccount" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+
+                                        @auth
+                                            <i class="bi bi-person-circle"></i>
+                                            <span class="small fw-bold">{{ Auth::user()->name }}</span>
+                                        @else
+                                            <i class="bi bi-person"></i>
+                                            <span class="small fw-bold">Cuenta</span>
+                                        @endauth
+                                    </button>
+
+                                    <ul class="dropdown-menu dropdown-menu-end shadow border-0"
+                                        aria-labelledby="dropdownAccount">
+                                        @guest
+                                            <li>
+                                                <a class="dropdown-item d-flex align-items-center gap-2"
+                                                    href="{{ route('login') }}">
+                                                    <i class="bi bi-box-arrow-in-right text-pink-custom"></i> Iniciar Sesión
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item d-flex align-items-center gap-2"
+                                                    href="{{ route('register') }}">
+                                                    <i class="bi bi-person-plus text-pink-custom"></i> Registrarse
+                                                </a>
+                                            </li>
+                                        @else
+                                            <li>
+                                                <h6 class="dropdown-header">Hola, {{ Auth::user()->name }}</h6>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item d-flex align-items-center gap-2"
+                                                    href="{{ route('admin') }}">
+                                                    <i class="bi bi-speedometer2 text-pink-custom"></i> Mi Panel
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item d-flex align-items-center gap-2"
+                                                    href="{{ route('profile.edit') }}">
+                                                    <i class="bi bi-gear text-pink-custom"></i> Configuración
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li>
+                                                <form method="POST" action="{{ route('logout') }}">
+                                                    @csrf
+                                                    <button type="submit"
+                                                        class="dropdown-item d-flex align-items-center gap-2 text-danger">
+                                                        <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        @endguest
+                                    </ul>
+                                </div>
+
+                                {{-- Botón del Carrito --}}
+                                <button class="btn position-relative">
+                                    <i class="bi bi-cart3 fs-5"></i>
+                                    <span class="badge"></span>
+                                </button>
+
+                            </div>
+                            {{-- Fin header-icons --}}
+
                         </div>
+                        {{-- Fin collapse navbar-collapse --}}
 
-                        {{-- Iconos Derecha (Carrito/Cuenta) --}}
-                        <div class="header-icons d-none d-lg-flex align-items-center gap-3">
-                            <button class="btn"><i class="bi bi-search"></i></button>
-
-                            @auth
-                                <a href="{{ route('profile.edit') }}" class="btn text-dark fw-bold small">Mi Cuenta</a>
-                            @else
-                                <a href="{{ route('login') }}" class="btn"><i class="bi bi-person"></i></a>
-                            @endauth
-
-                            <button class="btn position-relative">
-                                <i class="bi bi-cart3"></i>
-                                <span class="badge">2</span>
-                            </button>
-                        </div>
                     </div>
                 </nav>
             </div>
