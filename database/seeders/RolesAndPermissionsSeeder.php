@@ -19,9 +19,11 @@ class RolesAndPermissionsSeeder extends Seeder
         // 2. Crear Roles
         // Nota: Spatie usa el campo 'guard_name', por defecto es 'web'
         // Usamos firstOrCreate para evitar errores si lo corres dos veces
-        Role::firstOrCreate(['name' => 'Super Admin']);
-        Role::firstOrCreate(['name' => 'Admin']);
-        Role::firstOrCreate(['name' => 'Cliente']);
+        Role::firstOrCreate(['name' => 'SUPER ADMIN', 'guard_name' => 'web']);
+        Role::firstOrCreate(['name' => 'ADMINISTRADOR', 'guard_name' => 'web']);
+        Role::firstOrCreate(['name' => 'CLIENTE', 'guard_name' => 'web']);
+        Role::firstOrCreate(['name' => 'VENDEDOR', 'guard_name' => 'web']);
+        Role::firstOrCreate(['name' => 'PELUQUERO', 'guard_name' => 'web']);
 
         // Opcional: Si tienes permisos, los crearías aquí:
         // Permission::firstOrCreate(['name' => 'manage products']);
@@ -36,8 +38,8 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // Si el usuario existe, le asignamos el rol 'Admin'
         if ($user) {
-            $user->assignRole('Super Admin');
-            $this->command->info("Rol 'Super Admin' asignado a super@admin.com.");
+            $user->assignRole('SUPER ADMIN');
+            $this->command->info("Rol 'SUPER ADMIN' asignado a super@admin.com.");
         } else {
             $this->command->error("Usuario super@admin.com no encontrado. Asegúrate de que exista.");
         }

@@ -11,9 +11,14 @@
                         <div class="col-md-6">
                             <form action="{{ route('admin.usuarios.index') }}" method="GET">
                                 <div class="input-group mb-3 mt-3 gap-2 col-md-6">
-                                    <input type="text" name="search" class="form-control" placeholder="Buscar...">
+                                    <input type="text" name="search" class="form-control" placeholder="Buscar..."
+                                        value="{{ $_REQUEST['search'] ?? '' }}">
                                     <button class="btn btn-outline-primary" type="submit"><i
                                             class="bi bi-search"></i></button>
+                                    @if (isset($_REQUEST['search']))
+                                        <a href="{{ route('admin.usuarios.index') }}" class="btn btn-outline-secondary">Borrar
+                                            búsqueda<i class="bi bi"></i></a>
+                                    @endif
                                 </div>
                             </form>
                         </div>
@@ -23,11 +28,14 @@
                                 Nuevo usuario</a>
                         </div>
                     </div>
+
                     <table class=" table table-bordered table-striped table-hover mt-2">
                         <thead>
                             <tr>
                                 <th>Nro</th>
+                                <th>Rol de usuario</th>
                                 <th>Nombre del usuario</th>
+                                <th>Correo</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -38,15 +46,19 @@
                             @foreach ($users as $user)
                                 <tr>
                                     <td style="text-align: center;">{{ $nro++ }}</td>
+                                    <td style="text-align: center;">{{ $user->roles->pluck('name')->implode(', ') }}</td>
                                     <td style="text-align: center;">{{ $user->name }}</td>
+                                    <td style="text-align: center;">{{ $user->email }}</td>
                                     <td style="text-align: center;">
-                                        {{--
-                                        <a href="{{ route('admin.usuarios.show', $user->id) }}" class="btn btn-info"><i
-                                                class="bi bi-eye"></i></a> --}}
+
+                                        <a href="{{ route('admin.usuarios.show', $user->id) }}" class="btn btn-info">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
 
 
-                                        <a href="{{ route('admin.usuarios.edit', $user->id) }}" class="btn btn-success"><i
-                                                class="bi bi-pencil"></i></a>
+                                        <a href="{{ route('admin.usuarios.edit', $user->id) }}" class="btn btn-success">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
 
 
                                         <form action="{{ url('admin/usuarios', $user->id) }}" method="POST"

@@ -4,16 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-
+use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(10);
-        return view('admin.usuarios.index', compact('users'));
+        $search = $request->get('search');
+        $query = User::query();
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%');
+            });
+        }
+        $users = $query->paginate(10);
+        return view('admin.usuarios.index', compact('users', 'search'));
     }
 
     /**
@@ -21,7 +29,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.usuarios.create');
+        $roles = Role::all();
+        return view('admin.usuarios.create', compact('roles'))
+            ->with('icono', 'success');
     }
 
     /**
@@ -31,6 +41,7 @@ class UserController extends Controller
     {
         // 1. VALIDACIÓN
         $request->validate([
+            'role' => 'required',
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
 
@@ -46,11 +57,12 @@ class UserController extends Controller
         ]);
 
         // 3. ASIGNAR ROL (Si estás implementando roles en el create)
-        // $user->assignRole('Cliente'); // o el rol que venga del form
+        $user->assignRole($request->role);
 
         // 4. REDIRECCIONAR
         return redirect()->route('admin.usuarios.index')
-            ->with('success', 'Usuario creado exitosamente.');
+            ->with('message', 'Usuario creado exitosamente.')
+            ->with('icono', 'success');
     }
 
     /**
@@ -68,7 +80,8 @@ class UserController extends Controller
     public function edit(string $id)
     {
         $user = User::find($id);
-        return view('admin.usuarios.edit', compact('user'));
+        $roles = Role::all();
+        return view('admin.usuarios.edit', compact('user', 'roles'));
     }
 
     /**
@@ -76,9 +89,26 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'role' => 'required',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
+
         $user = User::find($id);
-        $user->update($request->all());
-        return redirect()->route('admin.usuarios.index');
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if ($request->password) {
+            $user->password = bcrypt($request->password);
+        }
+        $user->syncRoles($request->role);
+        $user->save();
+        $user->syncRoles($request->role);
+
+        return redirect()->route('admin.usuarios.index')
+            ->with('message', 'Usuario actualizado exitosamente.')
+            ->with('icono', 'success');
     }
 
     /**
@@ -88,6 +118,8 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->delete();
-        return redirect()->route('admin.usuarios.index');
+        return redirect()->route('admin.usuarios.index')
+            ->with('message', 'Usuario eliminado exitosamente.')
+            ->with('icono', 'success');
     }
 }

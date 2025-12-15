@@ -10,6 +10,29 @@
                     <form action="{{ route('admin.usuarios.store') }}" method="POST">
                         @csrf
                         <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label for="role" class="form-label">Roles (*)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi-person-badge-fill"></i></span>
+                                        <select name="role" class="form-control" id="role" required>
+                                            <option value="">Seleccionar un rol</option>
+                                            @foreach ($roles as $role)
+                                                @if (!($role->name == 'SUPER ADMIN'))
+                                                    <option value="{{ $role->name }}" {{ old('role') == $role->name ? 'selected' : '' }}>
+                                                        {{ $role->name }}
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @error('role')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             {{-- Nombre --}}
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
