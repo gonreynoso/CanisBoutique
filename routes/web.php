@@ -103,6 +103,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::delete('admin/usuarios/{id}', [UserController::class, 'destroy'])->name('admin.usuarios.destroy');
 
+    Route::patch('admin/usuarios/{id}/restore', [UserController::class, 'restore'])->name('admin.usuarios.restore');
+
+
     // Aquí es donde el usuario llega para pagar
     Route::get('/checkout', [StoreController::class, 'checkout'])->name('tienda.checkout');
 
