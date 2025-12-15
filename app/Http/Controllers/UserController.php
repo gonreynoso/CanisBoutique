@@ -117,9 +117,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        // dd("Llegué al controlador. ID a borrar: " . $id);
         $user = User::find($id);
         $user->estado = false;
         $user->save();
+        $user = User::find($id);
+        $user->delete();
 
         return redirect()->route('admin.usuarios.index')
             ->with('message', 'Usuario eliminado exitosamente.')

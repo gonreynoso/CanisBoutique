@@ -67,7 +67,10 @@
                                             @csrf
                                             @method('DELETE')
 
-                                            {{-- Cambiamos type="submit" por type="button" para que JS controle el envío --}}
+                                            {{--
+                                            1. type="button": Para que no haga submit solo.
+                                            2. onclick: Llamamos a la función genérica pasando el ID del usuario actual.
+                                            --}}
                                             <button type="button" class="btn btn-danger"
                                                 onclick="confirmarEliminacion({{ $user->id }})">
                                                 <i class="bi bi-trash"></i> Eliminar
@@ -99,7 +102,9 @@
     </div>
 
     <script>
-        function confirmarEliminacion(userId) {
+        // Esta función recibe el ID específico que le pasamos desde el botón
+        function confirmarEliminacion(idUsuario) {
+
             Swal.fire({
                 title: '¿Estás seguro?',
                 text: "¡No podrás revertir esto!",
@@ -111,11 +116,20 @@
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Aquí buscamos el formulario específico por ID y lo enviamos
-                    document.getElementById('form-eliminar-' + userId).submit();
+                    // Aquí construimos el ID del formulario dinámicamente
+                    // 'form-eliminar-' + 5  => 'form-eliminar-5'
+                    var formulario = document.getElementById('form-eliminar-' + idUsuario);
+
+                    if (formulario) {
+                        formulario.submit();
+                    } else {
+                        console.error('No se encontró el formulario para el ID: ' + idUsuario);
+                    }
                 }
             })
         }
     </script>
+
+
 
 @endsection

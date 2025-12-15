@@ -3,103 +3,79 @@
 namespace Database\Seeders;
 
 use Spatie\Permission\Models\Role;
-
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
-
-
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // Spatie Permission: aseguramos que los roles existan antes de asignarlos
-        Role::firstOrCreate(['name' => 'SUPER ADMIN', 'guard_name' => 'web']);
-        Role::firstOrCreate(['name' => 'ADMINISTRADOR', 'guard_name' => 'web']);
-        Role::firstOrCreate(['name' => 'CLIENTE', 'guard_name' => 'web']);
-        Role::firstOrCreate(['name' => 'VENDEDOR', 'guard_name' => 'web']);
-        Role::firstOrCreate(['name' => 'PELUQUERO', 'guard_name' => 'web']);
+        // NOTA: Idealmente esto iría en un RoleSeeder, pero lo dejamos aquí por ahora.
+        $roles = ['SUPER ADMIN', 'ADMINISTRADOR', 'CLIENTE', 'VENDEDOR', 'PELUQUERO'];
+        foreach ($roles as $rol) {
+            Role::firstOrCreate(['name' => $rol, 'guard_name' => 'web']);
+        }
 
-
-        // 1. SUPER ADMIN (Acceso total al sistema)
+        // 1. SUPER ADMIN
         $superAdmin = User::create([
             'name' => 'Gonzalo Reynoso',
             'email' => 'super@admin.com',
             'password' => Hash::make('dada'),
+            // 'phone_number' => null, // Asumo que puede ser nulo
         ]);
         $superAdmin->assignRole('SUPER ADMIN');
 
-        // 2. ADMIN (Dueño del negocio / Empleado)
+        // 2. ADMIN
         $admin = User::create([
             'name' => 'ADMIN CANISBOUTIQUE',
             'email' => 'admin@admin.com',
-            'phone_number' => '5551234567',
+            'phone_number' => '1111111111',
             'password' => Hash::make('dada'),
         ]);
         $admin->assignRole('ADMINISTRADOR');
 
-        // 3. CLIENTE (Usuario normal que compra)
-        $cliente = User::create([
-            'name' => 'CLIENTE CANISBOUTIQUE',
-            'email' => 'cliente@cliente.com',
-            'phone_number' => '5559876543',
-            'password' => Hash::make('dada'),
-        ]);
-        $cliente->assignRole('CLIENTE');
-
-        // 4. VENDEDOR (Usuario normal que compra)
+        // 3. VENDEDOR (CORREGIDO)
         $vendedor = User::create([
             'name' => 'Marcos Madero',
             'email' => 'marcos@madero.com',
-            'phone_number' => '5559876543',
+            'phone_number' => '2222222222',
             'password' => Hash::make('dada'),
         ]);
-        $vendedor->assignRole('CLIENTE');
+        $vendedor->assignRole('VENDEDOR'); // <--- AQUI ESTABA EL ERROR
 
-        // 5. CLIENTE (Usuario normal que compra)
-        $cliente = User::create([
-            'name' => 'Juan Perez',
-            'email' => 'juan@perez.com',
-            'phone_number' => '5559876543',
-            'password' => Hash::make('dada'),
-        ]);
-        $cliente->assignRole('CLIENTE');
+        // 4. CLIENTES (Usando un array para no repetir variables)
+        $clientes = [
+            ['name' => 'Cliente Canis', 'email' => 'cliente@cliente.com', 'phone' => '3333333331'],
+            ['name' => 'Juan Perez', 'email' => 'juan@perez.com', 'phone' => '3333333332'],
+            ['name' => 'Maria Rodriguez', 'email' => 'maria@rodriguez.com', 'phone' => '3333333333'],
+        ];
 
-        $cliente = User::create([
-            'name' => 'Maria Rodriguez',
-            'email' => 'maria@rodriguez.com',
-            'phone_number' => '5559876543',
-            'password' => Hash::make('dada'),
-        ]);
-        $cliente->assignRole('CLIENTE');
+        foreach ($clientes as $data) {
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'phone_number' => $data['phone'],
+                'password' => Hash::make('dada'),
+            ]);
+            $user->assignRole('CLIENTE');
+        }
 
-        $peluquero = User::create([
-            'name' => 'Pedro Ramirez',
-            'email' => 'pedro@ramirez.com',
-            'phone_number' => '5559876543',
-            'password' => Hash::make('dada'),
-        ]);
-        $peluquero->assignRole('PELUQUERO');
+        // 5. PELUQUEROS
+        $peluqueros = [
+            ['name' => 'Pedro Ramirez', 'email' => 'pedro@ramirez.com', 'phone' => '4444444441'],
+            ['name' => 'Ana Gonzalez', 'email' => 'ana@gonzalez.com', 'phone' => '4444444442'],
+            ['name' => 'Luisa Martinez', 'email' => 'luisa@martinez.com', 'phone' => '4444444443'],
+        ];
 
-        $peluquero = User::create([
-            'name' => 'Ana Gonzalez',
-            'email' => 'ana@gonzalez.com',
-            'phone_number' => '5559876543',
-            'password' => Hash::make('dada'),
-        ]);
-        $peluquero->assignRole('PELUQUERO');
-
-        $peluquero = User::create([
-            'name' => 'Luisa Martinez',
-            'email' => 'luisa@martinez.com',
-            'phone_number' => '5559876543',
-            'password' => Hash::make('dada'),
-        ]);
-        $peluquero->assignRole('PELUQUERO');
+        foreach ($peluqueros as $data) {
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'phone_number' => $data['phone'],
+                'password' => Hash::make('dada'),
+            ]);
+            $user->assignRole('PELUQUERO');
+        }
     }
-
 }
