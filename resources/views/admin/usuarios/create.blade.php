@@ -112,7 +112,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <a href="{{ route('admin.usuarios.index') }}" class="btn btn-secondary">Cancelar</a>
-                                    <button type="submit" class="btn btn-primary">Registrar</button>
+                                    <button type="submit" class="btn btn-primary">Crear usuario</button>
                                 </div>
                             </div>
                         </div>

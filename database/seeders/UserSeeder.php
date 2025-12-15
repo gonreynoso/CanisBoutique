@@ -58,7 +58,7 @@ class UserSeeder extends Seeder
             'phone_number' => '5559876543',
             'password' => Hash::make('dada'),
         ]);
-        $cliente->assignRole('CLIENTE');
+        $vendedor->assignRole('CLIENTE');
 
         // 5. CLIENTE (Usuario normal que compra)
         $cliente = User::create([
@@ -67,7 +67,7 @@ class UserSeeder extends Seeder
             'phone_number' => '5559876543',
             'password' => Hash::make('dada'),
         ]);
-        $vendedor->assignRole('VENDEDOR');
+        $cliente->assignRole('CLIENTE');
 
         $cliente = User::create([
             'name' => 'Maria Rodriguez',
@@ -75,7 +75,7 @@ class UserSeeder extends Seeder
             'phone_number' => '5559876543',
             'password' => Hash::make('dada'),
         ]);
-        $vendedor->assignRole('VENDEDOR');
+        $cliente->assignRole('CLIENTE');
 
         $peluquero = User::create([
             'name' => 'Pedro Ramirez',

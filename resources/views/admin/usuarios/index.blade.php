@@ -61,13 +61,18 @@
                                         </a>
 
 
-                                        <form action="{{ url('admin/usuarios', $user->id) }}" method="POST"
-                                            style="display: inline-block;">
+                                        <form action="{{ route('admin.usuarios.destroy', $user->id) }}" method="POST"
+                                            id="form-eliminar-{{ $user->id }}" style="display: inline-block;">
+
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger"
-                                                onclick="return confirm('¿Estas seguro de eliminar este usuario?')"><i
-                                                    class="bi-trash"></i></button>
+
+                                            {{-- Cambiamos type="submit" por type="button" para que JS controle el envío --}}
+                                            <button type="button" class="btn btn-danger"
+                                                onclick="confirmarEliminacion({{ $user->id }})">
+                                                <i class="bi bi-trash"></i> Eliminar
+                                            </button>
+
                                         </form>
                                     </td>
                                 </tr>
@@ -92,4 +97,25 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function confirmarEliminacion(userId) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d63384', // Tu color Canis Pink
+                cancelButtonColor: '#333',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Aquí buscamos el formulario específico por ID y lo enviamos
+                    document.getElementById('form-eliminar-' + userId).submit();
+                }
+            })
+        }
+    </script>
+
 @endsection

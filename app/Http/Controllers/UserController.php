@@ -104,7 +104,8 @@ class UserController extends Controller
         }
         $user->syncRoles($request->role);
         $user->save();
-        $user->syncRoles($request->role);
+
+
 
         return redirect()->route('admin.usuarios.index')
             ->with('message', 'Usuario actualizado exitosamente.')
@@ -114,10 +115,12 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         $user = User::find($id);
-        $user->delete();
+        $user->estado = false;
+        $user->save();
+
         return redirect()->route('admin.usuarios.index')
             ->with('message', 'Usuario eliminado exitosamente.')
             ->with('icono', 'success');

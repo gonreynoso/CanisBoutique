@@ -101,7 +101,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('admin/usuarios/{id}', [UserController::class, 'update'])
         ->name('admin.usuarios.update');
 
-    Route::delete('admin/usuarios/{id}', [RoleController::class, 'destroy'])->name('admin.usuarios.destroy');
+    Route::delete('admin/usuarios/{id}', [UserController::class, 'destroy'])->name('admin.usuarios.destroy');
 
     // Aquí es donde el usuario llega para pagar
     Route::get('/checkout', [StoreController::class, 'checkout'])->name('tienda.checkout');
