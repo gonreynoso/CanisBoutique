@@ -60,13 +60,13 @@
                 <div class="sidebar-menu">
                     <ul class="menu">
 
-                        <li class="sidebar-item {{ request()->is('admin') ? 'active' : '' }}">
+                        {{-- <li class="sidebar-item {{ request()->is('admin') ? 'active' : '' }}">
                             <a href="{{ url('/admin') }}" class='sidebar-link'>
                                 <i class="bi bi-house-fill"></i>
                                 <span>Inicio</span>
                             </a>
 
-                        </li>
+                        </li> --}}
 
 
                         <li class="sidebar-item has-sub {{ request()->is('admin/profile') ? 'active' : '' }}">
@@ -78,16 +78,16 @@
                             <ul class="submenu ">
 
                                 <li class="submenu-item  ">
-                                    <a href="index.html" class='sidebar-link'>
+                                    <a href="{{ url('/admin/') }}" class='sidebar-link'>
                                         {{ Auth::user()->name }}
                                     </a>
 
                                 </li>
 
-                                <li class="submenu-item  ">
+                                {{-- <li class="submenu-item  ">
                                     <a href="account-security.html" class="submenu-link">Seguridad</a>
 
-                                </li>
+                                </li>--}}
 
                                 <li class="submenu-item  ">
                                     <a href="{{ route('logout') }}" class="submenu-link"
@@ -104,27 +104,25 @@
                             </ul>
                         </li>
 
+                        <li class="sidebar-item {{ request()->is('admin/turnos') ? 'active' : '' }}">
+                            <a href="{{ route('admin.turnos.index') }}" class='sidebar-link'>
+                                <i class="bi-calendar-week"></i>
+                                <span>Turnos</span>
+                            </a>
+                        </li>
+
+
                         {{-- <li class="sidebar-title">Productos</li> --}}
 
-                        <li class="sidebar-item {{ request()->is('admin/products') ? 'active' : '' }}">
-                            <a href="{{ url('/admin/products') }}" class='sidebar-link'>
+                        {{-- <li class="sidebar-item {{ request()->is('admin/products') ? 'active' : '' }}">
+                            <a href="{{ route('admin.products.index') }}" class='sidebar-link'>
                                 <i class="bi bi-shop"></i>
                                 <span>Productos</span>
                             </a>
 
-                            {{-- <ul class="submenu ">
 
-                                <li class="submenu-item  ">
-                                    <a href="component-accordion.html" class="submenu-link">Stock</a>
+                        </li> --}}
 
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-alert.html" class="submenu-link">Reportes</a>
-
-                                </li>
-                            </ul> --}}
-                        </li>
 
 
 

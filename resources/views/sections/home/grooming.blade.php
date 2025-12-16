@@ -46,7 +46,7 @@
             </ul>
 
             {{-- CLAVE 2: mt-auto empuja el botón al fondo --}}
-            <a href="#cita" class="btn btn-pink-custom w-100 py-2 fw-bold rounded-3 mt-auto">
+            <a href="{{ route('web.reservar') }}" class="btn btn-pink-custom w-100 py-2 fw-bold rounded-3 mt-auto">
               Reservar Turno
             </a>
           </div>
@@ -78,7 +78,8 @@
               <li class="mb-0"><i class="bi bi-check-circle-fill text-pink-custom me-2"></i>Secado total</li>
             </ul>
 
-            <a href="#cita" class="btn btn-pink-custom w-100 py-2 fw-bold rounded-3 mt-auto"> Reservar Turno
+            <a href="{{ route('web.reservar') }}" class="btn btn-pink-custom w-100 py-2 fw-bold rounded-3 mt-auto">
+              Reservar Turno
             </a>
           </div>
         </div>
@@ -109,7 +110,8 @@
               <li class="mb-0"><i class="bi bi-check-circle-fill text-pink-custom me-2"></i>Spray brillo</li>
             </ul>
 
-            <a href="#cita" class="btn btn-outline-pink w-100 py-2 fw-bold rounded-3 mt-auto"> Reservar Turno
+            <a href="{{ route('web.reservar') }}" class="btn btn-outline-pink w-100 py-2 fw-bold rounded-3 mt-auto">
+              Reservar Turno
             </a>
           </div>
         </div>

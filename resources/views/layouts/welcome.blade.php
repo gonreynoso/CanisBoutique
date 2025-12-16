@@ -437,40 +437,29 @@
         <header class="main-header sticky-top">
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-light">
-                    <div class="container-fluid px-0">
+                    <div class="container-fluid px-0 ">
 
-                        {{-- Logo --}}
                         <a class="navbar-brand logo d-flex align-items-center gap-2" href="#">
                             <i class="bi bi-paw-fill fs-3" style="color: var(--canis-pink);"></i>
                             <h1>Canis<span>Boutique</span></h1>
                         </a>
 
-                        {{-- Toggler Mobile --}}
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarNav">
                             <span class="navbar-toggler-icon"></span>
                         </button>
 
-                        {{-- CONTENEDOR COLAPSABLE (Aquí dentro va todo lo que se oculta/muestra) --}}
                         <div class="collapse navbar-collapse" id="navbarNav">
 
-                            {{-- 1. Menú de Enlaces (Usamos me-auto para empujar los iconos a la derecha en Desktop)
-                            --}}
-                            <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center text-lg-start">
-                                <li class="nav-item"><a class="nav-link active" href="#">Inicio</a></li>
+                            <ul class="navbar-nav text-center">
+                                <li class="nav-item"><a class="nav-link active"
+                                        href="{{ route('web.index') }}">Inicio</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#productos">Tienda</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#servicios">Peluquería</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#nosotros">Nosotros</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
                             </ul>
 
-                            {{-- 2. Iconos y Cuenta (AHORA ESTÁN DENTRO DEL MENU) --}}
-                            {{-- Cambios realizados:
-                            - Quitamos 'd-none' para que siempre existan.
-                            - Quitamos 'd-lg-flex' y ponemos 'd-flex' general.
-                            - Agregamos 'justify-content-center' para que en móvil se centren.
-                            - Agregamos 'mt-3 mt-lg-0' para dar aire en móvil pero no en desktop.
-                            --}}
                             <div
                                 class="header-icons d-flex align-items-center justify-content-center gap-3 mt-3 mt-lg-0">
 
@@ -518,12 +507,7 @@
                                                     <i class="bi bi-speedometer2 text-pink-custom"></i> Mi Panel
                                                 </a>
                                             </li>
-                                            <li>
-                                                <a class="dropdown-item d-flex align-items-center gap-2"
-                                                    href="{{ route('profile.edit') }}">
-                                                    <i class="bi bi-gear text-pink-custom"></i> Configuración
-                                                </a>
-                                            </li>
+
                                             <li>
                                                 <hr class="dropdown-divider">
                                             </li>
@@ -923,12 +907,12 @@
         <section class="py-5 text-white text-center"
             style="background: linear-gradient(rgba(214, 51, 132, 0.9), rgba(214, 51, 132, 0.8)), url('{{ asset('images/pet-grooming-at-home-scaled-1.jpg') }}') center/cover fixed;">
             <div class="container py-4">
-                <h2 class="display-5 fw-bold mb-3">¡Dale a tu amigo un día de Spa!</h2>
-                <p class="lead mb-4 mx-auto" style="max-width: 700px;">
+                <h2 class="text-white display-5 fw-bold mb-3">¡Dale a tu amigo un día de Spa!</h2>
+                <p class="lead text-white mb-4 mx-auto" style="max-width: 700px;">
                     Nuestros expertos estilistas caninos están listos para dejar a tu compañero radiante.
                     Baño, corte, limado de uñas y mucho amor.
                 </p>
-                <a href="#contacto" class="btn btn-light btn-lg rounded-pill fw-bold px-5 py-3"
+                <a href="{{ route('web.reservar') }}" class="btn btn-light btn-lg rounded-pill fw-bold px-5 py-3"
                     style="color: var(--canis-pink);">
                     Reservar Cita Ahora
                 </a>

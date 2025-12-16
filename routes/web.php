@@ -8,11 +8,17 @@ use App\Http\Controllers\AjusteController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StoreController;
+use App\Http\Controllers\TurnoController;
+use App\Http\Controllers\AdminTurnoController;
 
 // 1. RUTAS PÚBLICAS (HOME)
 Route::get('/', function () {
     return view('web.index');
 })->name('web.index');
+
+// Rutas Públicas de Reserva
+Route::get('/reservar', [TurnoController::class, 'create'])->name('web.reservar');
+Route::post('/reservar', [TurnoController::class, 'store'])->name('web.reservar.store');
 
 Route::middleware('guest')->group(function () {
     Route::get('auth/google', [SocialController::class, 'redirectToGoogle'])->name('auth.google');
@@ -116,6 +122,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+    // Rutas de Turnos (Calendario)
+    Route::get('admin/turnos', [AdminTurnoController::class, 'index'])->name('admin.turnos.index');
+    Route::get('admin/turnos/datos', [AdminTurnoController::class, 'datos'])->name('admin.turnos.datos');
+    Route::delete('admin/turnos/{id}', [AdminTurnoController::class, 'destroy'])->name('admin.turnos.destroy');
+
 
 });
 
