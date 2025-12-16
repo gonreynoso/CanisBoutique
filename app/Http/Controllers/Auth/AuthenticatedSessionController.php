@@ -38,7 +38,7 @@ class AuthenticatedSessionController extends Controller
         }
 
         // 2. Si es un Cliente normal
-        return redirect()->intended(route('welcome'));
+        return redirect()->intended(route('web.index'));
     }
 
     /**

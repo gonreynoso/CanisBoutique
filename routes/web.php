@@ -34,6 +34,16 @@ Route::get('/tienda', [StoreController::class, 'index'])->name('tienda.index');
 Route::get('/tienda/producto/{id}', [StoreController::class, 'show'])->name('tienda.show');
 Route::get('/carrito', [StoreController::class, 'cart'])->name('tienda.cart');
 
+// 3. Carrito de Compras
+Route::get('/carrito', [StoreController::class, 'cart'])->name('tienda.cart');
+Route::get('/carrito/agregar/{id}', [StoreController::class, 'addToCart'])->name('carrito.add');
+Route::get('/carrito/eliminar/{id}', [StoreController::class, 'removeFromCart'])->name('carrito.remove');
+
+// 4. Proceso de Compra (Checkout)
+Route::get('/checkout', [StoreController::class, 'checkout'])->name('tienda.checkout');
+Route::post('/checkout', [StoreController::class, 'processOrder'])->name('tienda.processOrder');
+Route::get('/compra-exitosa/{id}', [StoreController::class, 'orderSuccess'])->name('tienda.success');
+
 // Contacto
 Route::get('/contacto', function () {
     return view('web.contact');
@@ -54,7 +64,6 @@ Route::middleware('guest')->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // Checkout y Perfil
-    Route::get('/checkout', [StoreController::class, 'checkout'])->name('tienda.checkout');
     Route::get('/mi-cuenta', [UserController::class, 'profile'])->name('usuarios.perfil');
 
     // Rutas estándar de Breeze (Perfil de usuario)

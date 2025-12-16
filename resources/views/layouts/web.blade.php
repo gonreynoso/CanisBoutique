@@ -427,6 +427,8 @@
 
                         <a class="navbar-brand logo d-flex align-items-center gap-2" href="{{ route('web.index') }}">
                             <i class="bi bi-paw-fill fs-3" style="color: var(--canis-pink);"></i>
+                            <img src="{{ asset('/images/logo_Canis_sin_fondo_sin_texto.png') }}" width="70" height="70"
+                                alt="Canis Boutique" class="img-fluid">
                             <h1>Canis<span>Boutique</span></h1>
                         </a>
 
@@ -513,6 +515,12 @@
                                     class="btn position-relative p-2 text-dark hover-pink transition-all">
                                     <i class="bi bi-cart3 fs-4"></i>
 
+                                    {{-- CORRECCIÓN DEL BADGE --}}
+                                    <span
+                                        class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger d-flex justify-content-center align-items-center"
+                                        style="width: 20px; height: 20px; font-size: 0.75rem; border: 2px solid white;">
+                                        {{ session('cart') ? count(session('cart')) : 0 }}
+                                    </span>
                                 </a>
 
                             </div>
@@ -524,7 +532,26 @@
     </header>
 
     <main class="main">
-        {{-- AQUÍ SE INYECTA EL CONTENIDO --}}
+
+        @if(session('success'))
+            <div class="container mt-3">
+                <div class="alert alert-success alert-dismissible fade show shadow-sm border-0" role="alert"
+                    style="border-left: 5px solid #198754 !important;">
+                    <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="container mt-3">
+                <div class="alert alert-danger alert-dismissible fade show shadow-sm border-0" role="alert"
+                    style="border-left: 5px solid #dc3545 !important;">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        @endif
         @yield('content')
     </main>
 
@@ -532,6 +559,8 @@
         <div class="container">
             <div class="row gy-4">
                 <div class="col-lg-4 col-md-6">
+                    <img src="{{ asset('/images/logo_Canis_sin_fondo_sin_texto.png') }}" width="70" height="70"
+                        alt="Canis Boutique" class="img-fluid">
                     <h4 class="footer-title">CanisBoutique</h4>
                     <p class="mb-4">Tu tienda de confianza para productos premium y servicios de peluquería canina.</p>
                     <div>
