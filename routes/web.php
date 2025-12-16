@@ -37,7 +37,7 @@ Route::get('/carrito', [StoreController::class, 'cart'])->name('tienda.cart');
 // Contacto
 Route::get('/contacto', function () {
     return view('web.contact');
-})->name('contacto');
+})->name('web.contacto');
 
 // Login Social (Google)
 Route::middleware('guest')->group(function () {

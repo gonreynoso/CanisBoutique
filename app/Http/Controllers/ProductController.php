@@ -8,123 +8,123 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    // ==========================================
+    // ÁREA PÚBLICA (Lo que ve el cliente)
+    // ==========================================
+
+    public function catalogo(Request $request)
+    {
+        // 1. Iniciamos la consulta base: solo productos activos
+        $query = Product::where('activo', true);
+
+        // 2. Filtro por Categoría (Si viene en la URL ?categoria=juguetes)
+        if ($request->has('categoria') && $request->categoria != null) {
+            $query->where('categoria', $request->categoria);
+        }
+
+        // 3. Obtenemos resultados paginados
+        $productos = $query->latest()->paginate(9);
+
+        // 4. Retornamos la vista PÚBLICA (la grilla de fotos)
+        return view('web.productos.index', compact('productos'));
+    }
+
+    // ==========================================
+    // ÁREA ADMIN (CRUD)
+    // ==========================================
 
     public function index()
     {
-        // Obtener todos los productos, ordenados por el más reciente, con paginación
+        // Admin: Listado tipo tabla para gestionar stock/precios
         $products = Product::latest()->paginate(10);
-
-        // Retornar la vista 'products.index' con los datos
-        return view('products.index', [
-            'products' => $products,
-        ]);
+        return view('products.index', compact('products'));
     }
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
-        // Simplemente devuelve la vista del formulario
         return view('products.create');
     }
 
-    // En app/Http/Controllers/ProductController.php
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Product $product)
-    {
-        // Retorna la vista de edición, pasando el producto a modificar.
-        return view('products.edit', [
-            'product' => $product,
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Product $product)
-    {
-        // 1. Validación de datos (Ajusta 'image_file' si tu campo en la vista es diferente)
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0.01',
-            'stock' => 'required|integer|min:0',
-            'image_file' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
-        // 2. Manejo de la subida de nueva imagen
-        if ($request->hasFile('image_file')) {
-            // Eliminar la imagen anterior si existe
-            if ($product->image_path) {
-                Storage::disk('public')->delete($product->image_path);
-            }
-
-            // Subir la nueva imagen
-            $validated['image_path'] = $request->file('image_file')->store('products', 'public');
-        }
-
-        // 3. Actualizar el producto
-        $product->update($validated);
-
-        // 4. Redirigir
-        return redirect()
-            ->route('products.index')
-            ->with('success', '¡Producto actualizado exitosamente!');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        // 1. Validación de datos
-        $request->validate([
-            'name' => 'required|string|max:100',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0.01',
+        // Validación con nombres en ESPAÑOL (según tu DB)
+        $validated = $request->validate([
+            'nombre' => 'required|string|max:100',
+            'descripcion' => 'nullable|string',
+            'precio' => 'required|numeric|min:0.01',
             'stock' => 'required|integer|min:0',
-            // Reglas de imagen: debe ser una imagen, máximo 2MB, tipos jpeg, png, jpg, gif
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'categoria' => 'required|string', // Agregamos categoría
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $imagePath = null;
+        $imagenUrl = null;
 
-        // 2. Manejo de la subida de imagen (si existe)
-        if ($request->hasFile('image')) {
-            // Guarda la imagen en 'storage/app/public/products' y obtiene la ruta
-            $imagePath = $request->file('image')->store('products', 'public');
+        // Si sube una foto real, la guardamos y obtenemos la URL pública
+        if ($request->hasFile('imagen')) {
+            $path = $request->file('imagen')->store('products', 'public');
+            // Guardamos la ruta relativa, luego en el modelo usaremos un Accessor o Asset
+            $imagenUrl = Storage::url($path);
         }
 
-        // 3. Crear el producto en la base de datos
         Product::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'precio' => $request->precio,
             'stock' => $request->stock,
-            'image_path' => $imagePath,
+            'categoria' => $request->categoria,
+            'imagen_url' => $imagenUrl, // Usamos la misma columna para URL externa o Path local
+            'activo' => true
         ]);
 
-        // 4. Redireccionar con un mensaje de éxito
         return redirect()->route('products.index')
             ->with('success', 'Producto creado exitosamente.');
     }
 
-    public function destroy(Product $product)
+    public function edit(Product $product)
     {
-        // 1. Eliminar la imagen del disco (Storage) si existe
-        if ($product->image_path) {
-            Storage::disk('public')->delete($product->image_path);
+        return view('products.edit', compact('product'));
+    }
+
+    public function update(Request $request, Product $product)
+    {
+        $validated = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'nullable|string',
+            'precio' => 'required|numeric|min:0.01',
+            'stock' => 'required|integer|min:0',
+            'categoria' => 'required|string',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($request->hasFile('imagen')) {
+            // Borrar imagen vieja si NO es una URL de Unsplash (si es local)
+            if ($product->imagen_url && !str_starts_with($product->imagen_url, 'http')) {
+                // Truco: Convertir URL pública a path relativo para borrar
+                $relativePath = str_replace('/storage/', '', $product->imagen_url);
+                Storage::disk('public')->delete($relativePath);
+            }
+
+            $path = $request->file('imagen')->store('products', 'public');
+            $validated['imagen_url'] = Storage::url($path);
         }
 
-        // 2. Eliminar el registro de la base de datos
+        $product->update($validated);
+
+        return redirect()->route('products.index')
+            ->with('success', 'Producto actualizado exitosamente!');
+    }
+
+    public function destroy(Product $product)
+    {
+        // Solo borramos del disco si es una imagen local (no borramos nada de Unsplash)
+        if ($product->imagen_url && !str_starts_with($product->imagen_url, 'http')) {
+            $relativePath = str_replace('/storage/', '', $product->imagen_url);
+            Storage::disk('public')->delete($relativePath);
+        }
+
         $product->delete();
 
-        // 3. Redirigir con mensaje de éxito
-        return redirect()
-            ->route('products.index')
-            ->with('success', '¡Producto eliminado exitosamente!');
+        return redirect()->route('products.index')
+            ->with('success', 'Producto eliminado exitosamente!');
     }
 }

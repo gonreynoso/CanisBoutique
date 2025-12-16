@@ -2,63 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class StoreController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    // Listado de productos (Catálogo)
+    public function index(Request $request)
     {
-        //
+        // 1. Iniciamos consulta de productos activos
+        $query = Product::where('activo', true);
+
+        // 2. Filtro por Categoría (si el usuario hace clic en "Juguetes")
+        if ($request->has('categoria') && $request->categoria != null) {
+            $query->where('categoria', $request->categoria);
+        }
+
+        $productos = $query->latest()->paginate(9); // 9 es buen número (3x3)
+        return view('web.tienda.index', compact('productos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    // Detalle de un producto individual
+    public function show($id)
     {
-        //
+        // Buscamos por ID, si no existe lanza error 404 automáticamente
+        $producto = Product::where('activo', true)->findOrFail($id);
+
+        return view('web.tienda.show', compact('producto'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    // Carrito de compras (Lo dejaremos visual por ahora)
+    public function cart()
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return view('web.tienda.cart');
     }
 }
