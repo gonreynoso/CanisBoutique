@@ -360,8 +360,8 @@
                             Accesorios seleccionados y mimos premium a precios imbatibles.
                         </p>
                         <div class="action-buttons" data-aos="fade-up" data-aos-delay="450">
-                            <a href="#productos" class="btn-shop-now">Comprar Ahora</a>
-                            <a href="#" class="btn-view-deals">Ver Ofertas del Mes</a>
+                            <a href="{{ route('tienda.index') }}" class="btn-shop-now">Comprar Ahora</a>
+                            <a href="{{ route('tienda.index') }}" class="btn-view-deals">Ver Ofertas del Mes</a>
                         </div>
                     </div>
                 </div>

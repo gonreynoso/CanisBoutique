@@ -447,7 +447,7 @@
                                         href="{{ route('tienda.index') }}">Tienda</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#servicios">Peluquería</a>
+                                    <a class="nav-link" href="{{ route('web.index') . '#servicios' }}">Peluquería</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link {{ request()->routeIs('web.contacto') ? 'active' : '' }}"
@@ -512,11 +512,7 @@
                                 <a href="{{ route('tienda.cart') }}"
                                     class="btn position-relative p-2 text-dark hover-pink transition-all">
                                     <i class="bi bi-cart3 fs-4"></i>
-                                    <span
-                                        class="badge bg-danger rounded-circle position-absolute top-0 start-100 translate-middle border border-light p-1"
-                                        style="font-size: 0.65rem;">
-                                        0
-                                    </span>
+
                                 </a>
 
                             </div>
@@ -576,7 +572,8 @@
             </div>
             <hr class="my-5 border-secondary">
             <div class="text-center small">
-                <p class="mb-0">&copy; {{ date('Y') }} <strong>CanisBoutique</strong>. Todos los derechos reservados.
+                <p class="mb-0">&copy; {{ date('Y') }} <strong>CanisBoutique</strong>. Desarrollado por <a
+                        href="https://github.com/gonreynoso" target="_blank">Gonzalo Reynoso ACN3AV</a>.
                 </p>
             </div>
         </div>
