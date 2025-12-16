@@ -60,13 +60,6 @@
                 <div class="sidebar-menu">
                     <ul class="menu">
 
-                        {{-- <li class="sidebar-item {{ request()->is('admin') ? 'active' : '' }}">
-                            <a href="{{ url('/admin') }}" class='sidebar-link'>
-                                <i class="bi bi-house-fill"></i>
-                                <span>Inicio</span>
-                            </a>
-
-                        </li> --}}
 
 
                         <li class="sidebar-item has-sub {{ request()->is('admin/profile') ? 'active' : '' }}">
@@ -83,11 +76,6 @@
                                     </a>
 
                                 </li>
-
-                                {{-- <li class="submenu-item  ">
-                                    <a href="account-security.html" class="submenu-link">Seguridad</a>
-
-                                </li>--}}
 
                                 <li class="submenu-item  ">
                                     <a href="{{ route('logout') }}" class="submenu-link"
@@ -112,23 +100,8 @@
                         </li>
 
 
-                        {{-- <li class="sidebar-title">Productos</li> --}}
-
-                        {{-- <li class="sidebar-item {{ request()->is('admin/products') ? 'active' : '' }}">
-                            <a href="{{ route('admin.products.index') }}" class='sidebar-link'>
-                                <i class="bi bi-shop"></i>
-                                <span>Productos</span>
-                            </a>
-
-
-                        </li> --}}
-
-
-
-
-
                         <li class="sidebar-item {{ request()->is('admin/roles') ? 'active' : '' }}  ">
-                            <a href="{{ url('/admin/roles') }}" class='sidebar-link'>
+                            <a href="{{ route('admin.roles.index') }}" class='sidebar-link'>
                                 <i class="bi bi-shield-check"></i>
                                 <span>Roles</span>
                             </a>
@@ -136,14 +109,22 @@
                         </li>
 
                         <li class="sidebar-item {{ request()->is('admin/usuarios') ? 'active' : '' }}  ">
-                            <a href="{{ url('/admin/usuarios') }}" class='sidebar-link'>
+                            <a href="{{ route('admin.usuarios.index') }}" class='sidebar-link'>
                                 <i class="bi bi-people-fill"></i>
                                 <span>Usuarios</span>
                             </a>
                         </li>
 
+                        <li class="sidebar-item {{ request()->is('admin/productos') ? 'active' : '' }}">
+                            <a href="{{ route('admin.productos.index') }}" class="sidebar-link">
+                                <i class="bi bi-box-seam"></i>
+                                <span>Productos</span>
+                            </a>
+
+                        </li>
+
                         <li class="sidebar-item {{ request()->is('admin/ajustes') ? 'active' : '' }}">
-                            <a href="{{ url('/admin/ajustes') }}" class='sidebar-link'>
+                            <a href="{{ route('admin.ajustes.index') }}" class='sidebar-link'>
                                 <i class="bi bi-gear-fill"></i>
                                 <span>Configuración</span>
                             </a>

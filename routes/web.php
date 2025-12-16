@@ -10,7 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\AdminTurnoController;
-use App\Http\Controllers\AdminController; // <--- AGREGADO: Importante para el Dashboard
+use App\Http\Controllers\AdminOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,12 +64,12 @@ Route::middleware('guest')->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
 
     // Checkout y Perfil
-    Route::get('/mi-cuenta', [UserController::class, 'profile'])->name('usuarios.perfil');
+    Route::get('/mi-cuenta', [StoreController::class, 'profile'])->name('web.perfil');
 
     // Rutas estándar de Breeze (Perfil de usuario)
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 
@@ -102,12 +102,21 @@ Route::middleware(['auth', 'verified', 'can:ver_panel_admin'])
         Route::resource('roles', RoleController::class);
 
         // E. PRODUCTOS
-        // La URL será /admin/products
-        Route::resource('products', ProductController::class)->except(['show']);
+        // La URL será /admin/productos
+        Route::resource('productos', ProductController::class)
+            ->names('productos')
+            ->except(['show']);
 
-        // F. AJUSTES
+        // F. Gestión de Órdenes
+        Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
+        Route::get('/orders/{id}', [AdminOrderController::class, 'show'])->name('orders.show');
+        Route::put('/orders/{id}', [AdminOrderController::class, 'update'])->name('orders.update');
+
+        // G. AJUSTES
         Route::get('/ajustes', [AjusteController::class, 'index'])->name('ajustes.index');
         Route::post('/ajustes', [AjusteController::class, 'store'])->name('ajustes.store');
+
+
 
     });
 

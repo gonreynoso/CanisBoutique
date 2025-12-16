@@ -491,14 +491,28 @@
                                                 <h6 class="dropdown-header bg-light py-2">Hola, {{ Auth::user()->name }}
                                                 </h6>
                                             </li>
+
+                                            {{-- 1. ENLACE PARA CLIENTES (Lo que pediste) --}}
                                             <li>
-                                                <a class="dropdown-item py-2" href="{{ route('admin.index') }}">
-                                                    <i class="bi bi-speedometer2 me-2 text-pink-custom"></i> Mi Panel
+                                                <a class="dropdown-item py-2" href="{{ route('web.perfil') }}">
+                                                    <i class="bi bi-person-badge me-2 text-pink-custom"></i> Mi Cuenta
                                                 </a>
                                             </li>
+
+                                            {{-- 2. ENLACE PARA ADMIN (Opcional: puedes ocultarlo con un if) --}}
+                                            {{-- Ejemplo: @if(Auth::user()->email == 'admin@tuemail.com') --}}
+                                            @if(Auth::user()->email == 'super@admin.com')
+                                                <li>
+                                                    <a class="dropdown-item py-2" href="{{ route('admin.index') }}">
+                                                        <i class="bi bi-speedometer2 me-2 text-pink-custom"></i> Panel Admin
+                                                    </a>
+                                                </li>
+                                            @endif
+
                                             <li>
                                                 <hr class="dropdown-divider my-1">
                                             </li>
+
                                             <li>
                                                 <form method="POST" action="{{ route('logout') }}">
                                                     @csrf

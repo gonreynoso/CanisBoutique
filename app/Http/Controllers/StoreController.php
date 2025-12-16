@@ -150,4 +150,17 @@ class StoreController extends Controller
         $order = Order::with('items')->findOrFail($id);
         return view('web.tienda.success', compact('order'));
     }
+
+    public function profile()
+    {
+        // Obtenemos el usuario logueado
+        $user = auth()->user();
+
+        // Buscamos sus compras (basado en el email, ya que en la orden guardamos cliente_email)
+        $orders = Order::where('cliente_email', $user->email)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('web.perfil', compact('user', 'orders'));
+    }
 }
