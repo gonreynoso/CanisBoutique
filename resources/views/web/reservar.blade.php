@@ -87,41 +87,72 @@
                                 </div>
                             </div>
 
-                            <h5 class="text-secondary border-bottom pb-2 mb-3 mt-4">2. Datos de la Mascota</h5>
+                            <h5 class="text-secondary border-bottom pb-2 mb-3 mt-4">2. Datos de tu canino</h5>
                             
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label class="form-label">Nombre de la Mascota</label>
+                                    <label class="form-label">Nombre del peludo</label>
                                     <input type="text" name="mascota_nombre" class="form-control" value="{{ old('mascota_nombre') }}" placeholder="Ej: Firulais" required>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Tipo</label>
-                                    <select name="mascota_tipo" class="form-select">
-                                        <option value="Perro">Perro</option>
-                                        <option value="Gato">Gato</option>
-                                        <option value="Otro">Otro</option>
-                                    </select>
-                                </div>
+                                    {{-- Input de texto fijo con valor "Perro" y atributo readonly --}}
+                                    <input type="text" 
+                                           name="mascota_tipo" 
+                                           class="form-control bg-light" 
+                                           value="Perros únicamente" 
+                                           readonly>
+                                </div>  
                             </div>
 
                             <h5 class="text-secondary border-bottom pb-2 mb-3 mt-4">3. Tus Datos de Contacto</h5>
 
                             <div class="mb-3">
-                                <label class="form-label">Nombre Completo</label>
-                                <input type="text" name="cliente_nombre" class="form-control" value="{{ old('cliente_nombre') }}" required>
-                            </div>
+    <label class="form-label">Nombre Completo</label>
+    {{-- pattern: Solo letras y espacios. oninput: Reemplaza números si se intentan pegar --}}
+    <input type="text" 
+           name="cliente_nombre" 
+           class="form-control @error('cliente_nombre') is-invalid @enderror" 
+           value="{{ old('cliente_nombre') }}" 
+           pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" 
+           title="Solo se permiten letras y espacios"
+           required>
+    
+    {{-- Mostrar error de Laravel si falla --}}
+    @error('cliente_nombre')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
 
-                            <div class="row mb-4">
-                                <div class="col-md-6">
-                                    <label class="form-label">Email</label>
-                                    <input type="email" name="cliente_email" class="form-control" value="{{ old('cliente_email') }}" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Teléfono / WhatsApp</label>
-                                    <input type="text" name="cliente_telefono" class="form-control" value="{{ old('cliente_telefono') }}" placeholder="Para confirmación" required>
-                                </div>
-                            </div>
+<div class="row mb-4">
+    <div class="col-md-6">
+        <label class="form-label">Email</label>
+        <input type="email" 
+               name="cliente_email" 
+               class="form-control @error('cliente_email') is-invalid @enderror" 
+               value="{{ old('cliente_email') }}" 
+               required>
+        @error('cliente_email')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
 
+    <div class="col-md-6">
+        <label class="form-label">Teléfono / WhatsApp</label>
+        {{-- type="tel" es semánticamente correcto. 
+             oninput: Borra cualquier cosa que no sea número (0-9) en tiempo real --}}
+        <input type="tel" 
+               name="cliente_telefono" 
+               class="form-control @error('cliente_telefono') is-invalid @enderror" 
+               value="{{ old('cliente_telefono') }}" 
+               placeholder="Solo números (Ej: 1122334455)" 
+               oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+               required>
+        @error('cliente_telefono')
+            <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary py-2 fw-bold" style="background-color: #d63384; border-color: #d63384;">
                                     Confirmar Reserva <i class="bi bi-arrow-right"></i>

@@ -10,130 +10,98 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\TurnoController;
 use App\Http\Controllers\AdminTurnoController;
+use App\Http\Controllers\AdminController; // <--- AGREGADO: Importante para el Dashboard
 
-// 1. RUTAS PÚBLICAS (HOME)
+/*
+|--------------------------------------------------------------------------
+| 1. RUTAS PÚBLICAS (Accesibles para todo el mundo)
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/', function () {
     return view('web.index');
 })->name('web.index');
 
-// Rutas Públicas de Reserva
+// Rutas de Reserva (Cliente Público)
 Route::get('/reservar', [TurnoController::class, 'create'])->name('web.reservar');
 Route::post('/reservar', [TurnoController::class, 'store'])->name('web.reservar.store');
+Route::get('/reserva-confirmada', function () {
+    return view('web.reservaConfirmada');
+})->name('web.reservaConfirmada');
 
+// Tienda Pública
+Route::get('/tienda', [StoreController::class, 'index'])->name('tienda.index');
+Route::get('/tienda/producto/{id}', [StoreController::class, 'show'])->name('tienda.show');
+Route::get('/carrito', [StoreController::class, 'cart'])->name('tienda.cart');
+
+// Contacto
+Route::get('/contacto', function () {
+    return view('web.contact');
+})->name('contacto');
+
+// Login Social (Google)
 Route::middleware('guest')->group(function () {
     Route::get('auth/google', [SocialController::class, 'redirectToGoogle'])->name('auth.google');
     Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback']);
 });
 
-// RUTA TIENDA
-Route::get('/tienda', [StoreController::class, 'index'])->name('tienda.index');
-Route::get('/tienda/producto/{id}', [StoreController::class, 'show'])->name('tienda.show');
-Route::get('/carrito', [StoreController::class, 'cart'])->name('tienda.cart');
 
-//RUTA CONTACTO
-Route::get('/contacto', function () {
-    return view('web.contact');
-})->name('contacto');
-
-
-// 2. RUTAS PROTEGIDAS (AUTH/VERIFIED)
+/*
+|--------------------------------------------------------------------------
+| 2. RUTAS DE CLIENTE (Requieren Login, pero NO son Admin)
+|--------------------------------------------------------------------------
+*/
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    // A. DASHBOARD (Ruta principal de entrada tras el login)
-    Route::get('admin', function () {
-        // Esta es la vista donde el usuario ve su cuenta, historial, etc.
-        return view('admin.index');
-    })->name('admin');
-
-    // B. GESTIÓN DE PRODUCTOS (CRUD)
-    // Esto define products.index, products.create, products.store, products.edit, products.update, products.destroy
-    Route::resource('products', ProductController::class)->except(['show']);
-
-    // D. Configuración del sistema (INDEX)
-    Route::get('admin/ajustes', [AjusteController::class, 'index'])->name('admin.ajustes.index');
-
-    // E. Configuración del sistema (CREATE)
-    Route::post('admin/ajustes/create', [AjusteController::class, 'store'])->name('admin.ajustes.store');
-
-    // F. Roles
-    Route::get('admin/roles', [RoleController::class, 'index'])->name('admin.roles.index');
-
-    Route::get('admin/roles/create', [RoleController::class, 'create'])->name('admin.roles.create');
-
-    Route::post('admin/roles/store', [RoleController::class, 'store'])->name('admin.roles.store');
-
-    Route::get('admin/roles/{id}', [RoleController::class, 'show'])->name('admin.roles.show');
-
-    Route::get('admin/role/{id}', [RoleController::class, 'edit'])->name('admin.roles.edit');
-
-    Route::put('admin/role/{id}', [RoleController::class, 'update'])->name('admin.roles.update');
-
-    Route::delete('admin/role/{id}', [RoleController::class, 'destroy'])->name('admin.roles.destroy');
-
-
-
-    // A. DASHBOARD (Ruta principal de entrada tras el login)
-    // Route::get('admin', function () {
-    //     // Esta es la vista donde el usuario ve su cuenta, historial, etc.
-    //     return view('admin.usuarios.index');
-    // })->name('admin.usuarios.index');
-
-    // // B. GESTIÓN DE PRODUCTOS (CRUD)
-    // // Esto define products.index, products.create, products.store, products.edit, products.update, products.destroy
-    // Route::resource('products', ProductController::class)->except(['show']);
-
-    // // C. PERFIL DE USUARIO
-    // // Las rutas de ProfileController se definen aquí o en auth/profile.php
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    //RUTAS USUARIOS
-    Route::get('admin/usuarios', [UserController::class, 'index'])->name('admin.usuarios.index');
-
-    Route::get('admin/usuarios/create', [UserController::class, 'create'])->name('admin.usuarios.create');
-
-    Route::post('admin/usuarios/store', [UserController::class, 'store'])->name('admin.usuarios.store');
-
-    // 1. Ver detalle (Show)
-    Route::get('admin/usuarios/{id}', [UserController::class, 'show'])
-        ->name('admin.usuarios.show');
-
-    // 2. Editar (Edit) -> AGREGAR '/edit' AQUÍ
-    Route::get('admin/usuarios/{id}/edit', [UserController::class, 'edit'])
-        ->name('admin.usuarios.edit');
-
-    // 3. Actualizar (Update) -> PUT está bien, el navegador distingue por el método
-    Route::put('admin/usuarios/{id}', [UserController::class, 'update'])
-        ->name('admin.usuarios.update');
-
-    Route::delete('admin/usuarios/{id}', [UserController::class, 'destroy'])->name('admin.usuarios.destroy');
-
-    Route::patch('admin/usuarios/{id}/restore', [UserController::class, 'restore'])->name('admin.usuarios.restore');
-
-
-    // Aquí es donde el usuario llega para pagar
+    // Checkout y Perfil
     Route::get('/checkout', [StoreController::class, 'checkout'])->name('tienda.checkout');
-
-    // "Mi Cuenta" para clientes
     Route::get('/mi-cuenta', [UserController::class, 'profile'])->name('usuarios.perfil');
 
-    // Rutas de perfil estándar de Breeze
+    // Rutas estándar de Breeze (Perfil de usuario)
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-
-    // Rutas de Turnos (Calendario)
-    Route::get('admin/turnos', [AdminTurnoController::class, 'index'])->name('admin.turnos.index');
-    Route::get('admin/turnos/datos', [AdminTurnoController::class, 'datos'])->name('admin.turnos.datos');
-    Route::delete('admin/turnos/{id}', [AdminTurnoController::class, 'destroy'])->name('admin.turnos.destroy');
-
-
 });
 
-// 3. INCLUSIÓN DE RUTAS DE AUTENTICACIÓN
-// El archivo auth.php contiene /login, /register, /logout, etc. 
-// Es vital que este require esté al final y FUERA de cualquier middleware 'auth' 
-// para que las rutas de login sean accesibles para visitantes.
+
+/*
+|--------------------------------------------------------------------------
+| 3. PANEL ADMINISTRATIVO (BLINDADO)
+|--------------------------------------------------------------------------
+| Aquí aplicamos el middleware 'can:ver_panel_admin'.
+| Si eres CLIENTE, Laravel te dará error 403 Forbidden.
+*/
+
+Route::middleware(['auth', 'verified', 'can:ver_panel_admin'])
+    ->prefix('admin')       // Agrega '/admin' a la URL automáticamente
+    ->name('admin.')        // Agrega 'admin.' a los nombres de ruta
+    ->group(function () {
+
+        // A. DASHBOARD (Usa el Controlador con estadísticas que creamos)
+        Route::get('/', [AdminController::class, 'index'])->name('index');
+
+        // B. TURNOS (Calendario Admin)
+        Route::get('/turnos', [AdminTurnoController::class, 'index'])->name('turnos.index');
+        Route::get('/turnos/datos', [AdminTurnoController::class, 'datos'])->name('turnos.datos');
+        Route::delete('/turnos/{id}', [AdminTurnoController::class, 'destroy'])->name('turnos.destroy');
+
+        // C. USUARIOS (Resource simplifica index, create, store, edit, update, destroy)
+        Route::resource('usuarios', UserController::class);
+        Route::patch('usuarios/{id}/restore', [UserController::class, 'restore'])->name('usuarios.restore');
+
+        // D. ROLES
+        Route::resource('roles', RoleController::class);
+
+        // E. PRODUCTOS
+        // La URL será /admin/products
+        Route::resource('products', ProductController::class)->except(['show']);
+
+        // F. AJUSTES
+        Route::get('/ajustes', [AjusteController::class, 'index'])->name('ajustes.index');
+        Route::post('/ajustes', [AjusteController::class, 'store'])->name('ajustes.store');
+
+    });
+
+
+// 4. RUTAS DE AUTENTICACIÓN (Login, Register, etc.)
 require __DIR__ . '/auth.php';

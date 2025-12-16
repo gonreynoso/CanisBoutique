@@ -28,7 +28,17 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('web.index'));
+        // LÓGICA DE REDIRECCIÓN INTELIGENTE
+
+        // 1. Si el usuario tiene el permiso de Admin/Empleado
+        if ($request->user()->can('ver_panel_admin')) {
+            // Usamos 'intended' para que si intentó entrar a /admin/turnos sin loguearse,
+            // el sistema lo lleve allí después del login, en vez de al dashboard general.
+            return redirect()->intended(route('admin.index'));
+        }
+
+        // 2. Si es un Cliente normal
+        return redirect()->intended(route('welcome'));
     }
 
     /**

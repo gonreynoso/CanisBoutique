@@ -9,40 +9,42 @@ class ServicioSeeder extends Seeder
 {
     public function run(): void
     {
-        // Servicio 1: Básico (45 min)
-        Servicio::create([
-            'nombre' => 'Baño y Cepillado (Perro Chico)',
-            'descripcion' => 'Incluye baño con shampoo neutro, secado y cepillado.',
-            'duracion_minutos' => 45,
-            'precio' => 8500.00,
-            'activo' => true,
-        ]);
+        $servicios = [
+            [
+                'nombre' => 'Baño Completo (Raza Pequeña)',
+                'descripcion' => 'Baño con shampoo neutro, corte de uñas y limpieza de oídos.',
+                'precio' => 8000,
+                'duracion_minutos' => 60,
+            ],
+            [
+                'nombre' => 'Corte y Estilo (Raza Pequeña)',
+                'descripcion' => 'Corte de raza o a tijera según preferencia, incluye baño.',
+                'precio' => 12000,
+                'duracion_minutos' => 90,
+            ],
+            [
+                'nombre' => 'Baño Completo (Raza Grande)',
+                'descripcion' => 'Para perros de más de 20kg. Incluye cepillado profundo.',
+                'precio' => 15000,
+                'duracion_minutos' => 90,
+            ],
+            [
+                'nombre' => 'Corte Higiénico',
+                'descripcion' => 'Limpieza de zonas sanitarias y plantares.',
+                'precio' => 5000,
+                'duracion_minutos' => 30,
+            ],
+            [
+                'nombre' => 'Spa de Ozono',
+                'descripcion' => 'Tratamiento relajante para pieles sensibles.',
+                'precio' => 18000,
+                'duracion_minutos' => 60,
+            ],
+        ];
 
-        // Servicio 2: Completo (90 min - Ocupa más tiempo en calendario)
-        Servicio::create([
-            'nombre' => 'Peluquería Completa (Corte y Baño)',
-            'descripcion' => 'Corte de raza, baño, corte de uñas y limpieza de oídos.',
-            'duracion_minutos' => 90,
-            'precio' => 15000.00,
-            'activo' => true,
-        ]);
+        foreach ($servicios as $servicio) {
+            Servicio::create($servicio);
+        }
 
-        // Servicio 3: Rápido (15 min)
-        Servicio::create([
-            'nombre' => 'Corte de Uñas',
-            'descripcion' => 'Solo corte y limado de uñas.',
-            'duracion_minutos' => 15,
-            'precio' => 3000.00,
-            'activo' => true,
-        ]);
-
-        // Servicio 4: Veterinaria (30 min)
-        Servicio::create([
-            'nombre' => 'Consulta Veterinaria General',
-            'descripcion' => 'Revisión clínica general de la mascota.',
-            'duracion_minutos' => 30,
-            'precio' => 10000.00,
-            'activo' => true,
-        ]);
     }
 }

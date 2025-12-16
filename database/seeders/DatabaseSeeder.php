@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Ajuste;
 
+use Illuminate\Support\Facades\DB;
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
@@ -29,6 +29,9 @@ class DatabaseSeeder extends Seeder
 
                 // 4. Ajustes del sistema
             AjusteSeeder::class,
+
+                // 5. Servicios
+            ServicioSeeder::class,
         ]);
     }
 }

@@ -12,11 +12,13 @@ return new class extends Migration {
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
-            $table->text('description')->nullable();
-            $table->decimal('price', 8, 2);
-            $table->integer('stock')->default(0);
-            $table->string('image_path')->nullable();
+            $table->string('nombre');
+            $table->text('descripcion')->nullable();
+            $table->decimal('precio', 10, 2); // 10 dígitos, 2 decimales
+            $table->string('categoria'); // 'alimentos', 'juguetes', 'ropa'
+            $table->string('imagen_url'); // Aquí guardaremos el link
+            $table->integer('stock')->default(10);
+            $table->boolean('activo')->default(true);
             $table->timestamps();
         });
     }

@@ -503,7 +503,7 @@
                                             </li>
                                             <li>
                                                 <a class="dropdown-item d-flex align-items-center gap-2"
-                                                    href="{{ route('admin') }}">
+                                                    href="{{ route('admin.index') }}">
                                                     <i class="bi bi-speedometer2 text-pink-custom"></i> Mi Panel
                                                 </a>
                                             </li>

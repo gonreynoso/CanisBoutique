@@ -20,20 +20,29 @@ class TurnoController extends Controller
     // 2. Guardar el turno (Con validación de disponibilidad)
     public function store(Request $request)
     {
-        // A. Validamos que los datos vengan bien
-        $request->validate([
-            'servicio_id' => 'required|exists:servicios,id',
-            'fecha' => 'required|date|after_or_equal:today', // No permitir fechas pasadas
-            'hora' => 'required',
-            'cliente_nombre' => 'required|string|max:255',
-            'cliente_email' => 'required|email',
-            'cliente_telefono' => 'required|string|max:20',
-            'mascota_nombre' => 'required|string|max:255',
-            'mascota_tipo' => 'required|string',
-        ]);
+        // A. Validaciones
+        $request->validate(
+            [
+                'servicio_id' => 'required|exists:servicios,id',
+                'fecha' => 'required|date|after_or_equal:today',
+                'hora' => 'required',
+                'cliente_nombre' => ['required', 'string', 'min:3', 'max:255', 'regex:/^[\pL\s]+$/u'],
+                'cliente_email' => ['required', 'email', 'max:255'],
+                'cliente_telefono' => ['required', 'numeric', 'digits_between:8,15'],
+                'mascota_nombre' => 'required|string|max:255',
+                'mascota_tipo' => 'required|string',
+            ],
+            [
+                'cliente_nombre.regex' => 'El nombre solo debe contener letras y espacios.',
+                'cliente_email.email' => 'Debes ingresar un correo electrónico válido.',
+                'cliente_telefono.numeric' => 'El teléfono solo debe contener números.',
+                'cliente_telefono.digits_between' => 'El teléfono debe tener entre 8 y 15 dígitos.',
+            ]
+        );
 
-        // B. Lógica de Negocio: ¿El turno está ocupado?
-        // Buscamos si hay un turno en esa fecha+hora y que NO esté cancelado
+        // --- AQUÍ ELIMINÉ EL Turno::create($request->all()); QUE CAUSABA EL ERROR ---
+
+        // B. Lógica de Negocio: Verificación PREVIA
         $turnoOcupado = Turno::where('fecha', $request->fecha)
             ->where('hora', $request->hora)
             ->where('estado', '!=', 'cancelado')
@@ -41,12 +50,12 @@ class TurnoController extends Controller
 
         if ($turnoOcupado) {
             return back()
-                ->withInput() // Devuelve los datos escritos para no borrarlos
-                ->withErrors(['hora' => 'Lo sentimos, ese horario ya está reservado. Por favor elige otro.']);
+                ->withInput()
+                ->withErrors(['hora' => 'Lo sentimos, ese horario ya está reservado.']);
         }
 
-        // C. Si está libre, creamos el turno
-        Turno::create([
+        // C. Si está libre, AHORA SÍ creamos el turno
+        $turno = Turno::create([
             'servicio_id' => $request->servicio_id,
             'fecha' => $request->fecha,
             'hora' => $request->hora,
@@ -55,11 +64,11 @@ class TurnoController extends Controller
             'cliente_telefono' => $request->cliente_telefono,
             'mascota_nombre' => $request->mascota_nombre,
             'mascota_tipo' => $request->mascota_tipo,
-            'estado' => 'confirmado' // Por defecto confirmado para MVP
+            'estado' => 'confirmado'
         ]);
 
-        // D. Redirigir con éxito
-        return redirect()->route('web.index')
-            ->with('success', '¡Tu turno ha sido reservado con éxito! Te esperamos.');
+        // D. Redirigir
+        return redirect()->route('web.reservaConfirmada')
+            ->with('turnoReciente', $turno); // <--- CAMBIO CLAVE AQUÍ
     }
 }

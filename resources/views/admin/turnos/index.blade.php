@@ -42,12 +42,12 @@
                     Swal.fire({
                         title: evento.title,
                         html: `
-                                <div class="text-start">
-                                    <p><strong>Cliente:</strong> ${props.cliente}</p>
-                                    <p><strong>Teléfono:</strong> ${props.telefono}</p>
-                                    <p><strong>Hora:</strong> ${evento.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                                </div>
-                            `,
+                                    <div class="text-start">
+                                        <p><strong>Cliente:</strong> ${props.cliente}</p>
+                                        <p><strong>Teléfono:</strong> ${props.telefono}</p>
+                                        <p><strong>Hora:</strong> ${evento.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                                    </div>
+                                `,
                         icon: 'info',
                         showCancelButton: true,
                         confirmButtonText: 'Cerrar',
