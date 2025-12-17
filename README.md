@@ -1,110 +1,95 @@
-# 🚀 CanisBoutique - Panel de Administración & E-commerce
+# 🐾 CanisBoutique - Panel de Administración & E-commerce
 
-Este proyecto utiliza **Laravel Sail** y se ejecuta completamente dentro de contenedores de **Docker**, garantizando que el entorno de desarrollo sea idéntico en cualquier sistema operativo.
+Este proyecto es una plataforma integral de gestión y venta para mascotas. Utiliza **Laravel Sail** y se ejecuta completamente dentro de contenedores de **Docker**, garantizando un entorno de desarrollo idéntico en cualquier sistema operativo (Ubuntu/Windows WSL2).
 
-## 1\. ⚙️ Requisitos del Sistema
+## 🚀 1. Requisitos y Preparación Inicial
 
-| Requisito | Entorno | Nota |
-| :--- | :--- | :--- |
-| **Docker Desktop** | **Windows** | Necesario para ejecutar los contenedores vía WSL 2. |
-| **Docker Engine** | **Ubuntu Nativo** | Necesario si no se usa Docker Desktop. |
-| **Terminal** | **Windows (WSL/Ubuntu)** o **Linux (Terminal Nativa)** | Todos los comandos de `sail` deben ejecutarse desde un *shell* de Linux. |
+### Requisitos del Sistema
+| Requisito | Nota |
+| :--- | :--- |
+| **Docker Desktop / Engine** | Necesario para ejecutar los contenedores. |
+| **Terminal Linux** | WSL2 (Windows) o Terminal Nativa (Ubuntu). |
 
------
+### Instalación Rápida
+1. **Clonar y configurar entorno:**
+   
+   ```bash
+   cp .env.example .env
+   # Asegúrate que DB_HOST=mysql en tu .env
 
-## 2\. 🔑 Configuración y Preparación Inicial
-
-Esta sección se ejecuta **una sola vez** después de clonar el repositorio.
-
-### A. Alineación de Entorno (`.env`)
-
-El archivo `.env` es crucial para la conexión. Debe alinearse con los nombres de los servicios Docker.
-
-1.  Copia el archivo de configuración de ejemplo:
-    ```bash
-    cp .env.example .env
-    ```
-2.  **Verificación de Base de Datos:** El archivo `.env` **debe** utilizar el nombre del servicio Docker:
-    ```env
-    DB_HOST=mysql
-    DB_USERNAME=sail
-    DB_PASSWORD=password <- Escribir password en minúsculas
-    ```
-    *Si su host fuera `127.0.0.1` o `localhost`, la comunicación interna entre contenedores fallaría.*
-
-### B. Instalación de Dependencias
-
-Siempre use **Sail** para instalar dependencias. Esto asegura que se utilicen las versiones correctas de PHP y Node/pnpm que están dentro de Docker.
-
-1.  **Instalar dependencias de PHP (Composer):**
-    ```bash
-    docker run --rm \
-        -u "$(id -u):$(id -g)" \
-        -v "$(pwd):/var/www/html" \
-        -w /var/www/html \
-        laravelsail/php83-composer:latest \
-        composer install --ignore-platform-reqs
-    ```
-2.  **Instalar dependencias de Node (pnpm):**
-    ```bash
-    ./vendor/bin/sail pnpm install
-    ```
-
------
-
-## 3\. 🏁 Puesta en Marcha (Arranque Simplificado y a Prueba de Fallos)
-
-El *script* **`start.sh`** automatiza todos los pasos de arranque, migración y *seeding*. Está diseñado para ser a prueba de fallos contra el error persistente de "Connection refused" en Docker/WSL.
-
-### A. Preparar el Script
-
-1.  Haga que el *script* sea ejecutable (una sola vez):
-    ```bash
-    chmod +x start.sh
-    ```
-
-### B. Ejecutar el Proyecto (Comando Único)
-
-Ejecute este comando en la terminal **WSL/Ubuntu o Nativa de Linux**:
-
-```bash
-./start.sh
 ```
 
-**Lo que hace el script `start.sh`:**
+2. **Instalar dependencias de PHP vía Docker:**
+```bash
+docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd):/var/www/html" -w /var/www/html laravelsail/php83-composer:latest composer install --ignore-platform-reqs
 
-| Comando | Propósito | Beneficio (Control de Fallos) |
-| :--- | :--- | :--- |
-| `./vendor/bin/sail up -d` | Levanta todos los contenedores (Web, DB, Adminer). | *Necesario para tener los servicios activos.* |
-| `sleep 15` | **Fuerza una pausa de 15 segundos.** | **CLAVE:** Da tiempo al servicio MySQL para inicializarse por completo. Esto previene el error `Connection refused`. |
-| `./vendor/bin/sail artisan migrate:fresh --seed` | Crea toda la estructura de la DB y carga los datos de prueba (incluyendo el usuario Admin). | *Garantiza que la aplicación tenga datos con los que trabajar.* |
-| `./vendor/bin/sail npm run dev` | Inicia Vite. | *Necesario para compilar el CSS/JS de Tailwind y habilitar la recarga automática (HMR).* |
+```
 
------
 
-## 4\. 🌐 Acceso y Credenciales
 
-Una vez que el *script* `start.sh` muestre que Vite está listo, puede acceder a la aplicación.
+## 🏁 2. Puesta en Marcha (Script Automático)
+
+Hemos desarrollado un script `start.sh` para evitar errores de conexión con MySQL.
+
+1. **Otorgar permisos:** `chmod +x start.sh`
+2. **Ejecutar:** `./start.sh`
+
+Este comando levanta los contenedores, espera la inicialización de la DB, ejecuta las migraciones con **Seeders de Roles/Productos** e inicia Vite.
+
+---
+
+## 🔐 3. Lógica de Negocio y Seguridad (RBAC)
+
+El sistema implementa un control de acceso basado en roles (Spatie) y **Middlewares personalizados** para proteger la integridad del negocio.
+
+### Matriz de Permisos
+
+| Rol | Usuarios | Productos | Turnos | Roles/Ajustes |
+| --- | --- | --- | --- | --- |
+| **Super Admin** | ✅ (Total) | ✅ | ✅ | ✅ |
+| **Admin** | ✅ (Limitado) | ✅ | ✅ | ✅ |
+| **Vendedor** | 👁️ (Lectura) | ✅ (Gestión) | ❌ | ❌ |
+| **Peluquero** | 👁️ (Lectura) | ❌ | ✅ (Gestión) | ❌ |
+
+### Blindaje de Seguridad
+
+* **Middleware `BloquearRol`:** Restringe accesos por URL directa según el rol (ej. Vendedor no puede entrar a `/admin/turnos`).
+* **Protección de Jerarquía:** Los roles Vendedor/Peluquero no pueden ver ni editar a usuarios con rol ADMIN o SUPER ADMIN.
+* **Protección de SuperUsuario:** El sistema bloquea cualquier intento de eliminar al Super Administrador (ID 1).
+
+---
+
+## 🛠️ 4. Tecnologías y Estructura
+
+* **Core:** Laravel 12 (PHP 8.4)
+* **Seguridad:** Spatie Laravel-Permission & Middlewares personalizados.
+* **Frontend:** Blade, Bootstrap 5, SweetAlert2 (Notificaciones interactivas).
+* **Herramientas:** - **Sail:** Gestión de contenedores.
+* **Adminer:** Visor de DB en `http://localhost:8080`.
+
+---
+
+## 🌐 5. Acceso y Credenciales
 
 | Servicio | URL |
-| :--- | :--- |
-| **Aplicación Web** | `http://localhost` |
-| **Panel de Administración** | `http://localhost/login` |
-| **Visor de Base de Datos (Adminer)** | `http://localhost:8080` |
+| --- | --- |
+| **Web App** | `http://localhost` |
+| **Admin Panel** | `http://localhost/admin` |
 
-### Credenciales de Adminer Base de Datos
-Servidor: mysql
-Usuario: sail
-Contraseña: password
-Base de datos: canisboutique
+### Credenciales de Prueba
 
-### Credenciales de Administrador
+| Rol | Email | Password |
+| --- | --- | --- |
+| **Super Admin** | `admin@admin.com` | `dada` |
+| **Vendedor** | `vendedor@vendedor.com` | `dada` |
+| **Peluquero** | `peluquero@peluquero.com` | `dada` |
+| **Cliente** | `cliente@cliente.com` | `dada` |
 
-| Campo | Valor |
-| :--- | :--- |
-| **Email** | `admin@canisboutique.com` |
-| **Contraseña** | `password` |
+---
 
------
+## 👤 Autor
 
-Tu documentación está completa y lista. ¿Continuamos con el desarrollo del **Módulo de Compra**?
+**Gonzalo Reynoso** - *KensiWeb*
+Analista de Sistemas & Desarrollador Web.
+
+```
