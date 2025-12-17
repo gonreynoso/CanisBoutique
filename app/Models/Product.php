@@ -9,8 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    // Especificamos la tabla si no sigues la convención plural inglesa (products)
-    // protected $table = 'productos'; 
+
 
     protected $fillable = [
         'nombre',

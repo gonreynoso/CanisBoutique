@@ -11,7 +11,7 @@ class Servicio extends Model
 
     protected $fillable = ['nombre', 'descripcion', 'duracion_minutos', 'precio', 'activo'];
 
-    // Relación: Un servicio tiene muchos turnos
+
     public function turnos()
     {
         return $this->hasMany(Turno::class);

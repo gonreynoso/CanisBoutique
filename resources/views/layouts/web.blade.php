@@ -381,6 +381,15 @@
             color: white;
         }
 
+        /* Forzar que el menú se vea cuando Bootstrap le pone la clase 'show' */
+        #accountDropdownContainer .dropdown-menu.show {
+            opacity: 1 !important;
+            visibility: visible !important;
+            display: block !important;
+            transform: none !important;
+            top: 100% !important;
+        }
+
         /* ANIMACIONES */
         @keyframes float {
             0% {
@@ -460,7 +469,7 @@
                             <div
                                 class="header-icons d-flex align-items-center justify-content-center justify-content-lg-end gap-3">
 
-                                <div class="dropdown">
+                                <div class="dropdown" id="accountDropdownContainer">
                                     <button class="btn btn-account dropdown-toggle" type="button" id="dropdownAccount"
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                         @auth

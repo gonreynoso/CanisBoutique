@@ -41,27 +41,26 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // 1. VALIDACIÓN
+
         $request->validate([
             'role' => 'required',
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
 
-            // LA CLAVE ESTÁ AQUÍ: 'confirmed'
+
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // 2. CREAR EL USUARIO
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password), // Encriptar siempre
+            'password' => bcrypt($request->password),
         ]);
 
-        // 3. ASIGNAR ROL (Si estás implementando roles en el create)
         $user->assignRole($request->role);
 
-        // 4. REDIRECCIONAR
+
         return redirect()->route('admin.usuarios.index')
             ->with('message', 'Usuario creado exitosamente.')
             ->with('icono', 'success');
@@ -119,7 +118,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        // dd("Llegué al controlador. ID a borrar: " . $id);
+
         $user = User::find($id);
         $user->estado = false;
         $user->save();

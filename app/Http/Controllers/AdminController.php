@@ -11,7 +11,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        // Asegúrate de que estas 4 variables existan:
+
         $totalUsuarios = User::count();
 
         $turnosHoy = Turno::whereDate('fecha', Carbon::today())
@@ -25,7 +25,7 @@ class AdminController extends Controller
             ->orderBy('fecha', 'asc')->orderBy('hora', 'asc')
             ->take(5)->get();
 
-        // Y que se pasen a la vista con compact:
+
         return view('admin.index', compact('totalUsuarios', 'turnosHoy', 'turnosPendientes', 'proximosTurnos'));
     }
 }

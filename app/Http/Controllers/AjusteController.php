@@ -7,9 +7,7 @@ use Illuminate\Http\Request;
 
 class AjusteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $ajuste = Ajuste::first();
@@ -18,21 +16,17 @@ class AjusteController extends Controller
         return view('admin.ajustes.index', compact('data', 'ajuste'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         $ajuste = Ajuste::firstOrNew([]);
-        // dd($request->all());
+
         $rules = [
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string|max:255',

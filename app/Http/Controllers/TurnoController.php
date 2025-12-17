@@ -1,26 +1,24 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Turno;
 use App\Models\Servicio;
 use Illuminate\Http\Request;
 
 class TurnoController extends Controller
 {
-    // 1. Mostrar el formulario de reserva
+
     public function create()
     {
-        // Solo mostramos servicios activos
+
         $servicios = Servicio::where('activo', true)->get();
 
         return view('web.reservar', compact('servicios'));
     }
 
-    // 2. Guardar el turno (Con validación de disponibilidad)
     public function store(Request $request)
     {
-        // A. Validaciones
+
         $request->validate(
             [
                 'servicio_id' => 'required|exists:servicios,id',
@@ -40,9 +38,7 @@ class TurnoController extends Controller
             ]
         );
 
-        // --- AQUÍ ELIMINÉ EL Turno::create($request->all()); QUE CAUSABA EL ERROR ---
 
-        // B. Lógica de Negocio: Verificación PREVIA
         $turnoOcupado = Turno::where('fecha', $request->fecha)
             ->where('hora', $request->hora)
             ->where('estado', '!=', 'cancelado')
@@ -54,7 +50,7 @@ class TurnoController extends Controller
                 ->withErrors(['hora' => 'Lo sentimos, ese horario ya está reservado.']);
         }
 
-        // C. Si está libre, AHORA SÍ creamos el turno
+
         $turno = Turno::create([
             'servicio_id' => $request->servicio_id,
             'fecha' => $request->fecha,
@@ -67,8 +63,7 @@ class TurnoController extends Controller
             'estado' => 'confirmado'
         ]);
 
-        // D. Redirigir
         return redirect()->route('web.reservaConfirmada')
-            ->with('turnoReciente', $turno); // <--- CAMBIO CLAVE AQUÍ
+            ->with('turnoReciente', $turno);
     }
 }
