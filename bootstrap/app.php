@@ -29,7 +29,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 }
 
 
-                return route('welcome');
+                return route('web.index');
             }
         );
 

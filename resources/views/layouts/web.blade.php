@@ -8,7 +8,6 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
 
-    {{-- IMPORTANTE: Usamos asset() para que no se rompa en subpáginas --}}
     <link href="{{ asset('assets/img/favicon.png') }}" rel="icon">
     <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
@@ -27,7 +26,6 @@
 
     <link href="{{ asset('assets/css/main.css') }}" rel="stylesheet">
 
-    {{-- TUS ESTILOS PERSONALIZADOS (Los mantengo aquí en el layout) --}}
     <style>
         :root {
             --canis-pink: #d63384;
@@ -60,7 +58,6 @@
             font-size: 0.9rem;
         }
 
-        /* HEADER */
         .top-bar {
             background: #111;
             color: #fff;
@@ -117,13 +114,10 @@
             font-size: 10px;
         }
 
-        /* Estilo para el botón de cuenta elegante */
         .btn-account {
             border: 2px solid #e9ecef;
-            /* Borde gris suave inicial */
             background-color: transparent;
             border-radius: 50px;
-            /* Forma de píldora */
             padding: 8px 24px;
             font-weight: 600;
             color: #333;
@@ -131,20 +125,18 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            /* Espacio entre icono y texto */
         }
 
         .btn-account:hover,
         .dropdown.show .btn-account {
             border-color: var(--canis-pink);
-            /* Se pinta rosa al tocar */
+
             color: var(--canis-pink);
             background-color: #fff;
             box-shadow: 0 4px 12px rgba(214, 51, 132, 0.15);
-            /* Sombra suave */
+
         }
 
-        /* Ajuste para que el menú no se pegue a los bordes en móviles */
         @media (max-width: 991px) {
             .navbar-collapse {
                 padding-top: 1rem;
@@ -152,7 +144,6 @@
             }
         }
 
-        /* HERO & GENERAL SECTIONS */
         .hero-section {
             position: relative;
             background-color: #f8f9fa;
@@ -239,7 +230,6 @@
             color: white;
         }
 
-        /* CARDS */
         .floating-card {
             position: absolute;
             bottom: 10%;
@@ -343,7 +333,6 @@
             font-size: 18px;
         }
 
-        /* FOOTER */
         .footer-dark {
             background-color: #1a1a1a;
             color: #aaa;
@@ -381,7 +370,6 @@
             color: white;
         }
 
-        /* Forzar que el menú se vea cuando Bootstrap le pone la clase 'show' */
         #accountDropdownContainer .dropdown-menu.show {
             opacity: 1 !important;
             visibility: visible !important;
@@ -390,7 +378,6 @@
             top: 100% !important;
         }
 
-        /* ANIMACIONES */
         @keyframes float {
             0% {
                 transform: translateY(0px);
@@ -501,15 +488,13 @@
                                                 </h6>
                                             </li>
 
-                                            {{-- 1. ENLACE PARA CLIENTES (Lo que pediste) --}}
                                             <li>
                                                 <a class="dropdown-item py-2" href="{{ route('web.perfil') }}">
                                                     <i class="bi bi-person-badge me-2 text-pink-custom"></i> Mi Cuenta
                                                 </a>
                                             </li>
 
-                                            {{-- 2. ENLACE PARA ADMIN (Opcional: puedes ocultarlo con un if) --}}
-                                            {{-- Ejemplo: @if(Auth::user()->email == 'admin@tuemail.com') --}}
+
                                             @if(Auth::user()->email == 'super@admin.com')
                                                 <li>
                                                     <a class="dropdown-item py-2" href="{{ route('admin.index') }}">
@@ -538,7 +523,7 @@
                                     class="btn position-relative p-2 text-dark hover-pink transition-all">
                                     <i class="bi bi-cart3 fs-4"></i>
 
-                                    {{-- CORRECCIÓN DEL BADGE --}}
+
                                     <span
                                         class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger d-flex justify-content-center align-items-center"
                                         style="width: 20px; height: 20px; font-size: 0.75rem; border: 2px solid white;">
@@ -595,19 +580,19 @@
                 <div class="col-lg-2 col-md-6">
                     <h5 class="footer-title text-white fs-6">Tienda</h5>
                     <ul class="list-unstyled d-flex flex-column gap-2">
-                        <li><a href="#">Alimentos</a></li>
-                        <li><a href="#">Accesorios</a></li>
-                        <li><a href="#">Juguetes</a></li>
-                        <li><a href="#">Ofertas</a></li>
+                        <li><a href="{{ route('tienda.index', ['categoria' => 'alimentos']) }}">Alimentos</a></li>
+                        <li><a href="{{ route('tienda.index', ['categoria' => 'ropa']) }}">Ropa</a></li>
+                        <li><a href="{{ route('tienda.index', ['categoria' => 'juguetes']) }}">Juguetes</a></li>
+                        <li><a href="{{ route('tienda.index', ['categoria' => 'higiene']) }}">Higiene</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-2 col-md-6">
                     <h5 class="footer-title text-white fs-6">Servicios</h5>
                     <ul class="list-unstyled d-flex flex-column gap-2">
-                        <li><a href="#">Peluquería</a></li>
-                        <li><a href="#">Baño Terapéutico</a></li>
-                        <li><a href="#">Corte de Raza</a></li>
-                        <li><a href="#">Preguntas Frecuentes</a></li>
+                        <li><a href="{{ route('web.reservar') }}">Corte y Peinado</a></li>
+                        <li><a href="{{ route('web.reservar') }}">Baño Completo</a></li>
+                        <li><a href="{{ route('web.reservar') }}">Cepillado</a></li>
+
                     </ul>
                 </div>
                 <div class="col-lg-4 col-md-6">
