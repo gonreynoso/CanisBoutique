@@ -85,7 +85,7 @@
                         <div class="col-xl-6">
                             <div class="category-card cat-men" data-aos="fade-up" data-aos-delay="300">
                                 <div class="category-image">
-                                    <img src="https://images.unsplash.com/photo-1589924691195-41432c84c161?q=80&w=600&auto=format&fit=crop"
+                                    <img src="https://img.freepik.com/foto-gratis/primer-plano-adorable-comida-mascotas_23-2151182848.jpg"
                                         alt="Alimento" class="img-fluid">
                                 </div>
                                 <div class="category-content">
@@ -99,7 +99,7 @@
                         <div class="col-xl-6">
                             <div class="category-card cat-kids" data-aos="fade-up" data-aos-delay="400">
                                 <div class="category-image">
-                                    <img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?q=80&w=600&auto=format&fit=crop"
+                                    <img src="https://blog.dogfydiet.com/wp-content/uploads/2023/08/juego-de-tirar.jpg"
                                         alt="Juguetes" class="img-fluid">
                                 </div>
                                 <div class="category-content">
@@ -113,12 +113,12 @@
                         <div class="col-xl-6">
                             <div class="category-card cat-cosmetics" data-aos="fade-up" data-aos-delay="500">
                                 <div class="category-image">
-                                    <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=600&auto=format&fit=crop"
+                                    <img src="https://pharmadiet.com/wp-content/uploads/2020/08/post-blog-3-agosto.jpg"
                                         alt="Higiene" class="img-fluid">
                                 </div>
                                 <div class="category-content">
                                     <h4>Higiene</h4>
-                                    <p>Shampoos y Colonias</p>
+                                    <p>Shampoos y Cremas</p>
                                     <a href="{{ route('tienda.index', ['categoria' => 'Higiene']) }}" class="card-link">Ver
                                         Catálogo <i class="bi bi-arrow-right"></i></a>
                                 </div>
@@ -127,13 +127,14 @@
                         <div class="col-xl-6">
                             <div class="category-card cat-accessories" data-aos="fade-up" data-aos-delay="600">
                                 <div class="category-image">
-                                    <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?q=80&w=600&auto=format&fit=crop"
-                                        alt="Accesorios" class="img-fluid">
+                                    <img src="https://www.superpet.club/blog/wp-content/uploads/2024/09/snacks-saludables-perros.webp"
+                                        alt="Snacks" class="img-fluid">
                                 </div>
                                 <div class="category-content">
-                                    <h4>Ropa</h4>
-                                    <p>Ropa y Accesorios</p>
-                                    <a href="{{ route('tienda.index', ['categoria' => 'ropa']) }}" class="card-link">Ver Más
+                                    <h4>Snacks</h4>
+                                    <p>Snacks</p>
+                                    <a href="{{ route('tienda.index', ['categoria' => 'snacks']) }}" class="card-link">Ver
+                                        más
                                         <i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
