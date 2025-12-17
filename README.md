@@ -90,7 +90,7 @@ El sistema implementa un control de acceso basado en roles (Spatie) y **Middlewa
 **Gonzalo Reynoso** - *KensiWeb*
 Analista de Sistemas & Desarrollador Web.
 
-## 🚀 1. Galería de imágenes.
+## Galería de imágenes.
 
 <img width="1331" height="854" alt="image" src="https://github.com/user-attachments/assets/11ce1765-a083-4254-a72b-3704e6bae6f9" />
 
