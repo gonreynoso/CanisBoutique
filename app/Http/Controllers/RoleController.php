@@ -46,6 +46,13 @@ class RoleController extends Controller
     public function edit(string $id)
     {
         $role = Role::findOrFail($id);
+
+        if (strtolower($role->name) === 'super admin') {
+            return redirect()->route('admin.roles.index')
+                ->with('message', 'No se permite editar el rol principal del sistema.')
+                ->with('icono', 'info');
+        }
+
         return view('admin.roles.edit', compact('role'));
     }
 
@@ -59,15 +66,27 @@ class RoleController extends Controller
         $role->name = strtoupper($request->name);
         $role->save();
 
-        return redirect()->route('admin.roles.index')->with('success', 'Se actualizo el rol');
+        return redirect()->route('admin.roles.index')->with('message', 'Se actualizo el rol')->with('icono', 'success');
     }
 
 
     public function destroy(string $id)
     {
         $role = Role::findOrFail($id);
+
+        // Lista de roles que NADIE puede borrar (puedes agregar más aquí)
+        $rolesProtegidos = ['super admin', 'admin', 'cliente'];
+
+        if (in_array(strtolower($role->name), $rolesProtegidos)) {
+            return redirect()->route('admin.roles.index')
+                ->with('message', 'Acción denegada: El rol "' . $role->name . '" es vital para el sistema.')
+                ->with('icono', 'error');
+        }
+
         $role->delete();
 
-        return redirect()->route('admin.roles.index')->with('success', 'Se elimino el rol');
+        return redirect()->route('admin.roles.index')
+            ->with('message', 'Rol eliminado correctamente.')
+            ->with('icono', 'success');
     }
 }

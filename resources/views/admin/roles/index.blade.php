@@ -31,24 +31,34 @@
                                     <td style="text-align: center;">{{ $role->name }}</td>
                                     <td style="text-align: center;">
 
-                                        <a href="{{ route('admin.roles.show', $role->id) }}" class="btn btn-info"><i
-                                                class="bi bi-eye"></i></a>
+                                        <a href="{{ route('admin.roles.show', $role->id) }}" class="btn btn-info">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
 
 
-                                        <a href="{{ route('admin.roles.edit', $role->id) }}" class="btn btn-success"><i
-                                                class="bi bi-pencil"></i></a>
+                                        @if(strtolower($role->name) !== 'super admin' && strtolower($role->name) !== 'admin')
 
 
-                                        <form action="{{ route('admin.roles.destroy', $role->id) }}" method="POST"
-                                            style="display: inline-block;">
-                                            @csrf
-                                            @method('DELETE')
+                                            <a href="{{ route('admin.roles.edit', $role->id) }}" class="btn btn-success">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
 
-                                            <button type="submit" class="btn btn-danger"
-                                                onclick="return confirm('¿Estás seguro de eliminar este rol?')">
-                                                <i class="bi bi-trash"></i>
+                                            <form action="{{ route('admin.roles.destroy', $role->id) }}" method="POST"
+                                                style="display: inline-block;" id="delete-form-{{ $role->id }}">
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <button type="button" class="btn btn-danger"
+                                                    onclick="confirmarBorradoRol('{{ $role->id }}')">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        @else
+
+                                            <button class="btn btn-secondary" disabled title="Rol del sistema">
+                                                <i class="bi bi-shield-lock"></i>
                                             </button>
-                                        </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -84,7 +94,7 @@
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Buscamos el formulario específico de ese ID y lo enviamos
+
                     document.getElementById('delete-form-' + id).submit();
                 }
             })

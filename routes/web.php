@@ -75,27 +75,38 @@ Route::middleware(['auth', 'verified', 'can:ver_panel_admin'])
     ->name('admin.')
     ->group(function () {
 
-
+        // --- 1. RUTAS COMUNES ---
         Route::get('/', [AdminController::class, 'index'])->name('index');
-        Route::get('/turnos', [AdminTurnoController::class, 'index'])->name('turnos.index');
-        Route::get('/turnos/datos', [AdminTurnoController::class, 'datos'])->name('turnos.datos');
-        Route::delete('/turnos/{id}', [AdminTurnoController::class, 'destroy'])->name('turnos.destroy');
-
 
         Route::resource('usuarios', UserController::class);
         Route::patch('usuarios/{id}/restore', [UserController::class, 'restore'])->name('usuarios.restore');
 
-
-        Route::resource('roles', RoleController::class);
-
-        Route::resource('productos', ProductController::class)
-            ->parameters(['productos' => 'product'])
-            ->except(['show']);
-
-        Route::get('/ajustes', [AjusteController::class, 'index'])->name('ajustes.index');
-        Route::post('/ajustes', [AjusteController::class, 'store'])->name('ajustes.store');
+        // --- MODIFICACIÓN PARA PRODUCTOS ---
+        // El Vendedor puede verlos, pero el Peluquero NO.
+        Route::middleware('not.peluquero:Productos')->group(function () {
+            Route::resource('productos', ProductController::class)
+                ->parameters(['productos' => 'product'])
+                ->except(['show']);
+        });
 
 
+        // --- 2. ACCESO RESTRINGIDO (not.vendor) ---
+        // Aquí entran Admin, SuperAdmin y ahora PELUQUERO (para ver turnos)
+        Route::middleware('not.vendor')->group(function () {
+
+            // Turnos: El Peluquero SÍ puede ver esto (porque no es Vendor)
+            Route::get('/turnos', [AdminTurnoController::class, 'index'])->name('turnos.index');
+            Route::get('/turnos/datos', [AdminTurnoController::class, 'datos'])->name('turnos.datos');
+            Route::delete('/turnos/{id}', [AdminTurnoController::class, 'destroy'])->name('turnos.destroy');
+
+            // --- PROTECCIÓN EXTRA PARA ROLES Y AJUSTES ---
+            // Queremos que el Peluquero NO vea esto, aunque pase el middleware 'not.vendor'
+            Route::middleware('not.peluquero:Roles y Ajustes')->group(function () {
+                Route::resource('roles', RoleController::class);
+                Route::get('/ajustes', [AjusteController::class, 'index'])->name('ajustes.index');
+                Route::post('/ajustes', [AjusteController::class, 'store'])->name('ajustes.store');
+            });
+        });
 
     });
 

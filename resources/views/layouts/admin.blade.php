@@ -92,21 +92,22 @@
                             </ul>
                         </li>
 
-                        <li class="sidebar-item {{ request()->is('admin/turnos') ? 'active' : '' }}">
+
+                        <li class="sidebar-item {{ request()->is('admin/turnos*') ? 'active' : '' }}">
                             <a href="{{ route('admin.turnos.index') }}" class='sidebar-link'>
                                 <i class="bi-calendar-week"></i>
                                 <span>Turnos</span>
                             </a>
                         </li>
 
-
-                        <li class="sidebar-item {{ request()->is('admin/roles') ? 'active' : '' }}  ">
+                        <li class="sidebar-item {{ request()->is('admin/roles*') ? 'active' : '' }}">
                             <a href="{{ route('admin.roles.index') }}" class='sidebar-link'>
                                 <i class="bi bi-shield-check"></i>
                                 <span>Roles</span>
                             </a>
-
                         </li>
+
+
 
                         <li class="sidebar-item {{ request()->is('admin/usuarios') ? 'active' : '' }}  ">
                             <a href="{{ route('admin.usuarios.index') }}" class='sidebar-link'>
@@ -115,14 +116,15 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item {{ request()->is('admin/productos') ? 'active' : '' }}">
-                            <a href="{{ route('admin.productos.index') }}" class="sidebar-link">
-                                <i class="bi bi-box-seam"></i>
-                                <span>Productos</span>
-                            </a>
+                        @if(Auth::user()->role?->name !== 'VENDEDOR')
+                            <li class="sidebar-item {{ request()->is('admin/productos') ? 'active' : '' }}">
+                                <a href="{{ route('admin.productos.index') }}" class="sidebar-link">
+                                    <i class="bi bi-box-seam"></i>
+                                    <span>Productos</span>
+                                </a>
 
-                        </li>
-
+                            </li>
+                        @endif
                         <li class="sidebar-item {{ request()->is('admin/ajustes') ? 'active' : '' }}">
                             <a href="{{ route('admin.ajustes.index') }}" class='sidebar-link'>
                                 <i class="bi bi-gear-fill"></i>

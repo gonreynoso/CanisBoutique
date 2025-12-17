@@ -22,10 +22,9 @@ class UserSeeder extends Seeder
             'name' => 'Gonzalo Reynoso',
             'email' => 'super@admin.com',
             'password' => Hash::make('dada'),
-            // 'phone_number' => null, // Asumo que puede ser nulo
+            'phone_number' => '1111111111',
         ]);
         $superAdmin->assignRole('SUPER ADMIN');
-
         // 2. ADMIN
         $admin = User::create([
             'name' => 'ADMIN CANISBOUTIQUE',
@@ -35,20 +34,20 @@ class UserSeeder extends Seeder
         ]);
         $admin->assignRole('ADMINISTRADOR');
 
-        // 3. VENDEDOR (CORREGIDO)
+        // 3. VENDEDOR 
         $vendedor = User::create([
             'name' => 'Marcos Madero',
-            'email' => 'marcos@madero.com',
+            'email' => 'vendedor@vendedor.com',
             'phone_number' => '2222222222',
             'password' => Hash::make('dada'),
         ]);
-        $vendedor->assignRole('VENDEDOR'); // <--- AQUI ESTABA EL ERROR
+        $vendedor->assignRole('VENDEDOR');
 
         // 4. CLIENTES (Usando un array para no repetir variables)
         $clientes = [
             ['name' => 'Cliente Canis', 'email' => 'cliente@cliente.com', 'phone' => '3333333331'],
-            ['name' => 'Juan Perez', 'email' => 'juan@perez.com', 'phone' => '3333333332'],
-            ['name' => 'Maria Rodriguez', 'email' => 'maria@rodriguez.com', 'phone' => '3333333333'],
+            ['name' => 'Juan Perez', 'email' => 'juan@cliente.com', 'phone' => '3333333332'],
+            ['name' => 'Maria Rodriguez', 'email' => 'maria@cliente.com', 'phone' => '3333333333'],
         ];
 
         foreach ($clientes as $data) {
@@ -63,9 +62,9 @@ class UserSeeder extends Seeder
 
         // 5. PELUQUEROS
         $peluqueros = [
-            ['name' => 'Pedro Ramirez', 'email' => 'pedro@ramirez.com', 'phone' => '4444444441'],
-            ['name' => 'Ana Gonzalez', 'email' => 'ana@gonzalez.com', 'phone' => '4444444442'],
-            ['name' => 'Luisa Martinez', 'email' => 'luisa@martinez.com', 'phone' => '4444444443'],
+            ['name' => 'Pedro Ramirez', 'email' => 'peluquero@peluquero.com', 'phone' => '4444444441'],
+            ['name' => 'Ana Gonzalez', 'email' => 'ana@peluquero.com', 'phone' => '4444444442'],
+            ['name' => 'Luisa Martinez', 'email' => 'luisa@peluquero.com', 'phone' => '4444444443'],
         ];
 
         foreach ($peluqueros as $data) {

@@ -13,15 +13,32 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
+        $userLogueado = auth()->user();
+
+
         $query = User::whereDoesntHave('roles', function ($q) {
             $q->where('name', 'SUPER ADMIN');
         })->withTrashed();
+
+        if ($userLogueado->hasRole('VENDEDOR')) {
+            $query->whereDoesntHave('roles', function ($q) {
+                $q->where('name', 'ADMINISTRADOR');
+            });
+        }
+
+        if ($userLogueado->hasRole('PELUQUERO')) {
+            $query->whereDoesntHave('roles', function ($q) {
+                $q->where('name', 'ADMINISTRADOR');
+            });
+        }
+
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', '%' . $search . '%')
                     ->orWhere('email', 'like', '%' . $search . '%');
             });
         }
+
         $users = $query->paginate(10);
         return view('admin.usuarios.index', compact('users', 'search'));
     }
@@ -120,9 +137,15 @@ class UserController extends Controller
     {
 
         $user = User::find($id);
+
+        if ($user->id === 1 || $user->id === 4) {
+            return redirect()->route('admin.usuarios.index')
+                ->with('message', 'No es posible eliminar al Super Administrador o al Administrador.')
+                ->with('icono', 'error');
+        }
+
         $user->estado = false;
         $user->save();
-        $user = User::find($id);
         $user->delete();
 
         return redirect()->route('admin.usuarios.index')
@@ -134,7 +157,6 @@ class UserController extends Controller
     {
         $user = User::withTrashed()->find($id);
         $user->restore();
-        $user = User::find($id);
         $user->estado = true;
         $user->save();
 
