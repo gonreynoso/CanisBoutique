@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class StoreController extends Controller
 {
-    // 1. CATÁLOGO (Vista Principal)
+
     public function index(Request $request)
     {
         $query = Product::where('activo', true);
@@ -19,7 +19,7 @@ class StoreController extends Controller
             $query->where('categoria', $request->categoria);
         }
 
-        // Búsqueda por texto (si usaste el buscador del header)
+
         if ($request->has('search') && $request->search != null) {
             $query->where('nombre', 'like', '%' . $request->search . '%');
         }
@@ -28,25 +28,22 @@ class StoreController extends Controller
 
         return view('web.tienda.index', compact('productos'));
     }
-
-    // 2. DETALLE DE PRODUCTO
     public function show($id)
     {
         $producto = Product::where('activo', true)->findOrFail($id);
         return view('web.tienda.show', compact('producto'));
     }
 
-    // 3. AGREGAR AL CARRITO
+
     public function addToCart($id)
     {
         $producto = Product::findOrFail($id);
         $cart = session()->get('cart', []);
 
-        // Si existe, sumamos cantidad
         if (isset($cart[$id])) {
             $cart[$id]['cantidad']++;
         } else {
-            // Si no, lo creamos
+
             $cart[$id] = [
                 "product_id" => $producto->id,
                 "nombre" => $producto->nombre,
@@ -60,13 +57,12 @@ class StoreController extends Controller
         return redirect()->back()->with('success', '¡Producto agregado al carrito!');
     }
 
-    // 4. VER CARRITO
     public function cart()
     {
         return view('web.tienda.cart');
     }
 
-    // 5. ELIMINAR DEL CARRITO
+
     public function removeFromCart($id)
     {
         $cart = session()->get('cart');
@@ -77,7 +73,7 @@ class StoreController extends Controller
         return redirect()->back()->with('success', 'Producto eliminado.');
     }
 
-    // 6. VISTA DE CHECKOUT
+
     public function checkout()
     {
         if (!session('cart') || count(session('cart')) == 0) {
@@ -86,7 +82,7 @@ class StoreController extends Controller
         return view('web.tienda.checkout');
     }
 
-    // 7. PROCESAR COMPRA (Guardar en DB)
+
     public function processOrder(Request $request)
     {
         $request->validate([
@@ -98,7 +94,7 @@ class StoreController extends Controller
 
         $cart = session('cart');
 
-        // Validación extra: Carrito vacío
+
         if (!$cart) {
             return redirect()->route('tienda.index')->with('error', 'El carrito está vacío.');
         }
@@ -111,7 +107,7 @@ class StoreController extends Controller
         try {
             DB::beginTransaction();
 
-            // Crear Orden
+
             $order = Order::create([
                 'cliente_nombre' => $request->cliente_nombre,
                 'cliente_email' => $request->cliente_email,
@@ -121,7 +117,7 @@ class StoreController extends Controller
                 'estado' => 'pagado',
             ]);
 
-            // Crear Items
+
             foreach ($cart as $id => $item) {
                 OrderItem::create([
                     'order_id' => $order->id,
@@ -134,7 +130,7 @@ class StoreController extends Controller
             }
 
             DB::commit();
-            session()->forget('cart'); // Vaciar carrito
+            session()->forget('cart');
 
             return redirect()->route('tienda.success', $order->id);
 
@@ -144,7 +140,7 @@ class StoreController extends Controller
         }
     }
 
-    // 8. PÁGINA DE ÉXITO
+
     public function orderSuccess($id)
     {
         $order = Order::with('items')->findOrFail($id);
@@ -153,14 +149,45 @@ class StoreController extends Controller
 
     public function profile()
     {
-        // Obtenemos el usuario logueado
+
         $user = auth()->user();
 
-        // Buscamos sus compras (basado en el email, ya que en la orden guardamos cliente_email)
+
         $orders = Order::where('cliente_email', $user->email)
             ->orderBy('created_at', 'desc')
             ->get();
 
         return view('web.perfil', compact('user', 'orders'));
+    }
+
+    public function increaseQuantity($id)
+    {
+        $cart = session()->get('cart');
+
+        if (isset($cart[$id])) {
+            $cart[$id]['cantidad']++;
+            session()->put('cart', $cart);
+        }
+
+        return redirect()->back()->with('success', 'Cantidad actualizada');
+    }
+
+    public function decreaseQuantity($id)
+    {
+        $cart = session()->get('cart');
+
+        if (isset($cart[$id])) {
+
+            if ($cart[$id]['cantidad'] > 1) {
+                $cart[$id]['cantidad']--;
+                session()->put('cart', $cart);
+            } else {
+
+                unset($cart[$id]);
+                session()->put('cart', $cart);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Carrito actualizado');
     }
 }

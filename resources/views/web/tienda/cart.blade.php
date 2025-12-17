@@ -24,7 +24,7 @@
                 <div class="col-lg-8">
                     <div class="cart-items card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
                         <div class="card-body p-0">
-                            {{-- Header Tabla (Desktop) --}}
+                           
                             <div class="cart-header bg-light p-3 d-none d-lg-block fw-bold text-secondary">
                                 <div class="row">
                                     <div class="col-6">Producto</div>
@@ -34,32 +34,65 @@
                                 </div>
                             </div>
 
-                            {{-- Items Loop --}}
+                            
                             @php $total = 0; @endphp
-                            @foreach(session('cart') as $id => $details)
+
+                            @foreach(session('cart') as $id => $item)
                                 @php 
-                                    $subtotal = $details['precio'] * $details['cantidad']; 
+                                    $subtotal = $item['precio'] * $item['cantidad']; 
                                     $total += $subtotal;
                                 @endphp
                                 
                                 <div class="cart-item p-3 border-bottom">
                                     <div class="row align-items-center">
+                                        
+                                        
                                         <div class="col-lg-6 col-12 d-flex align-items-center gap-3">
-                                            <img src="{{ $details['imagen'] }}" alt="{{ $details['nombre'] }}" class="rounded-3 border" style="width: 80px; height: 80px; object-fit: cover;">
+                                            <img src="{{ $item['imagen'] }}" alt="{{ $item['nombre'] }}" class="rounded-3 border" style="width: 80px; height: 80px; object-fit: cover;">
                                             <div>
-                                                <h6 class="mb-1 fw-bold">{{ $details['nombre'] }}</h6>
+                                                <h6 class="mb-1 fw-bold">{{ $item['nombre'] }}</h6>
+                                                
                                                 <a href="{{ route('carrito.remove', $id) }}" class="text-danger small text-decoration-none">
                                                     <i class="bi bi-trash"></i> Eliminar
                                                 </a>
                                             </div>
                                         </div>
+
+                                      
                                         <div class="col-lg-2 col-12 text-center mt-3 mt-lg-0">
                                             <span class="d-lg-none fw-bold me-2">Precio:</span>
-                                            ${{ number_format($details['precio'], 0, ',', '.') }}
+                                            ${{ number_format($item['precio'], 0, ',', '.') }}
                                         </div>
-                                        <div class="col-lg-2 col-12 text-center mt-3 mt-lg-0">
-                                            <span class="badge bg-light text-dark border px-3 py-2 rounded-pill fs-6">{{ $details['cantidad'] }}</span>
+
+                                        
+                                        <div class="col-lg-2 col-12 mt-3 mt-lg-0 d-flex justify-content-center">
+                                            <div class="input-group input-group-sm" style="width: 110px;">
+                                                
+                                               
+                                                @if($item['cantidad'] == 1)
+                                                    
+                                                    <button class="btn btn-outline-secondary" type="button" 
+                                                        onclick="confirmarEliminacion('{{ $id }}', '{{ $item['nombre'] }}')">
+                                                        <i class="bi bi-dash"></i>
+                                                    </button>
+                                                @else
+                                                    
+                                                    <a href="{{ route('cart.decrease', $id) }}" class="btn btn-outline-secondary">
+                                                        <i class="bi bi-dash"></i>
+                                                    </a>
+                                                @endif
+
+                                                
+                                                <input type="text" class="form-control text-center bg-white px-1" value="{{ $item['cantidad'] }}" readonly>
+
+                                                
+                                                <a href="{{ route('cart.increase', $id) }}" class="btn btn-outline-secondary">
+                                                    <i class="bi bi-plus"></i>
+                                                </a>
+                                            </div>
                                         </div>
+
+                                        
                                         <div class="col-lg-2 col-12 text-center mt-3 mt-lg-0 fw-bold text-pink-custom">
                                             <span class="d-lg-none text-dark me-2">Total:</span>
                                             ${{ number_format($subtotal, 0, ',', '.') }}
@@ -117,4 +150,25 @@
         @endif
     </div>
 </section>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmarEliminacion(id, nombre) {
+        Swal.fire({
+            title: '¿Eliminar?',
+            text: "¿Quitar " + nombre + " del carrito?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d63384',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, borrar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                
+                window.location.href = "/carrito/eliminar/" + id;
+            }
+        })
+    }
+</script>
 @endsection

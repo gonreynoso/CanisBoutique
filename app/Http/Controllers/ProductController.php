@@ -18,12 +18,21 @@ class ProductController extends Controller
     /**
      * Muestra la tabla de productos (Admin).
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Paginamos de 10 en 10
-        $products = Product::latest()->paginate(10);
+        $query = Product::query();
 
-        // CAMBIO IMPORTANTE: Apuntamos a la carpeta 'admin/products'
+        // Si hay búsqueda en la URL (?buscar=collar)
+        if ($request->has('buscar') && $request->buscar != '') {
+            $query->where('nombre', 'like', '%' . $request->buscar . '%')
+                ->orWhere('categoria', 'like', '%' . $request->buscar . '%');
+        }
+
+        $products = $query->latest()->paginate(10);
+
+        // Mantenemos el parámetro de búsqueda en la paginación
+        $products->appends(['buscar' => $request->buscar]);
+
         return view('admin.productos.index', compact('products'));
     }
 
@@ -32,7 +41,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('admin.products.create');
+        return view('admin.productos.create');
     }
 
     /**
@@ -73,7 +82,7 @@ class ProductController extends Controller
         ]);
 
         // CAMBIO IMPORTANTE: Redirigimos a la ruta del admin
-        return redirect()->route('admin.products.index')
+        return redirect()->route('admin.productos.index')
             ->with('success', 'Producto creado exitosamente.');
     }
 
@@ -82,7 +91,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('admin.products.edit', compact('product'));
+        return view('admin.productos.edit', compact('product'));
     }
 
     /**
@@ -96,6 +105,7 @@ class ProductController extends Controller
             'precio' => 'required|numeric|min:0.01',
             'stock' => 'required|integer|min:0',
             'categoria' => 'required|string',
+            'activo' => 'required|boolean',
             'imagen' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
@@ -117,7 +127,7 @@ class ProductController extends Controller
 
         $product->update($validated);
 
-        return redirect()->route('admin.products.index')
+        return redirect()->route('admin.productos.index')
             ->with('success', 'Producto actualizado exitosamente!');
     }
 
@@ -139,7 +149,7 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return redirect()->route('admin.products.index')
+        return redirect()->route('admin.productos.index')
             ->with('success', 'Producto eliminado exitosamente!');
     }
 }

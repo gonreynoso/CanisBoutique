@@ -4,7 +4,7 @@
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold mb-0">Editar Producto</h2>
-        <a href="{{ route('admin.products.index') }}" class="btn btn-outline-secondary rounded-pill px-4">
+        <a href="{{ route('admin.productos.index') }}" class="btn btn-outline-secondary rounded-pill px-4">
             <i class="bi bi-arrow-left me-2"></i> Volver
         </a>
     </div>
@@ -13,14 +13,14 @@
         <div class="col-lg-10">
             <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
                 <div class="card-header bg-light py-3 px-4">
-                    <h6 class="mb-0 fw-bold">Información del Producto: {{ $product->nombre }}</h6>
+                    <h6 class="mb-0 fw-bold">Editando: {{ $product->nombre }}</h6>
                 </div>
 
                 <div class="card-body p-4">
-                    <form action="{{ route('admin.products.update', $product->id) }}" method="POST"
+                    <form action="{{ route('admin.productos.update', $product->id) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
+                        @method('PUT') {{-- Importante para actualizar --}}
 
                         <div class="row g-4">
 
@@ -34,8 +34,7 @@
                                 </div>
 
                                 <div class="text-start">
-                                    <label for="imagen" class="form-label small text-muted">Cambiar Imagen
-                                        (Opcional)</label>
+                                    <label for="imagen" class="form-label small text-muted">Cambiar Imagen</label>
                                     <input type="file" name="imagen" id="imagen" class="form-control form-control-sm"
                                         accept="image/*" onchange="previewImage(event)">
                                 </div>
@@ -44,7 +43,7 @@
                             <div class="col-md-8">
                                 <div class="row g-3">
                                     <div class="col-12">
-                                        <label class="form-label fw-bold">Nombre del Producto</label>
+                                        <label class="form-label fw-bold">Nombre</label>
                                         <input type="text" name="nombre" class="form-control" required
                                             value="{{ old('nombre', $product->nombre) }}">
                                     </div>
@@ -70,16 +69,13 @@
                                     <div class="col-12">
                                         <label class="form-label fw-bold">Descripción</label>
                                         <textarea name="descripcion" class="form-control"
-                                            rows="4">{{ old('descripcion', $product->descripcion) }}</textarea>
+                                            rows="3">{{ old('descripcion', $product->descripcion) }}</textarea>
                                     </div>
 
                                     <div class="col-md-6">
                                         <label class="form-label fw-bold">Precio ($)</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text">$</span>
-                                            <input type="number" step="0.01" name="precio" class="form-control" required
-                                                value="{{ old('precio', $product->precio) }}">
-                                        </div>
+                                        <input type="number" step="0.01" name="precio" class="form-control" required
+                                            value="{{ old('precio', $product->precio) }}">
                                     </div>
 
                                     <div class="col-md-6">
@@ -89,9 +85,9 @@
                                     </div>
                                 </div>
 
-                                <div class="mt-4 pt-3 border-top d-flex justify-content-end gap-2">
+                                <div class="mt-4 pt-3 border-top d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary px-4 rounded-pill">
-                                        <i class="bi bi-check-lg me-2"></i> Guardar Cambios
+                                        <i class="bi bi-check-lg me-2"></i> Actualizar
                                     </button>
                                 </div>
                             </div>
@@ -103,7 +99,6 @@
     </div>
 
     <script>
-        // Pequeño script para previsualizar la imagen al seleccionarla
         function previewImage(event) {
             var reader = new FileReader();
             reader.onload = function () {

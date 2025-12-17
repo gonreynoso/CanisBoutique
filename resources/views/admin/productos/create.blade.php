@@ -1,62 +1,95 @@
-/
+@extends('layouts.admin')
 
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Crear Nuevo Producto') }}
-        </h2>
-    </x-slot>
+@section('content')
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Nuevo Producto</h2>
+        <a href="{{ route('admin.productos.index') }}" class="btn btn-outline-secondary rounded-pill px-4">
+            <i class="bi bi-arrow-left me-2"></i> Volver
+        </a>
+    </div>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    {{-- OJO: enctype es obligatorio para subir fotos --}}
+                    <form action="{{ route('admin.productos.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
 
-                <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
-                    @csrf
+                        <div class="row g-3">
+                            <div class="col-md-8">
+                                <label class="form-label fw-bold">Nombre del Producto</label>
+                                <input type="text" name="nombre" class="form-control" required value="{{ old('nombre') }}"
+                                    placeholder="Ej: Correa Extensible">
 
-                    <div>
-                        <x-input-label for="name" :value="__('Nombre')" />
-                        <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name')"
-                            required autofocus />
-                        <x-input-error class="mt-2" :messages="$errors->get('name')" />
-                    </div>
+                                @error('nombre')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                    <div class="mt-4">
-                        <x-input-label for="description" :value="__('Descripción')" />
-                        <textarea id="description" name="description"
-                            class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full">{{ old('description') }}</textarea>
-                        <x-input-error class="mt-2" :messages="$errors->get('description')" />
-                    </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Categoría</label>
+                                <select name="categoria" class="form-select">
+                                    <option value="Alimento">Alimento</option>
+                                    <option value="Juguetes">Juguetes</option>
+                                    <option value="Accesorios">Accesorios</option>
+                                    <option value="Higiene">Higiene</option>
+                                    <option value="Ropa">Ropa</option>
+                                </select>
 
-                    <div class="mt-4">
-                        <x-input-label for="price" :value="__('Precio (€)')" />
-                        <x-text-input id="price" name="price" type="number" step="0.01" class="mt-1 block w-full"
-                            :value="old('price')" required />
-                        <x-input-error class="mt-2" :messages="$errors->get('price')" />
-                    </div>
+                                @error('categoria')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                    <div class="mt-4">
-                        <x-input-label for="stock" :value="__('Stock')" />
-                        <x-text-input id="stock" name="stock" type="number" class="mt-1 block w-full"
-                            :value="old('stock', 0)" required />
-                        <x-input-error class="mt-2" :messages="$errors->get('stock')" />
-                    </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Descripción</label>
+                                <textarea name="descripcion" class="form-control" rows="3"
+                                    placeholder="Detalles del producto...">{{ old('descripcion') }}</textarea>
 
-                    <div class="mt-4">
-                        <x-input-label for="image" :value="__('Imagen del Producto')" />
-                        <input id="image" name="image" type="file"
-                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md" />
-                        <x-input-error class="mt-2" :messages="$errors->get('image')" />
-                    </div>
+                                @error('descripcion')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                    <div class="flex items-center justify-end mt-4">
-                        <x-primary-button class="ms-4">
-                            {{ __('Guardar Producto') }}
-                        </x-primary-button>
-                    </div>
-                </form>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Precio ($)</label>
+                                <input type="number" step="0.01" name="precio" class="form-control" required
+                                    value="{{ old('precio') }}" placeholder="0.00">
 
+                                @error('precio')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Stock Inicial</label>
+                                <input type="number" name="stock" class="form-control" required value="{{ old('stock') }}"
+                                    placeholder="0">
+
+                                @error('stock')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Imagen</label>
+                                <input type="file" name="imagen" class="form-control" accept="image/*">
+                                <small class="text-muted">Formatos: JPG, PNG, WEBP. (Opcional)</small>
+
+                                @error('imagen')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="mt-4 text-end">
+                            <button type="submit" class="btn btn-primary px-5 rounded-pill shadow-sm">
+                                <i class="bi bi-save me-2"></i> Guardar Producto
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</x-app-layout>
+@endsection

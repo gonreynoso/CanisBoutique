@@ -4,7 +4,7 @@
     <h1 class="text-2xl font-bold mb-2">Usuarios</h1>
     <hr class="mb-2">
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
