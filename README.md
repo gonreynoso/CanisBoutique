@@ -25,21 +25,6 @@ docker run --rm -u "$(id -u):$(id -g)" -v "$(pwd):/var/www/html" -w /var/www/htm
 
 ```
 
-<img width="1331" height="854" alt="image" src="https://github.com/user-attachments/assets/11ce1765-a083-4254-a72b-3704e6bae6f9" />
-
-<img width="1369" height="825" alt="image" src="https://github.com/user-attachments/assets/03d4866d-e19b-4673-a8da-018e3891ae96" />
-
-<img width="1339" height="1064" alt="image" src="https://github.com/user-attachments/assets/17305658-e4ac-4e80-a878-cc9bccdb54ff" />
-
-<img width="1353" height="754" alt="image" src="https://github.com/user-attachments/assets/fc0239f9-9e27-41fd-9a10-771dc35086e2" />
-
-<img width="1372" height="672" alt="image" src="https://github.com/user-attachments/assets/a94f88a9-50e0-4afa-b2df-28927b22d986" />
-
-
-
-
-
-
 ## 🏁 2. Puesta en Marcha (Script Automático)
 
 Hemos desarrollado un script `start.sh` para evitar errores de conexión con MySQL.
@@ -105,4 +90,15 @@ El sistema implementa un control de acceso basado en roles (Spatie) y **Middlewa
 **Gonzalo Reynoso** - *KensiWeb*
 Analista de Sistemas & Desarrollador Web.
 
-```
+## 🚀 1. Galería de imágenes.
+
+<img width="1331" height="854" alt="image" src="https://github.com/user-attachments/assets/11ce1765-a083-4254-a72b-3704e6bae6f9" />
+
+<img width="1369" height="825" alt="image" src="https://github.com/user-attachments/assets/03d4866d-e19b-4673-a8da-018e3891ae96" />
+
+<img width="1339" height="1064" alt="image" src="https://github.com/user-attachments/assets/17305658-e4ac-4e80-a878-cc9bccdb54ff" />
+
+<img width="1353" height="754" alt="image" src="https://github.com/user-attachments/assets/fc0239f9-9e27-41fd-9a10-771dc35086e2" />
+
+<img width="1372" height="672" alt="image" src="https://github.com/user-attachments/assets/a94f88a9-50e0-4afa-b2df-28927b22d986" />
+
