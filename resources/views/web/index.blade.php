@@ -41,7 +41,7 @@
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 text-center position-relative">
                     <div class="image-wrapper">
-                        {{-- OJO: Asegúrate de tener esta imagen en public/images/ --}}
+
                         <img src="{{ asset('images/pet-grooming-at-home-scaled-1.jpg') }}" alt="Canis Hero"
                             class="img-fluid rounded-circle shadow-lg hero-main-img">
                         <div class="floating-card bg-white p-3 rounded-4 shadow d-none d-md-flex align-items-center gap-3">
@@ -63,7 +63,7 @@
     <section id="promo-cards" class="promo-cards section">
         <div class="container" data-aos="fade-up" data-aos-delay="100">
             <div class="row gy-4">
-                {{-- DESTACADA --}}
+
                 <div class="col-lg-6">
                     <div class="category-featured" data-aos="fade-right" data-aos-delay="200">
                         <div class="category-image">
@@ -79,7 +79,7 @@
                     </div>
                 </div>
 
-                {{-- GRID SECUNDARIO --}}
+
                 <div class="col-lg-6">
                     <div class="row gy-4">
                         <div class="col-xl-6">
@@ -89,9 +89,10 @@
                                         alt="Alimento" class="img-fluid">
                                 </div>
                                 <div class="category-content">
-                                    <h4>Nutrición</h4>
+                                    <h4>Alimentos</h4>
                                     <p>Alimentos Premium</p>
-                                    <a href="#" class="card-link">Comprar Ahora <i class="bi bi-arrow-right"></i></a>
+                                    <a href="{{ route('tienda.index', ['categoria' => 'alimentos']) }}"
+                                        class="card-link">Comprar Ahora <i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -102,9 +103,10 @@
                                         alt="Juguetes" class="img-fluid">
                                 </div>
                                 <div class="category-content">
-                                    <h4>Diversión</h4>
+                                    <h4>Juguetes</h4>
                                     <p>Juguetes y Mordillos</p>
-                                    <a href="#" class="card-link">Explorar <i class="bi bi-arrow-right"></i></a>
+                                    <a href="{{ route('tienda.index', ['categoria' => 'juguetes']) }}"
+                                        class="card-link">Explorar <i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +119,8 @@
                                 <div class="category-content">
                                     <h4>Higiene</h4>
                                     <p>Shampoos y Colonias</p>
-                                    <a href="#" class="card-link">Ver Catálogo <i class="bi bi-arrow-right"></i></a>
+                                    <a href="{{ route('tienda.index', ['categoria' => 'Higiene']) }}" class="card-link">Ver
+                                        Catálogo <i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -128,9 +131,10 @@
                                         alt="Accesorios" class="img-fluid">
                                 </div>
                                 <div class="category-content">
-                                    <h4>Accesorios</h4>
-                                    <p>Paseo y Descanso</p>
-                                    <a href="#" class="card-link">Ver Más <i class="bi bi-arrow-right"></i></a>
+                                    <h4>Ropa</h4>
+                                    <p>Ropa y Accesorios</p>
+                                    <a href="{{ route('tienda.index', ['categoria' => 'ropa']) }}" class="card-link">Ver Más
+                                        <i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -143,194 +147,65 @@
     <x-grooming />
 
     <section id="best-sellers" class="best-sellers section">
-
         <div class="container section-title" data-aos="fade-up">
             <h2>Favoritos de la Comunidad</h2>
-            <p>Los productos más elegidos por nuestros clientes para el bienestar y estilo de sus mejores amigos.
-            </p>
+            <p>Los productos más elegidos por nuestros clientes para el bienestar y estilo de sus mejores amigos.</p>
         </div>
 
         <div class="container" data-aos="fade-up" data-aos-delay="100">
-
             <div class="row g-5">
+                @foreach($favoritos as $producto)
+                    <div class="col-lg-3 col-md-6">
+                        <div class="product-item">
+                            <div class="product-image">
+                                {{-- Badge dinámico basado en stock --}}
+                                @if($producto->stock <= 5)
+                                    <div class="product-badge bg-danger">¡Últimos!</div>
+                                @endif
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="product-item">
-                        <div class="product-image">
-                            <div class="product-badge">Limitado</div>
-                            <img src="https://images.unsplash.com/photo-1589924691195-41432c84c161?q=80&w=600&auto=format&fit=crop"
-                                alt="Alimento Premium" class="img-fluid" loading="lazy">
-                            <div class="product-actions">
-                                <button class="action-btn wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                                <button class="action-btn compare-btn">
-                                    <i class="bi bi-arrow-left-right"></i>
-                                </button>
-                                <button class="action-btn quickview-btn">
-                                    <i class="bi bi-zoom-in"></i>
-                                </button>
-                            </div>
-                            <button class="cart-btn">Seleccionar Opciones</button>
-                        </div>
-                        <div class="product-info">
-                            <div class="product-category">Nutrición Premium</div>
-                            <h4 class="product-name"><a href="#">Royal Canin - Adulto Mini</a></h4>
-                            <div class="product-rating">
-                                <div class="stars">
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star"></i>
+                                <img src="{{ asset($producto->imagen_url) }}" alt="{{ $producto->nombre }}" class="img-fluid"
+                                    loading="lazy" style="height: 250px; object-fit: cover; width: 100%;">
+
+                                <div class="product-actions">
+                                    <button class="action-btn wishlist-btn"><i class="bi bi-heart"></i></button>
+                                    <a href="{{ route('tienda.show', $producto->id) }}" class="action-btn quickview-btn">
+                                        <i class="bi bi-zoom-in"></i>
+                                    </a>
                                 </div>
-                                <span class="rating-count">(24)</span>
+
+
+                                <a href="{{ route('carrito.add', $producto->id) }}"
+                                    class="cart-btn text-decoration-none text-center">
+                                    Añadir al Carrito
+                                </a>
                             </div>
-                            <div class="product-price">$45.500</div>
-                            <div class="color-swatches">
-                                <span class="swatch active" title="1kg" style="background-color: #f3f4f6;"></span>
-                                <span class="swatch" title="3kg" style="background-color: #e5e7eb;"></span>
-                                <span class="swatch" title="7kg" style="background-color: #d1d5db;"></span>
+
+                            <div class="product-info">
+                                <div class="product-category">{{ $producto->categoria }}</div>
+                                <h4 class="product-name">
+                                    <a href="{{ route('tienda.show', $producto->id) }}">{{ $producto->nombre }}</a>
+                                </h4>
+
+                                <div class="product-rating">
+                                    <div class="stars text-warning">
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-half"></i>
+                                    </div>
+                                </div>
+
+                                <div class="product-price">${{ number_format($producto->precio, 0, ',', '.') }}</div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="product-item">
-                        <div class="product-image">
-                            <div class="product-badge sale-badge">25% OFF</div>
-                            <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?q=80&w=600&auto=format&fit=crop"
-                                alt="Pretal de Cuero" class="img-fluid" loading="lazy">
-                            <div class="product-actions">
-                                <button class="action-btn wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                                <button class="action-btn compare-btn">
-                                    <i class="bi bi-arrow-left-right"></i>
-                                </button>
-                                <button class="action-btn quickview-btn">
-                                    <i class="bi bi-zoom-in"></i>
-                                </button>
-                            </div>
-                            <button class="cart-btn">Añadir al Carrito</button>
-                        </div>
-                        <div class="product-info">
-                            <div class="product-category">Paseo y Estilo</div>
-                            <h4 class="product-name"><a href="#">Arnés de Cuero Artesanal</a></h4>
-                            <div class="product-rating">
-                                <div class="stars">
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-half"></i>
-                                </div>
-                                <span class="rating-count">(38)</span>
-                            </div>
-                            <div class="product-price">
-                                <span class="old-price">$18.200</span>
-                                <span class="current-price">$14.500</span>
-                            </div>
-                            <div class="color-swatches">
-                                <span class="swatch active" title="Marrón" style="background-color: #634832;"></span>
-                                <span class="swatch" title="Negro" style="background-color: #000000;"></span>
-                                <span class="swatch" title="Rojo" style="background-color: #8B0000;"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="product-item">
-                        <div class="product-image">
-                            <img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?q=80&w=600&auto=format&fit=crop"
-                                alt="Mordillo Kong" class="img-fluid" loading="lazy">
-                            <div class="product-actions">
-                                <button class="action-btn wishlist-btn">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                                <button class="action-btn compare-btn">
-                                    <i class="bi bi-arrow-left-right"></i>
-                                </button>
-                                <button class="action-btn quickview-btn">
-                                    <i class="bi bi-zoom-in"></i>
-                                </button>
-                            </div>
-                            <button class="cart-btn">Añadir al Carrito</button>
-                        </div>
-                        <div class="product-info">
-                            <div class="product-category">Juguetes</div>
-                            <h4 class="product-name"><a href="#">Pelota de Caucho Irrompible</a></h4>
-                            <div class="product-rating">
-                                <div class="stars">
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star"></i>
-                                    <i class="bi bi-star"></i>
-                                </div>
-                                <span class="rating-count">(12)</span>
-                            </div>
-                            <div class="product-price">$8.900</div>
-                            <div class="color-swatches">
-                                <span class="swatch active" title="Naranja" style="background-color: #ff6600;"></span>
-                                <span class="swatch" title="Azul" style="background-color: #0000ff;"></span>
-                                <span class="swatch" title="Verde" style="background-color: #008000;"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="product-item">
-                        <div class="product-image">
-                            <div class="product-badge trending-badge">Tendencia</div>
-                            <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=600&auto=format&fit=crop"
-                                alt="Cama para perro" class="img-fluid" loading="lazy">
-                            <div class="product-actions">
-                                <button class="action-btn wishlist-btn active">
-                                    <i class="bi bi-heart-fill"></i>
-                                </button>
-                                <button class="action-btn compare-btn">
-                                    <i class="bi bi-arrow-left-right"></i>
-                                </button>
-                                <button class="action-btn quickview-btn">
-                                    <i class="bi bi-zoom-in"></i>
-                                </button>
-                            </div>
-                            <button class="cart-btn">Añadir al Carrito</button>
-                        </div>
-                        <div class="product-info">
-                            <div class="product-category">Descanso</div>
-                            <h4 class="product-name"><a href="#">Cama Ortopédica "Nube"</a></h4>
-                            <div class="product-rating">
-                                <div class="stars">
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                </div>
-                                <span class="rating-count">(56)</span>
-                            </div>
-                            <div class="product-price">$32.500</div>
-                            <div class="color-swatches">
-                                <span class="swatch" title="Gris" style="background-color: #808080;"></span>
-                                <span class="swatch active" title="Rosa" style="background-color: #ffc0cb;"></span>
-                                <span class="swatch" title="Crema" style="background-color: #fffdd0;"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                @endforeach
             </div>
-
         </div>
-
     </section>
 
-    {{-- Call to Action 1 --}}
+
     <section class="py-5 text-white text-center"
         style="background: linear-gradient(rgba(214, 51, 132, 0.9), rgba(214, 51, 132, 0.8)), url('{{ asset('images/pet-grooming-at-home-scaled-1.jpg') }}') center/cover fixed;">
         <div class="container py-4">
@@ -345,7 +220,7 @@
         </div>
     </section>
 
-    {{-- Call to Action 2 --}}
+
     <section id="call-to-action" class="call-to-action section">
         <div class="container" data-aos="fade-up" data-aos-delay="100">
             <div class="row">
@@ -370,5 +245,6 @@
     </section>
 
     <x-contact />
+
 
 @endsection

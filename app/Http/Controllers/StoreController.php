@@ -57,6 +57,15 @@ class StoreController extends Controller
         return redirect()->back()->with('success', '¡Producto agregado al carrito!');
     }
 
+    public function home()
+    {
+        // Obtenemos 4 productos activos de forma aleatoria para la sección de favoritos
+        $favoritos = Product::where('activo', true)->inRandomOrder()->take(4)->get();
+
+        // Retornamos la vista de la página de inicio (ajusta la ruta según tu proyecto)
+        return view('web.index', compact('favoritos'));
+    }
+
     public function cart()
     {
         return view('web.tienda.cart');

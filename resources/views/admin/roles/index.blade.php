@@ -39,13 +39,15 @@
                                                 class="bi bi-pencil"></i></a>
 
 
-                                        <form action="{{ url('admin/role', $role->id) }}" method="POST"
+                                        <form action="{{ route('admin.roles.destroy', $role->id) }}" method="POST"
                                             style="display: inline-block;">
                                             @csrf
                                             @method('DELETE')
+
                                             <button type="submit" class="btn btn-danger"
-                                                onclick="return confirm('¿Estas seguro de eliminar este rol?')"><i
-                                                    class="bi-trash"></i></button>
+                                                onclick="return confirm('¿Estás seguro de eliminar este rol?')">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
                                         </form>
                                     </td>
                                 </tr>
@@ -69,4 +71,23 @@
             </div>
         </div>
     </div>
+    <script>
+        function confirmarBorradoRol(id) {
+            Swal.fire({
+                title: '¿Eliminar Rol?',
+                text: "Esta acción no se puede deshacer",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Buscamos el formulario específico de ese ID y lo enviamos
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            })
+        }
+    </script>
 @endsection

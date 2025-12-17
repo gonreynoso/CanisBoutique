@@ -16,9 +16,7 @@ use App\Http\Controllers\AdminController;
 | 1. RUTAS PÚBLICAS 
 */
 
-Route::get('/', function () {
-    return view('web.index');
-})->name('web.index');
+Route::get('/', [StoreController::class, 'home'])->name('web.index');
 
 
 Route::get('/reservar', [TurnoController::class, 'create'])->name('web.reservar');
@@ -38,6 +36,7 @@ Route::get('/carrito/agregar/{id}', [StoreController::class, 'addToCart'])->name
 Route::get('/carrito/eliminar/{id}', [StoreController::class, 'removeFromCart'])->name('carrito.remove');
 Route::get('/carrito/incrementar/{id}', [StoreController::class, 'increaseQuantity'])->name('cart.increase');
 Route::get('/carrito/disminuir/{id}', [StoreController::class, 'decreaseQuantity'])->name('cart.decrease');
+
 
 
 Route::get('/checkout', [StoreController::class, 'checkout'])->name('tienda.checkout');
@@ -92,12 +91,6 @@ Route::middleware(['auth', 'verified', 'can:ver_panel_admin'])
         Route::resource('productos', ProductController::class)
             ->parameters(['productos' => 'product'])
             ->except(['show']);
-
-
-        // Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
-        // Route::get('/orders/{id}', [AdminOrderController::class, 'show'])->name('orders.show');
-        // Route::put('/orders/{id}', [AdminOrderController::class, 'update'])->name('orders.update');
-    
 
         Route::get('/ajustes', [AjusteController::class, 'index'])->name('ajustes.index');
         Route::post('/ajustes', [AjusteController::class, 'store'])->name('ajustes.store');

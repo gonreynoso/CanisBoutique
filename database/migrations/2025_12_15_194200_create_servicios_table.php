@@ -12,9 +12,9 @@ return new class extends Migration {
     {
         Schema::create('servicios', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre'); // Ej: "Baño y Corte"
+            $table->string('nombre');
             $table->text('descripcion')->nullable();
-            $table->integer('duracion_minutos'); // Ej: 60, 90, 30. Vital para el calendario.
+            $table->integer('duracion_minutos');
             $table->decimal('precio', 10, 2);
             $table->boolean('activo')->default(true);
             $table->timestamps();

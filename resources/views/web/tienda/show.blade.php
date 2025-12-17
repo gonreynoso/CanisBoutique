@@ -29,7 +29,6 @@
                                     class="img-fluid w-100 object-fit-cover" style="height: 500px;">
                             </div>
                         </div>
-                        {{-- Si tuvieras más imágenes, irían aquí en el thumbnail-grid --}}
                     </div>
                 </div>
 

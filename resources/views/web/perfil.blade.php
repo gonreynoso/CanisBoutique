@@ -151,16 +151,15 @@
 </section>
 
 <style>
-    /* Estilos extra para badges rosados */
+  
     .bg-pink-light { background-color: rgba(214, 51, 132, 0.1); }
     .text-pink-custom { color: #d63384; }
     
-    /* Hover en el menú lateral */
     .list-group-item-action:hover, .list-group-item-action.active {
         background-color: #f8f9fa;
         color: #d63384;
         font-weight: 600;
-        border-left: 4px solid #d63384 !important; /* Indicador lateral activo */
+        border-left: 4px solid #d63384 !important;
     }
     .list-group-item { transition: all 0.2s; border-left: 4px solid transparent; }
 </style>

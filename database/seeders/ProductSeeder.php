@@ -264,11 +264,98 @@ class ProductSeeder extends Seeder
                 'imagen_url' => 'https://images.unsplash.com/photo-1551025119-92c421739f75?auto=format&fit=crop&w=600&q=80',
                 'stock' => 30,
             ],
+            [
+                'nombre' => 'Shampoo Extra Suave Aloe Vera',
+                'categoria' => 'Higiene',
+                'precio' => 8500,
+                'stock' => 50,
+                'imagen_url' => 'assets/img/productos/shampoo-aloe.jpg',
+                'activo' => true,
+                'descripcion' => 'Shampoo hipoalergénico con extracto natural de Aloe Vera para pieles sensibles.'
+            ],
+            [
+                'nombre' => 'Acondicionador Desenredante Pro-Brillo',
+                'categoria' => 'Higiene',
+                'precio' => 7200,
+                'stock' => 30,
+                'imagen_url' => 'assets/img/productos/acondicionador.jpg',
+                'activo' => true,
+                'descripcion' => 'Facilita el cepillado y aporta suavidad extrema al pelaje largo.'
+            ],
+            [
+                'nombre' => 'Perfume "Brisa de Campo" 100ml',
+                'categoria' => 'Higiene',
+                'precio' => 5400,
+                'stock' => 40,
+                'imagen_url' => 'assets/img/productos/perfume-perro.jpg',
+                'activo' => true,
+                'descripcion' => 'Fragancia duradera sin alcohol, no irrita el olfato de tu mascota.'
+            ],
+            [
+                'nombre' => 'Crema Hidratante para Almohadillas',
+                'categoria' => 'Higiene',
+                'precio' => 9800,
+                'stock' => 25,
+                'imagen_url' => 'assets/img/productos/crema-patas.jpg',
+                'activo' => true,
+                'descripcion' => 'Bálsamo reparador para proteger las patas del calor del asfalto y el frío.'
+            ],
+            [
+                'nombre' => 'Espuma de Baño en Seco',
+                'categoria' => 'Higiene',
+                'precio' => 11200,
+                'stock' => 20,
+                'imagen_url' => 'assets/img/productos/bano-seco.jpg',
+                'activo' => true,
+                'descripcion' => 'Limpieza rápida sin necesidad de agua, ideal para días de frío o gatos.'
+            ],
+            [
+                'nombre' => 'Toallitas Húmedas Desinfectantes',
+                'categoria' => 'Higiene',
+                'precio' => 4500,
+                'stock' => 100,
+                'imagen_url' => 'assets/img/productos/toallitas.jpg',
+                'activo' => true,
+                'descripcion' => 'Pack de 50 unidades para limpiar patas y pelaje después del paseo.'
+            ],
+            [
+                'nombre' => 'Shampoo Medicado Antipulgas',
+                'categoria' => 'Higiene',
+                'precio' => 13500,
+                'stock' => 15,
+                'imagen_url' => 'assets/img/productos/shampoo-pulgas.jpg',
+                'activo' => true,
+                'descripcion' => 'Elimina pulgas y garrapatas de forma efectiva protegiendo la piel.'
+            ],
+            [
+                'nombre' => 'Gel Dental Sabor Carne',
+                'categoria' => 'Higiene',
+                'precio' => 6900,
+                'stock' => 35,
+                'imagen_url' => 'assets/img/productos/pasta-dental.jpg',
+                'activo' => true,
+                'descripcion' => 'Previene el sarro y el mal aliento con un sabor que les encanta.'
+            ],
+            [
+                'nombre' => 'Loción Limpiadora de Oídos',
+                'categoria' => 'Higiene',
+                'precio' => 8900,
+                'stock' => 18,
+                'imagen_url' => 'assets/img/productos/limpia-oidos.jpg',
+                'activo' => true,
+                'descripcion' => 'Elimina el exceso de cera y previene infecciones en las orejas.'
+            ],
+            [
+                'nombre' => 'Perfume "Vainilla Soft" 100ml',
+                'categoria' => 'Higiene',
+                'precio' => 5400,
+                'stock' => 40,
+                'imagen_url' => 'assets/img/productos/perfume-vainilla.jpg',
+                'activo' => true,
+                'descripcion' => 'Aroma dulce y delicado especial para cachorros.'
+            ],
         ];
 
-        // Insertamos los datos
-        // Usamos insert en lugar de create para hacerlo en una sola query (más rápido)
-        // Pero recuerda agregar 'created_at' y 'updated_at' manualmente si usas insert
         $now = now();
         foreach ($productos as &$producto) {
             $producto['created_at'] = $now;

@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\URL; // <--- 1. ASEGURATE DE IMPORTAR ESTO
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 
@@ -21,8 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // 2. AGREGAR ESTE BLOQUE
-        // Si la petición viene con el header de Cloudflare indicando HTTPS, forzamos el esquema.
+
         Paginator::useBootstrapFive();
         if (request()->server('HTTP_X_FORWARDED_PROTO') === 'https') {
             URL::forceScheme('https');

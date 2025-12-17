@@ -35,7 +35,7 @@
             style="max-width: 600px; border-radius: 20px;">
             <div class="card-body">
 
-                {{-- Círculo animado con check --}}
+
                 <div class="mb-4">
                     <div
                         style="width: 80px; height: 80px; background-color: #d63384; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;">
@@ -45,7 +45,6 @@
 
                 <h2 class="fw-bold mb-3 text-dark">¡Reserva Exitosa!</h2>
 
-                {{-- LÓGICA BLADE: Verificamos si hay datos del turno en la sesión --}}
                 @if (session('turnoReciente'))
                     @php $turno = session('turnoReciente'); @endphp
 
@@ -70,8 +69,7 @@
                         </ul>
                     </div>
 
-                    {{-- Botón Google Calendar --}}
-                    {{-- NOTA: Requiere que hayas puesto el getGoogleCalendarLinkAttribute en el Modelo --}}
+
                     <div class="mt-4">
                         <a href="{{ $turno->google_calendar_link }}" target="_blank"
                             class="btn btn-outline-dark fw-bold w-100 py-2 border-2">
@@ -79,7 +77,7 @@
                         </a>
                     </div>
                 @else
-                    {{-- Fallback: Mensaje genérico si se pierde la sesión --}}
+
                     <p class="text-muted mb-4">
                         {{ session('success') ?? 'Tu turno ha sido agendado correctamente.' }}
                     </p>

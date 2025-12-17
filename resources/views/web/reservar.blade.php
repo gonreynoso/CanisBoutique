@@ -20,7 +20,7 @@
 
                     <div class="card-body p-4 p-md-5 bg-white">
 
-                        {{-- Mensajes de Feedback --}}
+
                         @if(session('error'))
                             <div class="alert alert-danger rounded-3 shadow-sm border-0 mb-4">
                                 <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ session('error') }}
@@ -165,7 +165,6 @@
     </div>
 
     <style>
-        /* Estilos específicos para esta vista si quieres un hover bonito en el botón */
         .btn-reservar:hover {
             background-color: #b02a67 !important;
             border-color: #b02a67 !important;

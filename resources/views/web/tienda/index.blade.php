@@ -41,12 +41,15 @@
                                 <span class="badge bg-light text-dark rounded-pill">10</span>
                             </a>
                         </li>
+                        <li class="mb-2">
+                            <a href="{{ route('tienda.index', ['categoria' => 'higiene']) }}" 
+                               class="d-flex justify-content-between align-items-center text-decoration-none {{ request('categoria') == 'higiene' ? 'text-primary fw-bold' : 'text-dark' }}">
+                                <span> 🧴 Higiene</span>
+                                <span class="badge bg-light text-dark rounded-pill">10</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
-
-                <div class="alert alert-info small">
-                    <i class="bi bi-info-circle"></i> Más filtros próximamente.
-                 </div>
 
             </div>
         </div>
@@ -60,13 +63,13 @@
                         <span class="fw-bold text-dark">{{ $productos->count() }} resultados</span>
                     </div>
                     
-                    <div class="d-flex align-items-center">
+                    {{-- <div class="d-flex align-items-center">
                         <select class="form-select form-select-sm border-0 bg-light" aria-label="Sort by">
                             <option selected>Más Recientes</option>
                             <option value="1">Menor Precio</option>
                             <option value="2">Mayor Precio</option>
                         </select>
-                    </div>
+                    </div> --}}
                 </div>
             </section>
 
@@ -77,7 +80,7 @@
                             <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden product-card position-relative group">
                                 
                                 <div class="position-relative overflow-hidden" style="height: 280px;">
-                                    {{-- Como no tienes 2 imagenes, usamos la misma para el efecto hover o solo una --}}
+                                    
                                     <img src="{{ $producto->imagen_url }}" 
                                          class="w-100 h-100 object-fit-cover transition-transform duration-300" 
                                          alt="{{ $producto->nombre }}">
@@ -138,7 +141,6 @@
             </section>
 
             <section class="mt-5 d-flex justify-content-center">
-                {{-- Esto le dice a Laravel que use el archivo que acabas de editar en vendor/pagination --}}
                 {{ $productos->withQueryString()->links('vendor.pagination.bootstrap-5') }}
             </section>
 
@@ -147,22 +149,20 @@
 </div>
 
 <style>
-    /* Ajustes mínimos para que funcione con tu layout actual */
+    
     .object-fit-cover { object-fit: cover; }
     
-    /* Efecto hover suave en las cards */
     .product-card { transition: transform 0.2s, box-shadow 0.2s; }
     .product-card:hover { 
         transform: translateY(-5px); 
         box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important; 
     }
 
-    /* Paginación Personalizada Rosa */
-.page-link {
-    color: var(--canis-pink); /* Texto rosa */
+    .page-link {
+    color: var(--canis-pink); 
     border: 1px solid #dee2e6;
     margin: 0 3px;
-    border-radius: 50% !important; /* Círculos en lugar de cuadrados */
+    border-radius: 50% !important; 
     width: 40px;
     height: 40px;
     display: flex;
@@ -181,7 +181,7 @@
     background-color: var(--canis-pink);
     border-color: var(--canis-pink);
     color: #fff;
-    box-shadow: 0 4px 10px rgba(214, 51, 132, 0.3); /* Sombra suave rosa */
+    box-shadow: 0 4px 10px rgba(214, 51, 132, 0.3); 
 }
 
 .page-item.disabled .page-link {
@@ -190,7 +190,6 @@
     border-color: #dee2e6;
 }
 
-/* Ocultar el focus azul feo de Bootstrap */
 .page-link:focus {
     box-shadow: 0 0 0 0.25rem rgba(214, 51, 132, 0.25);
 }

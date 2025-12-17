@@ -4,18 +4,6 @@
 
 @section('content')
 
-    <div class="page-title light-background">
-        <div class="container d-lg-flex justify-content-between align-items-center py-4">
-            <h1 class="mb-2 mb-lg-0">Error 404</h1>
-            <nav class="breadcrumbs">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="{{ route('web.index') }}">Inicio</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">404</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-
     <section id="error-404" class="error-404 section py-5">
         <div class="container" data-aos="fade-up" data-aos-delay="100">
             <div class="text-center">

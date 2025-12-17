@@ -14,9 +14,9 @@ return new class extends Migration {
             $table->id();
             $table->string('nombre');
             $table->text('descripcion')->nullable();
-            $table->decimal('precio', 10, 2); // 10 dígitos, 2 decimales
-            $table->string('categoria'); // 'alimentos', 'juguetes', 'ropa'
-            $table->string('imagen_url'); // Aquí guardaremos el link
+            $table->decimal('precio', 10, 2);
+            $table->string('categoria');
+            $table->string('imagen_url');
             $table->integer('stock')->default(10);
             $table->boolean('activo')->default(true);
             $table->timestamps();
